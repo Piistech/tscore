@@ -3,6 +3,7 @@ import '../../../fixture/fixture.dart';
 import '../../../live_audio/presentation/pages/lives_radio.dart';
 import '../../../more/presentation/pages/more.dart';
 import '../../../prediction/prediction.dart';
+import '../../home.dart';
 
 class HomePage extends StatefulWidget {
   static const String path = '/home';
@@ -19,13 +20,33 @@ class _HomePageState extends State<HomePage> {
   late final List<Widget> fragments;
   @override
   void initState() {
+    super.initState();
     fragments = [
       const FixturesPage(),
       const LiveRadioPage(),
       const PredictionsPage(),
       const MorePage(),
     ];
-    super.initState();
+
+    /*
+    The code snippet you provided checks for an update using InAppUpdate.checkForUpdate(). 
+    If an update is available, it performs an immediate update using InAppUpdate.performImmediateUpdate(). 
+    If the update is successful (AppUpdateResult.success), it executes the code inside the if block.
+    */
+    
+    if (kReleaseMode) {
+      InAppUpdate.checkForUpdate().then(
+        (event) {
+          if (event.updateAvailability == UpdateAvailability.updateAvailable) {
+            InAppUpdate.performImmediateUpdate().then(
+              (result) {
+                if (result == AppUpdateResult.success) {}
+              },
+            );
+          }
+        },
+      );
+    }
   }
 
   @override

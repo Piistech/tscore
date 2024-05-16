@@ -290,7 +290,7 @@ class CardWidget extends StatelessWidget {
     );
   }
 }
-
+// Asynchronously checks if the given permission is granted. Returns true if granted, false otherwise.
 Future<bool> checkPermission(Permission permission) async {
   if (await permission.isGranted) {
     return true;
