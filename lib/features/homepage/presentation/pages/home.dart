@@ -29,11 +29,13 @@ class _HomePageState extends State<HomePage> {
     ];
 
     /*
+    
     The code snippet you provided checks for an update using InAppUpdate.checkForUpdate(). 
     If an update is available, it performs an immediate update using InAppUpdate.performImmediateUpdate(). 
     If the update is successful (AppUpdateResult.success), it executes the code inside the if block.
+
     */
-    
+
     if (kReleaseMode) {
       InAppUpdate.checkForUpdate().then(
         (event) {
