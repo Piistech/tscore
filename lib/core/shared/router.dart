@@ -1,5 +1,5 @@
-import 'package:podcast/features/homepage/presentation/pages/home.dart';
-import 'package:podcast/features/prediction/presentation/pages/predictions.dart';
+import 'package:tscore/features/homepage/presentation/pages/home.dart';
+import 'package:tscore/features/prediction/presentation/pages/predictions.dart';
 
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';

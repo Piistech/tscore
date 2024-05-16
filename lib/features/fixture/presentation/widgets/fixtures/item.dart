@@ -1,4 +1,4 @@
-import 'package:podcast/core/shared/task_notifier.dart';
+import 'package:tscore/core/shared/task_notifier.dart';
 
 import '../../../../../core/shared/shared.dart';
 import '../../../../commentary/commentary.dart';

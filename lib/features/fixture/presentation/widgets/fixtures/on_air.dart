@@ -1,4 +1,4 @@
-import 'package:podcast/features/commentary/commentary.dart';
+import 'package:tscore/features/commentary/commentary.dart';
 
 import '../../../../../core/shared/shared.dart';
 import '../../../fixture.dart';

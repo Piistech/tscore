@@ -1,4 +1,4 @@
-import 'package:podcast/core/shared/shimmer/shimmer_lable.dart';
+import 'package:tscore/core/shared/shimmer/shimmer_lable.dart';
 
 import '../../../../../core/shared/shared.dart';
 

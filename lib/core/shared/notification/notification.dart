@@ -35,6 +35,7 @@ class NotificationManager {
       AgoraManager.instance.engine.leaveChannel();
     }
   }
+
   void onCommentaryStarted({
     required String matchName,
     required String channelId,
@@ -51,7 +52,7 @@ class NotificationManager {
       'live-commentary',
       'Live commentary',
       icon: 'splash',
-      channelDescription: 'Live commentary podcast channel',
+      channelDescription: 'Live commentary tscore channel',
       importance: Importance.max,
       largeIcon: FilePathAndroidBitmap(icon),
       priority: Priority.max,
@@ -75,7 +76,6 @@ class NotificationManager {
       groupAlertBehavior: GroupAlertBehavior.all,
       visibility: NotificationVisibility.public,
       autoCancel: false,
-
     );
 
     final NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);

@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "podcast" "\0"
+            VALUE "FileDescription", "tscore" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "podcast" "\0"
+            VALUE "InternalName", "tscore" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "podcast.exe" "\0"
-            VALUE "ProductName", "podcast" "\0"
+            VALUE "OriginalFilename", "tscore.exe" "\0"
+            VALUE "ProductName", "tscore" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
