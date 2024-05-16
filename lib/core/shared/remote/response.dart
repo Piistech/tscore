@@ -19,13 +19,13 @@ class RemoteResponse<T> {
     final Map<String, dynamic> payload = json.decode(response.body);
 
     final bool success = payload['success'] as bool;
-    final String? error = payload['error'] as String?;
-    final T? result = payload['result'] as T?;
     //print(result);
 
     if (success) {
+      final T? result = payload['result'] as T?;
       return RemoteResponse._success(result: result);
     } else {
+      final String? error = payload['error'] as String?;
       assert(
         error != null,
         'Error message is required',
