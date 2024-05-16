@@ -1,9 +1,8 @@
-import 'package:tscore/features/homepage/presentation/pages/home.dart';
-import 'package:tscore/features/prediction/presentation/pages/predictions.dart';
 
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';
 import '../../features/fixture/fixture.dart';
+import '../../features/homepage/presentation/pages/home.dart';
 import '../../features/live_audio/presentation/pages/lives_radio.dart';
 import '../../features/more/presentation/pages/more.dart';
 import '../../features/prediction/prediction.dart';
