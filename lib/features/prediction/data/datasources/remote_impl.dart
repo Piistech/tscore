@@ -23,24 +23,16 @@ class PredictionDataSourceImpl extends PredictionRemoteDataSource {
       headers: headers,
     );
 
-    //! initialize result
 
-    final Map<String, dynamic> map = Map<String, dynamic>.from(
-      json.decode(response.body),
-    );
-    if (map["success"]) {
-      final RemoteResponse<Map<String, dynamic>> result = RemoteResponse.parse(response: response);
+    final RemoteResponse<Map<String, dynamic>> result = RemoteResponse.parse(response: response);
 
-      if (result.success) {
-        //final PredictionModel prediction = PredictionModel.parse(result.result!);
+    if (result.success) {
+      //final PredictionModel prediction = PredictionModel.parse(result.result!);
 
-        final PredictionModel prediction = PredictionModel.parse(result.result!);
-        return prediction;
-      } else {
-        throw RemoteFailure(message: result.error!);
-      }
+      final PredictionModel prediction = PredictionModel.parse(result.result!);
+      return prediction;
     } else {
-      throw RemoteFailure(message: map["error"]);
+      throw RemoteFailure(message: result.error!);
     }
   }
 }

@@ -1,6 +1,5 @@
 import '../../../../core/shared/shared.dart';
-import '../widgets/fixtures/tab/tab_cricket.dart';
-import '../widgets/fixtures/tab/tab_football.dart';
+import '../../fixture.dart';
 
 class FixturesPage extends StatefulWidget {
   static const String path = '/fixtures';

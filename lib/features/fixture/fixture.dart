@@ -14,3 +14,5 @@ export 'presentation/pages/details.dart';
 export 'presentation/pages/fixtures.dart';
 export 'presentation/widgets/details/match_title.dart';
 export 'presentation/widgets/fixtures/item.dart';
+export 'presentation/widgets/fixtures/tab/tab_cricket.dart';
+export 'presentation/widgets/fixtures/tab/tab_football.dart';

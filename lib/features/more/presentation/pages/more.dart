@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/shared/shared.dart';
@@ -14,6 +13,8 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
+  final InAppReview inAppReview = InAppReview.instance;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -160,8 +161,6 @@ class _MorePageState extends State<MorePage> {
                     leading: Icon(Icons.star_rate_outlined, color: theme.white),
                     horizontalTitleGap: 8.w,
                     onTap: () async {
-                      final InAppReview inAppReview = InAppReview.instance;
-
                       if (await inAppReview.isAvailable()) {
                         inAppReview.requestReview();
                       }

@@ -28,39 +28,31 @@ class _PredictionWidgetState extends State<PredictionWidget> {
     return BlocBuilder<PredictionBloc, PredictionState>(
       builder: (context, state) {
         if (state is PredictionLoading) {
-          return Center(
-            child: Text(
-              "No prediction found",
-              style: context.textStyle14Medium(color: Colors.white),
-            )
-                .animate(
-                  onPlay: (controller) => controller.repeat(),
-                  onComplete: (controller) => controller.repeat(),
-                )
-                .shimmer(
-                  duration: const Duration(milliseconds: 1000),
-                  color: Colors.orange,
-                ),
-          );
+          return const Center(child: CircularProgressIndicator());
         } else if (state is PredictionDone) {
-          return ListView(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              BlocProvider(
-                create: (context) => sl<TeamBloc>(),
-                child: BeforeTossPrediction(teamGuid: state.prediction.winnerTeamId),
-              ),
-              SizedBox(height: context.verticalMargin15),
-              BlocProvider(
-                create: (context) => sl<TeamBloc>(),
-                child: AfterTossPrediction(
-                  teamGuid: state.prediction.winnerTeamIdAfterToss,
-                ),
-              ),
-            ],
-          );
+          return ((state.prediction.winnerTeamIdAfterToss.isEmpty) && (state.prediction.winnerTeamId.isNotEmpty))
+              ? const Center(
+                  child: Text(
+                  'No prediction available',
+                ))
+              : ListView(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    BlocProvider(
+                      create: (context) => sl<TeamBloc>(),
+                      child: BeforeTossPrediction(teamGuid: state.prediction.winnerTeamId),
+                    ),
+                    SizedBox(height: context.verticalMargin15),
+                    BlocProvider(
+                      create: (context) => sl<TeamBloc>(),
+                      child: AfterTossPrediction(
+                        teamGuid: state.prediction.winnerTeamIdAfterToss,
+                      ),
+                    ),
+                  ],
+                );
         } else {
           return Container();
         }
