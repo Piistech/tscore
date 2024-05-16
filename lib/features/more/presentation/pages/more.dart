@@ -1,7 +1,7 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../../../core/shared/constants.dart';
 import '../../../../core/shared/shared.dart';
 
 class MorePage extends StatefulWidget {
@@ -51,19 +51,14 @@ class _MorePageState extends State<MorePage> {
                     if (snapshot.hasData) {
                       return CupertinoSwitch(
                         value: snapshot.data ?? false,
-                        onChanged: (switchValue) async {
-                          Permission.notification.status.then(
-                            (value) {
-                              if (value.isGranted) {
-                                AppSettings.openAppSettings(type: AppSettingsType.notification);
-                                setState(() {
-                                  switchValue = true;
-                                });
-                              } else {
-                                AppSettings.openAppSettings(type: AppSettingsType.notification);
-                              }
-                            },
-                          );
+                        onChanged: (granted) async {
+                          if (granted) {
+                            await Permission.notification.request();
+                            setState(() {});
+                          } else {
+                            await AppSettings.openAppSettings(type: AppSettingsType.notification);
+                            setState(() {});
+                          }
                         },
                       );
                     } else {
@@ -80,32 +75,16 @@ class _MorePageState extends State<MorePage> {
             ),
             SizedBox(height: context.verticalMargin10),
             CardWidget(
-              child: Column(
-                children: [
-                  ListTile(
-                    dense: true,
-                    visualDensity: VisualDensity.compact,
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.facebook_outlined, color: theme.white),
-                    horizontalTitleGap: 8.w,
-                    title: Text(
-                      "Facebook",
-                      style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
-                    ),
-                  ),
-                  Divider(color: theme.textSecondary, height: 1.h, thickness: .5.h),
-                  ListTile(
-                    dense: true,
-                    visualDensity: VisualDensity.compact,
-                    contentPadding: EdgeInsets.zero,
-                    leading: Image.asset("images/icons/instagram.png", width: 16.w, height: 16.h, color: theme.white),
-                    horizontalTitleGap: 8.w,
-                    title: Text(
-                      "Instagram",
-                      style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
-                    ),
-                  ),
-                ],
+              child: ListTile(
+                dense: true,
+                visualDensity: VisualDensity.compact,
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(Icons.facebook_outlined, color: theme.white),
+                horizontalTitleGap: 8.w,
+                title: Text(
+                  "Facebook",
+                  style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
+                ),
               ),
             ),
             SizedBox(height: context.verticalMargin10),
@@ -191,9 +170,19 @@ class _MorePageState extends State<MorePage> {
                     style: TextStyles.title(context: context, color: theme.textPrimary).copyWith(height: 1.2),
                   ),
                   SizedBox(width: context.horizontalMargin8),
-                  Text(
-                    appVersion,
-                    style: TextStyles.title(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                  FutureBuilder(
+                    future: PackageInfo.fromPlatform(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final PackageInfo packageInfo = snapshot.data as PackageInfo;
+                        return Text(
+                          packageInfo.version,
+                          style: TextStyles.title(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                        );
+                      } else {
+                        return const CupertinoActivityIndicator();
+                      }
+                    },
                   ),
                 ],
               ),

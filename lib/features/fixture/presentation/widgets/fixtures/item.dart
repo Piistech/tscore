@@ -148,81 +148,79 @@ class FixtureItemWidget extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: context.verticalMargin16),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(context.radius5),
-                    onTap: () {
-                      context.pushNamed(
-                        FixtureDetailsPage.name,
-                        pathParameters: {
-                          'id': fixture.guid,
-                        },
-                      );
-                    },
-                    child: Container(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
                       padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(context.radius5),
-                        color: theme.backgroundTertiary,
+                        color: fixture.isLive
+                            ? theme.negative
+                            : fixture.isUpcoming
+                                ? theme.warning
+                                : theme.positive,
                       ),
-                      child: Text(
-                        "Prediction",
-                        style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Visibility(
+                            visible: fixture.isLive,
+                            child: Icon(
+                              Icons.circle,
+                              size: 8.h,
+                              color: theme.textPrimary,
+                            )
+                                .animate(
+                                  onPlay: (controller) => controller.repeat(),
+                                  onComplete: (controller) => controller.repeat(),
+                                )
+                                .fadeIn(duration: const Duration(milliseconds: 700)),
+                          ),
+                          SizedBox(width: context.verticalMargin5),
+                          Text(
+                            fixture.isLive
+                                ? "Live now"
+                                : fixture.isUpcoming
+                                    ? "Upcoming"
+                                    : "Finished",
+                            style: context
+                                .textStyle10Regular(
+                                  color: fixture.isLive
+                                      ? theme.textPrimary
+                                      : fixture.isUpcoming
+                                          ? theme.backgroundPrimary
+                                          : theme.textPrimary,
+                                )
+                                .copyWith(height: 1.2, fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: context.verticalMargin16),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
-                    decoration: BoxDecoration(
+                    InkWell(
                       borderRadius: BorderRadius.circular(context.radius5),
-                      color: fixture.isLive
-                          ? theme.negative
-                          : fixture.isUpcoming
-                              ? theme.warning
-                              : theme.positive,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Visibility(
-                          visible: fixture.isLive,
-                          child: Icon(
-                            Icons.circle,
-                            size: 8.h,
-                            color: theme.textPrimary,
-                          )
-                              .animate(
-                                onPlay: (controller) => controller.repeat(),
-                                onComplete: (controller) => controller.repeat(),
-                              )
-                              .fadeIn(duration: const Duration(milliseconds: 700)),
+                      onTap: () {
+                        context.pushNamed(
+                          FixtureDetailsPage.name,
+                          pathParameters: {
+                            'id': fixture.guid,
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(context.radius5),
+                          color: theme.backgroundTertiary,
                         ),
-                        SizedBox(width: context.verticalMargin5),
-                        Text(
-                          fixture.isLive
-                              ? "Live now"
-                              : fixture.isUpcoming
-                                  ? "Upcoming"
-                                  : "Finished",
-                          style: context
-                              .textStyle10Regular(
-                                color: fixture.isLive
-                                    ? theme.textPrimary
-                                    : fixture.isUpcoming
-                                        ? theme.backgroundPrimary
-                                        : theme.textPrimary,
-                              )
-                              .copyWith(height: 1.2, fontWeight: FontWeight.bold),
+                        child: Text(
+                          "Prediction",
+                          style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                )
+                  ],
+                ),
               ],
             ),
           ),
