@@ -1,8 +1,8 @@
-import 'package:app_settings/app_settings.dart';
+
 import 'package:flutter/cupertino.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 import '../../../../core/shared/shared.dart';
+import '../../more.dart';
 
 class MorePage extends StatefulWidget {
   static const String path = '/more';
@@ -81,6 +81,9 @@ class _MorePageState extends State<MorePage> {
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.facebook_outlined, color: theme.white),
                 horizontalTitleGap: 8.w,
+                onTap: () async {
+                  await launchUrl(Uri.parse(ExternalLinks().facebook), mode: LaunchMode.inAppBrowserView);
+                },
                 title: Text(
                   "Facebook",
                   style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
@@ -102,6 +105,48 @@ class _MorePageState extends State<MorePage> {
                     contentPadding: EdgeInsets.zero,
                     leading: Icon(Icons.info_outline, color: theme.white),
                     horizontalTitleGap: 8.w,
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return ListView(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.horizontalMargin15,
+                              vertical: context.verticalMargin15,
+                            ),
+                            children: [
+                              Text(
+                                "About app",
+                                style: TextStyles.title(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                              ),
+                              SizedBox(height: context.verticalMargin10),
+                              Text(
+                                "copyrights@ by - T Score (${DateFormat("yyyy").format(DateTime.now())}). All rights reserved.All trademarks are the property of their respective owners.",
+                                style: TextStyles.body(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                              ),
+                              SizedBox(height: context.verticalMargin10),
+                              FutureBuilder(
+                                future: PackageInfo.fromPlatform(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    final PackageInfo packageInfo = snapshot.data as PackageInfo;
+                                    return Text(
+                                      "App version - ${packageInfo.version}",
+                                      style:
+                                          TextStyles.caption(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                                    );
+                                  } else {
+                                    return const CupertinoActivityIndicator();
+                                  }
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                     title: Text(
                       "About app",
                       style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
@@ -114,6 +159,13 @@ class _MorePageState extends State<MorePage> {
                     contentPadding: EdgeInsets.zero,
                     leading: Icon(Icons.star_rate_outlined, color: theme.white),
                     horizontalTitleGap: 8.w,
+                    onTap: () async {
+                      final InAppReview inAppReview = InAppReview.instance;
+
+                      if (await inAppReview.isAvailable()) {
+                        inAppReview.requestReview();
+                      }
+                    },
                     title: Text(
                       "Rate us",
                       style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
@@ -126,6 +178,9 @@ class _MorePageState extends State<MorePage> {
                     contentPadding: EdgeInsets.zero,
                     leading: Icon(Icons.share_outlined, color: theme.white),
                     horizontalTitleGap: 8.w,
+                    onTap: () async {
+                      Share.share('');
+                    },
                     title: Text(
                       "Share App",
                       style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
@@ -138,6 +193,15 @@ class _MorePageState extends State<MorePage> {
                     contentPadding: EdgeInsets.zero,
                     leading: Icon(Icons.lock_outline_rounded, color: theme.white),
                     horizontalTitleGap: 8.w,
+                    onTap: () {
+                      context.pushNamed(
+                        PrivacyPolicyPage.name,
+                        extra: {
+                          "link": ExternalLinks.privacyPolicy,
+                          "header": "Privacy Policy",
+                        },
+                      );
+                    },
                     title: Text(
                       "Privacy Policy",
                       style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
@@ -150,6 +214,15 @@ class _MorePageState extends State<MorePage> {
                     contentPadding: EdgeInsets.zero,
                     leading: Icon(Icons.list_alt_rounded, color: theme.white),
                     horizontalTitleGap: 8.w,
+                    onTap: () {
+                      context.pushNamed(
+                        PrivacyPolicyPage.name,
+                        extra: {
+                          "link": ExternalLinks.termsAndCondition,
+                          "header": "Terms & Condition",
+                        },
+                      );
+                    },
                     title: Text(
                       "Terms & Condition",
                       style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),

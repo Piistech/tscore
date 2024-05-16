@@ -51,4 +51,10 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+    <!-- Provide required visibility configuration for API level 30 and above -->
+<queries>
+  <intent>
+    <action android:name="android.support.customtabs.action.CustomTabsService" />
+  </intent>
+</queries>
 </manifest>

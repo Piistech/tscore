@@ -1,3 +1,4 @@
+import 'package:tscore/features/more/presentation/widgets/privacy_policy.dart';
 
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';
@@ -41,6 +42,18 @@ final router = GoRouter(
       name: MorePage.name,
       builder: (context, state) => const MorePage(),
     ),
+    GoRoute(
+        path: PrivacyPolicyPage.path,
+        name: PrivacyPolicyPage.name,
+        builder: (context, state) {
+          final Map<String, dynamic>? arguments = state.extra as Map<String, dynamic>?;
+          final String header = arguments?['header'] as String;
+          final String link = arguments?['link'] as String;
+          return PrivacyPolicyPage(
+            headerText: header,
+            link: link,
+          );
+        }),
     GoRoute(
       path: LiveRadioPage.path,
       name: LiveRadioPage.name,

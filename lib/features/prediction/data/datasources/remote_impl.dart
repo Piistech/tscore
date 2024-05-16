@@ -23,21 +23,24 @@ class PredictionDataSourceImpl extends PredictionRemoteDataSource {
       headers: headers,
     );
 
-    //! mock response
-    // final Response response = Response(
-    //   await rootBundle.loadString('mock/prediction.json'),
-    //   HttpStatus.ok,
-    // );
+    //! initialize result
 
-    final RemoteResponse<Map<String, dynamic>> result = RemoteResponse.parse(response: response);
+    final Map<String, dynamic> map = Map<String, dynamic>.from(
+      json.decode(response.body),
+    );
+    if (map["success"]) {
+      final RemoteResponse<Map<String, dynamic>> result = RemoteResponse.parse(response: response);
 
-    if (result.success) {
-      //final PredictionModel prediction = PredictionModel.parse(result.result!);
+      if (result.success) {
+        //final PredictionModel prediction = PredictionModel.parse(result.result!);
 
-      final PredictionModel prediction = PredictionModel.parse(result.result!);
-      return prediction;
+        final PredictionModel prediction = PredictionModel.parse(result.result!);
+        return prediction;
+      } else {
+        throw RemoteFailure(message: result.error!);
+      }
     } else {
-      throw RemoteFailure(message: result.error!);
+      throw RemoteFailure(message: map["error"]);
     }
   }
 }
