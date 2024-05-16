@@ -65,13 +65,81 @@ android {
 
     buildTypes {
         release {
-            ndk { abiFilters 'arm64-v8a', 'x86_64' }
+            ndk{
+                abiFilters 'arm64-v8a', 'x86_64'
+            }
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
-            signingConfig signingConfigs.release
-            
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro' 
         }
+    }
+
+    packagingOptions {
+        exclude 'lib/armeabi-v7a/libagora_ai_noise_suppression_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_audio_beauty_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_clear_vision_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_content_inspect_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_screen_capture_extension.so'
+        exclude 'lib/armeabi-v7a/AgoraScreenShareExtension.so'
+        exclude 'lib/armeabi-v7a/libagora_segmentation_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_spatial_audio_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_pvc_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_super_resolution_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_drm_loader_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_udrm3_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_ai_echo_cancellation_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_face_detection_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_video_quality_analyzer_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_ai_noise_suppression_extension.so'
+
+        exclude 'lib/arm64-v8a/libagora_ai_noise_suppression_extension.so'
+        exclude 'lib/arm64-v8a/libagora_audio_beauty_extension.so'
+        exclude 'lib/arm64-v8a/libagora_clear_vision_extension.so'
+        exclude 'lib/arm64-v8a/libagora_content_inspect_extension.so'
+        exclude 'lib/arm64-v8a/libagora_screen_capture_extension.so'
+        exclude 'lib/arm64-v8a/AgoraScreenShareExtension.so'
+        exclude 'lib/arm64-v8a/libagora_segmentation_extension.so'
+        exclude 'lib/arm64-v8a/libagora_spatial_audio_extension.so'
+        exclude 'lib/arm64-v8a/libagora_pvc_extension.so'
+        exclude 'lib/arm64-v8a/libagora_super_resolution_extension.so'
+        exclude 'lib/arm64-v8a/libagora_drm_loader_extension.so'
+        exclude 'lib/arm64-v8a/libagora_udrm3_extension.so'
+        exclude 'lib/arm64-v8a/libagora_ai_echo_cancellation_extension.so'
+        exclude 'lib/arm64-v8a/libagora_face_detection_extension.so'
+        exclude 'lib/arm64-v8a/libagora_video_quality_analyzer_extension.so'
+
+        exclude 'lib/x86_64/libagora_ai_noise_suppression_extension.so'
+        exclude 'lib/x86_64/libagora_audio_beauty_extension.so'
+        exclude 'lib/x86_64/libagora_clear_vision_extension.so'
+        exclude 'lib/x86_64/libagora_content_inspect_extension.so'
+        exclude 'lib/x86_64/libagora_screen_capture_extension.so'
+        exclude 'lib/x86_64/AgoraScreenShareExtension.so'
+        exclude 'lib/x86_64/libagora_segmentation_extension.so'
+        exclude 'lib/x86_64/libagora_spatial_audio_extension.so'
+        exclude 'lib/x86_64/libagora_pvc_extension.so'
+        exclude 'lib/x86_64/libagora_super_resolution_extension.so'
+        exclude 'lib/x86_64/libagora_drm_loader_extension.so'
+        exclude 'lib/x86_64/libagora_udrm3_extension.so'
+        exclude 'lib/x86_64/libagora_ai_echo_cancellation_extension.so'
+        exclude 'lib/x86_64/libagora_face_detection_extension.so'
+        exclude 'lib/x86_64/libagora_video_quality_analyzer_extension.so'
+
+        exclude 'lib/x86/libagora_ai_noise_suppression_extension.so'
+        exclude 'lib/x86/libagora_audio_beauty_extension.so'
+        exclude 'lib/x86/libagora_clear_vision_extension.so'
+        exclude 'lib/x86/libagora_content_inspect_extension.so'
+        exclude 'lib/x86/libagora_screen_capture_extension.so'
+        exclude 'lib/x86/AgoraScreenShareExtension.so'
+        exclude 'lib/x86/libagora_segmentation_extension.so'
+        exclude 'lib/x86/libagora_spatial_audio_extension.so'
+        exclude 'lib/x86/libagora_pvc_extension.so'
+        exclude 'lib/x86/libagora_super_resolution_extension.so'
+        exclude 'lib/x86/libagora_drm_loader_extension.so'
+        exclude 'lib/x86/libagora_udrm3_extension.so'
+        exclude 'lib/x86/libagora_ai_echo_cancellation_extension.so'
+        exclude 'lib/x86/libagora_face_detection_extension.so'
+        exclude 'lib/x86/libagora_video_quality_analyzer_extension.so'
     }
 }
 
