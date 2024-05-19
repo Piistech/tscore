@@ -1,71 +1,103 @@
-import '../../../../core/shared/shared.dart';
-import '../../../fixture/fixture.dart';
-import '../../../live_audio/presentation/widgets/shimmer/item.dart';
-import '../widgets/item.dart';
 
-class PredictionsPage extends StatelessWidget {
+
+import '../../../../core/shared/shared.dart';
+import '../../prediction.dart';
+
+class PredictionsPage extends StatefulWidget {
   static const String path = '/predictions';
   static const String name = 'PredictionsPage';
   const PredictionsPage({super.key});
 
   @override
+  State<PredictionsPage> createState() => _PredictionsPageState();
+}
+
+class _PredictionsPageState extends State<PredictionsPage> with SingleTickerProviderStateMixin {
+  late TabController tabController;
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: () async {
-          context.read<FixturesBloc>().add(const FetchFixtures());
-        },
-        child: BlocBuilder<FixturesBloc, FixturesState>(
-          builder: (_, state) {
-            if (state is FixturesLoading) {
-              return ListView.builder(
-                itemCount: 4,
-                itemBuilder: (_, __) => const ShimmerItem(),
-              );
-            } else if (state is FixturesDone) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin16, vertical: context.verticalMargin8),
-                    child: Text(
-                      "Upcoming matches",
-                      style: TextStyles.title(
-                        context: context,
-                        color: Colors.white,
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        final theme = state.scheme;
+        return Scaffold(
+          body: DefaultTabController(
+            length: 4,
+            initialIndex: 0,
+            child: Scaffold(
+              backgroundColor: theme.backgroundPrimary,
+              appBar: TabBar(
+                labelStyle: TextStyles.body(
+                  context: context,
+                  color: theme.textPrimary,
+                ).copyWith(fontWeight: FontWeight.bold),
+                unselectedLabelStyle: TextStyles.body(context: context, color: theme.textSecondary),
+                indicatorWeight: 3,
+                tabAlignment: TabAlignment.center,
+                dividerColor: Colors.transparent,
+                indicatorColor: theme.warning,
+                physics: const ScrollPhysics(),
+                isScrollable: true,
+                controller: tabController,
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs: [
+                  Tab(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      child: Text(
+                        "Today",
+                        style: context.textStyle12Medium(color: theme.textPrimary).copyWith(height: 1.2),
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: ListView.separated(
-                      itemCount: state.fixtures.length,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.horizontalMargin15,
-                        vertical: context.verticalMargin15,
+                  Tab(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      child: Text(
+                        "Tomorrow",
+                        style: context.textStyle12Medium(color: theme.textPrimary).copyWith(height: 1.2),
                       ),
-                      separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin8),
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemBuilder: (_, index) {
-                        final fixture = state.fixtures[index];
-                        if (fixture.isUpcoming) {
-                          return PredictionItemWidget(fixture: fixture);
-                        } else {
-                          return Container();
-                        }
-                      },
+                    ),
+                  ),
+                  Tab(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      child: Text(
+                        "Upcoming",
+                        style: context.textStyle12Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      child: Text(
+                        "Past",
+                        style: context.textStyle12Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                      ),
                     ),
                   ),
                 ],
-              );
-            } else if (state is FixturesError) {
-              return Center(child: Text(state.failure.message));
-            } else {
-              return Container();
-            }
-          },
-        ),
-      ),
+              ),
+              body: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: tabController,
+                children: const [
+                  TodayMatches(),
+                  TomorrowMatches(),
+                  UpcomingMatches(),
+                  PastMatches(),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

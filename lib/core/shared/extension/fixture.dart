@@ -12,7 +12,20 @@ extension FixtureEntityExtension on FixtureEntity {
   }
 
   bool get isUpcoming {
-    return !isLive && DateTime.now().isBefore(startedAt);
+    final now = DateTime.now();
+    return (now.day+2 == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
+  }
+  bool get isToday {
+    final now = DateTime.now();
+    return !isLive && (now.day == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
+  }
+  bool get isTomorrow {
+    final now = DateTime.now();
+    return (now.day+1 == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
+  }
+  bool get isPast {
+    final now = DateTime.now();
+    return (now.day-3 == startedAt.day);
   }
 
   bool get isFinished {
