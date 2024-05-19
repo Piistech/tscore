@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
 
     /*
     
-    The code snippet you provided checks for an update using InAppUpdate.checkForUpdate(). 
+    The code snippet in the if block provided checks for an update using InAppUpdate.checkForUpdate(). 
     If an update is available, it performs an immediate update using InAppUpdate.performImmediateUpdate(). 
     If the update is successful (AppUpdateResult.success), it executes the code inside the if block.
 

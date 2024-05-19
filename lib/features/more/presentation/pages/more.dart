@@ -13,8 +13,6 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
-  final InAppReview inAppReview = InAppReview.instance;
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -161,8 +159,12 @@ class _MorePageState extends State<MorePage> {
                     leading: Icon(Icons.star_rate_outlined, color: theme.white),
                     horizontalTitleGap: 8.w,
                     onTap: () async {
-                      if (await inAppReview.isAvailable()) {
-                        inAppReview.requestReview();
+                      if (await checkReview()) {
+                        InAppReview.instance.requestReview();
+                      } else {
+                        InAppReview.instance.openStoreListing(
+                          appStoreId: "com.tscore.radio",
+                        );
                       }
                     },
                     title: Text(
@@ -178,7 +180,7 @@ class _MorePageState extends State<MorePage> {
                     leading: Icon(Icons.share_outlined, color: theme.white),
                     horizontalTitleGap: 8.w,
                     onTap: () async {
-                      Share.share('');
+                      Share.share('https://play.google.com/store/apps/details?id=com.tscore.radio');
                     },
                     title: Text(
                       "Share App",
@@ -290,6 +292,7 @@ class CardWidget extends StatelessWidget {
     );
   }
 }
+
 // Asynchronously checks if the given permission is granted. Returns true if granted, false otherwise.
 Future<bool> checkPermission(Permission permission) async {
   if (await permission.isGranted) {
@@ -297,4 +300,8 @@ Future<bool> checkPermission(Permission permission) async {
   } else {
     return false;
   }
+}
+
+Future<bool> checkReview() {
+  return InAppReview.instance.isAvailable();
 }
