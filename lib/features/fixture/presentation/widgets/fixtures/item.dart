@@ -158,7 +158,9 @@ class FixtureItemWidget extends StatelessWidget {
                         color: fixture.isLive
                             ? theme.negative
                             : fixture.isUpcoming
-                                ? theme.warning
+                                ? fixture.isTomorrow
+                                    ? theme.tomorrow
+                                    : theme.warning
                                 : theme.positive,
                       ),
                       child: Row(
@@ -182,15 +184,19 @@ class FixtureItemWidget extends StatelessWidget {
                             fixture.isLive
                                 ? "Live now"
                                 : fixture.isUpcoming
-                                    ? "Upcoming"
+                                    ? fixture.isTomorrow
+                                        ? "Tomorrow"
+                                        : "Upcoming"
                                     : "Finished",
                             style: context
                                 .textStyle10Regular(
                                   color: fixture.isLive
                                       ? theme.textPrimary
                                       : fixture.isUpcoming
-                                          ? theme.backgroundPrimary
-                                          : theme.textPrimary,
+                                          ? fixture.isTomorrow
+                                              ? theme.textPrimary
+                                              : theme.backgroundPrimary
+                                          : theme.backgroundPrimary,
                                 )
                                 .copyWith(height: 1.2, fontWeight: FontWeight.bold),
                           ),

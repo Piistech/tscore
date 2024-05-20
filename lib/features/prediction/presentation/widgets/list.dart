@@ -1,4 +1,3 @@
-
 import '../../../../core/shared/shared.dart';
 import '../../../fixture/fixture.dart';
 import 'item.dart';
@@ -12,7 +11,7 @@ class PredictionList extends StatelessWidget {
     return fixtures.isEmpty
         ? Center(
             child: Text(
-              'No match ',
+              'No match found',
               style: TextStyles.body(context: context, color: Colors.white),
             ),
           )

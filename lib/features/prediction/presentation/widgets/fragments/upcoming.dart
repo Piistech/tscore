@@ -21,7 +21,7 @@ class UpcomingMatches extends StatelessWidget {
             );
           } else if (state is FixturesDone) {
             return PredictionList(
-              fixtures: state.fixtures.where((element) => element.isUpcoming).toList(),
+              fixtures: state.fixtures.where((element) => (element.isUpcoming && !element.isTomorrow)).toList(),
             );
           } else if (state is FixturesError) {
             return Center(child: Text(state.failure.message));

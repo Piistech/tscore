@@ -8,28 +8,33 @@ extension FixtureEntityExtension on FixtureEntity {
   }
 
   bool get isLive {
-    return (result != "" && isCompleted==false && (startedAt.isAfter(DateTime.now())|| startedAt.isAtSameMomentAs(DateTime.now()))) ? false : DateTime.now().isAfter(startedAt);
+    return (result == "" &&
+        isCompleted == false &&
+        (startedAt.isBefore(DateTime.now()) || startedAt.isAtSameMomentAs(DateTime.now())));
   }
 
   bool get isUpcoming {
     final now = DateTime.now();
-    return (now.day+2 == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
+    return (now.day < startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
   }
+
   bool get isToday {
     final now = DateTime.now();
     return !isLive && (now.day == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
   }
+
   bool get isTomorrow {
     final now = DateTime.now();
-    return (now.day+1 == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
+    return (now.day + 1 == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
   }
+
   bool get isPast {
     final now = DateTime.now();
-    return (now.day-3 == startedAt.day);
+    return (now.day > startedAt.day);
   }
 
   bool get isFinished {
-    return !isLive && !isUpcoming && (result != "" || result!=null) && isCompleted;
+    return !isLive && !isUpcoming && (result != "" || result != null) && isCompleted;
   }
 
   String get startTime {
