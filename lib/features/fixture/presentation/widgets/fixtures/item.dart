@@ -1,5 +1,3 @@
-import 'package:tscore/core/shared/task_notifier.dart';
-
 import '../../../../../core/shared/shared.dart';
 import '../../../../commentary/commentary.dart';
 import '../../../fixture.dart';
@@ -58,9 +56,7 @@ class FixtureItemWidget extends StatelessWidget {
                         placeholder: (context, url) => SizedBox(
                           width: 50.w,
                           height: 50.h,
-                          child: const Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                          child: ShimmerIcon(radius: context.radius8),
                         ),
                         errorWidget: (context, url, error) => SizedBox(
                           width: 50.w,

@@ -2,6 +2,7 @@ import '../../../../core/config/config.dart';
 import '../../../../core/shared/shared.dart';
 import '../../../team/team.dart';
 import '../../prediction.dart';
+import 'shimmer/prediction.dart';
 
 class PredictionWidget extends StatefulWidget {
   final String fixtureGuid;
@@ -28,13 +29,14 @@ class _PredictionWidgetState extends State<PredictionWidget> {
     return BlocBuilder<PredictionBloc, PredictionState>(
       builder: (context, state) {
         if (state is PredictionLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: ShimmerPrediction());
         } else if (state is PredictionDone) {
           return ((state.prediction.winnerTeamIdAfterToss.isEmpty) && (state.prediction.winnerTeamId.isNotEmpty))
               ? const Center(
                   child: Text(
-                  'No prediction available',
-                ))
+                    'No prediction available',
+                  ),
+                )
               : ListView(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
@@ -54,7 +56,7 @@ class _PredictionWidgetState extends State<PredictionWidget> {
                   ],
                 );
         } else {
-          return Container();
+          return const ShimmerPrediction();
         }
       },
     );

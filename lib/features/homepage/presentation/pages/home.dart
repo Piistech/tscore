@@ -1,6 +1,6 @@
 import '../../../../core/shared/shared.dart';
 import '../../../fixture/fixture.dart';
-import '../../../live_audio/presentation/pages/lives_radio.dart';
+import '../../../live_audio/live_audio.dart';
 import '../../../more/presentation/pages/more.dart';
 import '../../../prediction/prediction.dart';
 import '../../home.dart';

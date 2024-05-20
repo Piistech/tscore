@@ -1,7 +1,8 @@
 
+import 'package:tscore/features/prediction/presentation/widgets/shimmer/item.dart';
+
 import '../../../../../core/shared/shared.dart';
 import '../../../../fixture/fixture.dart';
-import '../../../../live_audio/live_audio.dart';
 import '../../../prediction.dart';
 
 class TodayMatches extends StatelessWidget {
@@ -18,7 +19,7 @@ class TodayMatches extends StatelessWidget {
           if (state is FixturesLoading) {
             return ListView.builder(
               itemCount: 4,
-              itemBuilder: (_, __) => const ShimmerItem(),
+              itemBuilder: (_, __) => const ShimmerPredictionItem(),
             );
           } else if (state is FixturesDone) {
             return PredictionList(

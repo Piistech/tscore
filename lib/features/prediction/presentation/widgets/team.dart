@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import '../../../../core/shared/shared.dart';
 import '../../../team/team.dart';
+import 'shimmer/team.dart';
 
 class TeamNameAndFlagWidget extends StatelessWidget {
   final bool isEnd;
@@ -16,7 +17,7 @@ class TeamNameAndFlagWidget extends StatelessWidget {
         return BlocBuilder<TeamBloc, TeamState>(
           builder: (context, state) {
             if (state is TeamLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: ShimmerItemVertical());
             } else if (state is TeamDone) {
               return Column(
                 mainAxisSize: MainAxisSize.min,

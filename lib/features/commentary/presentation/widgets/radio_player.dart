@@ -1,4 +1,3 @@
-import 'package:tscore/core/shared/task_notifier.dart';
 
 import '../../../../core/shared/shared.dart';
 import '../../../fixture/fixture.dart';

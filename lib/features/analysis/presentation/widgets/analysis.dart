@@ -3,6 +3,7 @@ import '../../../../core/shared/shared.dart';
 import '../../../../core/config/config.dart';
 import '../../../team/team.dart';
 import '../../analysis.dart';
+import 'shimmer/analysis.dart';
 
 class AnalysisWidget extends StatefulWidget {
   final String fixtureGuid;
@@ -32,7 +33,7 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
         return BlocBuilder<AnalysisBloc, AnalysisState>(
           builder: (context, state) {
             if (state is AnalysisLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: ShimmerAnalysis());
             } else if (state is AnalysisDone) {
               return state.analysis.factors.isEmpty
                   ? Align(
@@ -165,7 +166,7 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                       ],
                     );
             } else {
-              return Container();
+              return const ShimmerAnalysis();
             }
           },
         );

@@ -1,6 +1,6 @@
-import 'package:tscore/features/commentary/commentary.dart';
 
 import '../../../../../core/shared/shared.dart';
+import '../../../../commentary/commentary.dart';
 import '../../../fixture.dart';
 
 class OnAirWidget extends StatelessWidget {

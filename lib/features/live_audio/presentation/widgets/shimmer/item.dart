@@ -1,4 +1,3 @@
-import 'package:tscore/core/shared/shimmer/shimmer_label.dart';
 
 import '../../../../../core/shared/shared.dart';
 

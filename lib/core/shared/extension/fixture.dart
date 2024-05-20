@@ -20,7 +20,7 @@ extension FixtureEntityExtension on FixtureEntity {
 
   bool get isToday {
     final now = DateTime.now();
-    return !isLive && (now.day == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
+    return (now.day == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
   }
 
   bool get isTomorrow {
