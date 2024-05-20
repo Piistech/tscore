@@ -23,6 +23,8 @@ class TabCricket extends StatelessWidget {
             );
           } else if (state is FixturesDone) {
             final bool live = state.fixtures.where((element) => element.isLive).isNotEmpty;
+            final List<FixtureEntity> fixtures = state.fixtures.where((element) => !element.isFinished).toList();
+
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -43,7 +45,7 @@ class TabCricket extends StatelessWidget {
                 ),
                 Expanded(
                   child: ListView.separated(
-                    itemCount: state.fixtures.length,
+                    itemCount: fixtures.length,
                     padding: EdgeInsets.symmetric(
                       horizontal: context.horizontalMargin15,
                       vertical: context.verticalMargin15,
@@ -51,7 +53,7 @@ class TabCricket extends StatelessWidget {
                     separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin8),
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemBuilder: (_, index) {
-                      final fixture = state.fixtures[index];
+                      final fixture = fixtures[index];
                       return BlocProvider(
                         create: (context) => sl<CommentaryBloc>()
                           ..add(
