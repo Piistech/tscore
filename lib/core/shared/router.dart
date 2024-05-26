@@ -3,6 +3,7 @@ import 'package:tscore/features/more/presentation/widgets/privacy_policy.dart';
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';
 import '../../features/fixture/fixture.dart';
+import '../../features/fixture/presentation/pages/ad_page.dart';
 import '../../features/homepage/presentation/pages/home.dart';
 import '../../features/live_audio/presentation/pages/lives_radio.dart';
 import '../../features/more/presentation/pages/more.dart';
@@ -82,6 +83,16 @@ final router = GoRouter(
           child: FixtureDetailsPage(
             guid: guid,
           ),
+        );
+      },
+    ),
+    GoRoute(
+      path: AdPage.path,
+      name: AdPage.name,
+      builder: (context, state) {
+        final String guid = state.pathParameters['id']!;
+        return AdPage(
+          guid: guid,
         );
       },
     ),

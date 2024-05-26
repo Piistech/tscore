@@ -1,14 +1,20 @@
 import '../../../../../core/shared/shared.dart';
 import '../../../../commentary/commentary.dart';
 import '../../../fixture.dart';
+import '../../pages/ad_page.dart';
 
-class FixtureItemWidget extends StatelessWidget {
+class FixtureItemWidget extends StatefulWidget {
   final FixtureEntity fixture;
   const FixtureItemWidget({
     super.key,
     required this.fixture,
   });
 
+  @override
+  State<FixtureItemWidget> createState() => _FixtureItemWidgetState();
+}
+
+class _FixtureItemWidgetState extends State<FixtureItemWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -17,12 +23,12 @@ class FixtureItemWidget extends StatelessWidget {
         return InkWell(
           borderRadius: BorderRadius.circular(context.radius12),
           onTap: () {
-            if (fixture.isLive) {
+            if (widget.fixture.isLive) {
               context.pushNamed(
                 LivePage.name,
-                pathParameters: {'fixtureGuid': fixture.guid},
+                pathParameters: {'fixtureGuid': widget.fixture.guid},
               );
-            } else if (fixture.isUpcoming) {
+            } else if (widget.fixture.isUpcoming) {
               TaskNotifier.instance.warning(context, message: "Match is not started yet!");
             } else {
               TaskNotifier.instance.success(context, message: "Match has been finished");
@@ -49,7 +55,7 @@ class FixtureItemWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(context.radius8),
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       child: CachedNetworkImage(
-                        imageUrl: fixture.logo,
+                        imageUrl: widget.fixture.logo,
                         fit: BoxFit.cover,
                         width: 50.w,
                         height: 50.h,
@@ -68,7 +74,7 @@ class FixtureItemWidget extends StatelessWidget {
                     SizedBox(width: context.horizontalMargin8),
                     Expanded(
                       child: Text(
-                        fixture.matchTitle,
+                        widget.fixture.matchTitle,
                         style: context.textStyle17Medium(color: theme.textPrimary).copyWith(height: 1.2),
                       ),
                     ),
@@ -76,7 +82,7 @@ class FixtureItemWidget extends StatelessWidget {
                 ),
                 SizedBox(height: context.verticalMargin12),
                 Text(
-                  fixture.matchDescription,
+                  widget.fixture.matchDescription,
                   style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
                 ),
                 SizedBox(height: context.verticalMargin16),
@@ -138,7 +144,7 @@ class FixtureItemWidget extends StatelessWidget {
                       },
                     ),
                     Text(
-                      fixture.startDate,
+                      widget.fixture.startDate,
                       style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
                     ),
                   ],
@@ -151,10 +157,10 @@ class FixtureItemWidget extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(context.radius5),
-                        color: fixture.isLive
+                        color: widget.fixture.isLive
                             ? theme.negative
-                            : fixture.isUpcoming
-                                ? fixture.isTomorrow
+                            : widget.fixture.isUpcoming
+                                ? widget.fixture.isTomorrow
                                     ? theme.tomorrow
                                     : theme.warning
                                 : theme.positive,
@@ -163,7 +169,7 @@ class FixtureItemWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Visibility(
-                            visible: fixture.isLive,
+                            visible: widget.fixture.isLive,
                             child: Icon(
                               Icons.circle,
                               size: 8.h,
@@ -177,19 +183,19 @@ class FixtureItemWidget extends StatelessWidget {
                           ),
                           SizedBox(width: context.verticalMargin5),
                           Text(
-                            fixture.isLive
+                            widget.fixture.isLive
                                 ? "Live now"
-                                : fixture.isUpcoming
-                                    ? fixture.isTomorrow
+                                : widget.fixture.isUpcoming
+                                    ? widget.fixture.isTomorrow
                                         ? "Tomorrow"
                                         : "Upcoming"
                                     : "Finished",
                             style: context
                                 .textStyle10Regular(
-                                  color: fixture.isLive
+                                  color: widget.fixture.isLive
                                       ? theme.textPrimary
-                                      : fixture.isUpcoming
-                                          ? fixture.isTomorrow
+                                      : widget.fixture.isUpcoming
+                                          ? widget.fixture.isTomorrow
                                               ? theme.textPrimary
                                               : theme.backgroundPrimary
                                           : theme.backgroundPrimary,
@@ -201,13 +207,49 @@ class FixtureItemWidget extends StatelessWidget {
                     ),
                     InkWell(
                       borderRadius: BorderRadius.circular(context.radius5),
-                      onTap: () {
-                        context.pushNamed(
-                          FixtureDetailsPage.name,
-                          pathParameters: {
-                            'id': fixture.guid,
-                          },
+                      onTap: () async {
+                        await RewardedAd.loadWithAdManagerAdRequest(
+                          adUnitId: adUnitId,
+                          adManagerRequest: const AdManagerAdRequest(),
+                          rewardedAdLoadCallback: RewardedAdLoadCallback(
+                            onAdLoaded: (RewardedAd ad) async {
+                              await ad.show(
+                                onUserEarnedReward: (view, reward) {
+                                  context.pushNamed(
+                                    FixtureDetailsPage.name,
+                                    pathParameters: {
+                                      'id': widget.fixture.guid,
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            onAdFailedToLoad: (LoadAdError error) {
+                              print('RewardedAd failed to load: $error');
+                            },
+                          ),
                         );
+                        // RewardedAd.load(
+                        //   adUnitId: adUnitId,
+                        //   request: const AdRequest(),
+                        //   rewardedAdLoadCallback: RewardedAdLoadCallback(
+                        //     onAdLoaded: (RewardedAd ad) async {
+                        //       await ad.show(
+                        //         onUserEarnedReward: (view, reward) {
+                        //           context.pushNamed(
+                        //             FixtureDetailsPage.name,
+                        //             pathParameters: {
+                        //               'id': widget.fixture.guid,
+                        //             },
+                        //           );
+                        //         },
+                        //       );
+                        //     },
+                        //     onAdFailedToLoad: (LoadAdError error) {
+                        //       print('RewardedAd failed to load: $error');
+                        //     },
+                        //   ),
+                        // );
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),

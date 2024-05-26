@@ -1,4 +1,3 @@
-import 'package:tscore/features/fixture/presentation/widgets/details/banner_ad_widget.dart';
 
 import '../../../../core/shared/shared.dart';
 import '../../../analysis/analysis.dart';
@@ -27,7 +26,6 @@ class FixtureDetailsPage extends StatelessWidget {
           AnalysisWidget(fixtureGuid: guid),
           SizedBox(height: context.verticalMargin16),
           PredictionWidget(fixtureGuid: guid),
-          const BannerAdWidget(),
         ],
       ),
     );
