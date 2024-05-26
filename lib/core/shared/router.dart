@@ -3,7 +3,6 @@ import 'package:tscore/features/more/presentation/widgets/privacy_policy.dart';
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';
 import '../../features/fixture/fixture.dart';
-import '../../features/fixture/presentation/pages/ad_page.dart';
 import '../../features/homepage/presentation/pages/home.dart';
 import '../../features/live_audio/presentation/pages/lives_radio.dart';
 import '../../features/more/presentation/pages/more.dart';
@@ -47,7 +46,8 @@ final router = GoRouter(
         path: PrivacyPolicyPage.path,
         name: PrivacyPolicyPage.name,
         builder: (context, state) {
-          final Map<String, dynamic>? arguments = state.extra as Map<String, dynamic>?;
+          final Map<String, dynamic>? arguments =
+              state.extra as Map<String, dynamic>?;
           final String header = arguments?['header'] as String;
           final String link = arguments?['link'] as String;
           return PrivacyPolicyPage(
@@ -71,28 +71,21 @@ final router = GoRouter(
         return MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => sl<FindFixtureByIdBloc>()..add(FindFixtureById(guid: guid)),
+              create: (context) =>
+                  sl<FindFixtureByIdBloc>()..add(FindFixtureById(guid: guid)),
             ),
             BlocProvider(
-              create: (context) => sl<AnalysisBloc>()..add(FetchAnalysis(fixtureGuid: guid)),
+              create: (context) =>
+                  sl<AnalysisBloc>()..add(FetchAnalysis(fixtureGuid: guid)),
             ),
             BlocProvider(
-              create: (context) => sl<PredictionBloc>()..add(FetchPrediction(fixtureGuid: guid)),
+              create: (context) =>
+                  sl<PredictionBloc>()..add(FetchPrediction(fixtureGuid: guid)),
             ),
           ],
           child: FixtureDetailsPage(
             guid: guid,
           ),
-        );
-      },
-    ),
-    GoRoute(
-      path: AdPage.path,
-      name: AdPage.name,
-      builder: (context, state) {
-        final String guid = state.pathParameters['id']!;
-        return AdPage(
-          guid: guid,
         );
       },
     ),

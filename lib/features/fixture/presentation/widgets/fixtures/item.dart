@@ -1,7 +1,6 @@
 import '../../../../../core/shared/shared.dart';
 import '../../../../commentary/commentary.dart';
 import '../../../fixture.dart';
-import '../../pages/ad_page.dart';
 
 class FixtureItemWidget extends StatefulWidget {
   final FixtureEntity fixture;
@@ -29,9 +28,11 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                 pathParameters: {'fixtureGuid': widget.fixture.guid},
               );
             } else if (widget.fixture.isUpcoming) {
-              TaskNotifier.instance.warning(context, message: "Match is not started yet!");
+              TaskNotifier.instance
+                  .warning(context, message: "Match is not started yet!");
             } else {
-              TaskNotifier.instance.success(context, message: "Match has been finished");
+              TaskNotifier.instance
+                  .success(context, message: "Match has been finished");
             }
           },
           child: Container(
@@ -75,7 +76,9 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                     Expanded(
                       child: Text(
                         widget.fixture.matchTitle,
-                        style: context.textStyle17Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                        style: context
+                            .textStyle17Medium(color: theme.textPrimary)
+                            .copyWith(height: 1.2),
                       ),
                     ),
                   ],
@@ -83,7 +86,9 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                 SizedBox(height: context.verticalMargin12),
                 Text(
                   widget.fixture.matchDescription,
-                  style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
+                  style: context
+                      .textStyle10Regular(color: theme.textPrimary)
+                      .copyWith(height: 1.2),
                 ),
                 SizedBox(height: context.verticalMargin16),
                 Row(
@@ -95,9 +100,12 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                       builder: (context, state) {
                         if (state is CommentaryDone) {
                           final String channelId = state.commentary.channelId;
-                          return BlocBuilder<CurrentlyPlayingCommentaryBloc, CurrentlyPlayingCommentaryState>(
+                          return BlocBuilder<CurrentlyPlayingCommentaryBloc,
+                              CurrentlyPlayingCommentaryState>(
                             builder: (context, state) {
-                              final isPlaying = state is CurrentlyPlayingCommentaryChannel && state.channelId == channelId;
+                              final isPlaying =
+                                  state is CurrentlyPlayingCommentaryChannel &&
+                                      state.channelId == channelId;
                               if (isPlaying) {
                                 return Lottie.asset(
                                   'animation/waveform.json',
@@ -117,7 +125,10 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                                   SizedBox(width: context.horizontalMargin4),
                                   Text(
                                     "Play Now",
-                                    style: context.textStyle12Medium(color: theme.textPrimary).copyWith(letterSpacing: -0.04),
+                                    style: context
+                                        .textStyle12Medium(
+                                            color: theme.textPrimary)
+                                        .copyWith(letterSpacing: -0.04),
                                   ),
                                 ],
                               );
@@ -137,7 +148,9 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                             SizedBox(width: context.horizontalMargin4),
                             Text(
                               "Play Now",
-                              style: context.textStyle12Medium(color: theme.textPrimary).copyWith(letterSpacing: -0.04),
+                              style: context
+                                  .textStyle12Medium(color: theme.textPrimary)
+                                  .copyWith(letterSpacing: -0.04),
                             ),
                           ],
                         );
@@ -145,7 +158,9 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                     ),
                     Text(
                       widget.fixture.startDate,
-                      style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
+                      style: context
+                          .textStyle10Regular(color: theme.textPrimary)
+                          .copyWith(height: 1.2),
                     ),
                   ],
                 ),
@@ -154,7 +169,9 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.horizontalMargin8,
+                          vertical: context.verticalMargin4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(context.radius5),
                         color: widget.fixture.isLive
@@ -177,9 +194,12 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                             )
                                 .animate(
                                   onPlay: (controller) => controller.repeat(),
-                                  onComplete: (controller) => controller.repeat(),
+                                  onComplete: (controller) =>
+                                      controller.repeat(),
                                 )
-                                .fadeIn(duration: const Duration(milliseconds: 700)),
+                                .fadeIn(
+                                    duration:
+                                        const Duration(milliseconds: 700)),
                           ),
                           SizedBox(width: context.verticalMargin5),
                           Text(
@@ -200,7 +220,8 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                                               : theme.backgroundPrimary
                                           : theme.backgroundPrimary,
                                 )
-                                .copyWith(height: 1.2, fontWeight: FontWeight.bold),
+                                .copyWith(
+                                    height: 1.2, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -224,42 +245,23 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                                 },
                               );
                             },
-                            onAdFailedToLoad: (LoadAdError error) {
-                              print('RewardedAd failed to load: $error');
-                            },
+                            onAdFailedToLoad: (LoadAdError error) {},
                           ),
                         );
-                        // RewardedAd.load(
-                        //   adUnitId: adUnitId,
-                        //   request: const AdRequest(),
-                        //   rewardedAdLoadCallback: RewardedAdLoadCallback(
-                        //     onAdLoaded: (RewardedAd ad) async {
-                        //       await ad.show(
-                        //         onUserEarnedReward: (view, reward) {
-                        //           context.pushNamed(
-                        //             FixtureDetailsPage.name,
-                        //             pathParameters: {
-                        //               'id': widget.fixture.guid,
-                        //             },
-                        //           );
-                        //         },
-                        //       );
-                        //     },
-                        //     onAdFailedToLoad: (LoadAdError error) {
-                        //       print('RewardedAd failed to load: $error');
-                        //     },
-                        //   ),
-                        // );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: context.horizontalMargin8,
+                            vertical: context.verticalMargin4),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(context.radius5),
                           color: theme.backgroundTertiary,
                         ),
                         child: Text(
                           "Prediction",
-                          style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                          style: context
+                              .textStyle10Medium(color: theme.textPrimary)
+                              .copyWith(height: 1.2),
                         ),
                       ),
                     ),

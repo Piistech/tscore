@@ -21,7 +21,8 @@ Future<void> get _core async {
 
   sl.registerLazySingleton(() => Client());
   sl.registerLazySingleton<AgoraManager>(() => AgoraManager.instance);
-  sl.registerLazySingleton<NotificationManager>(() => NotificationManager.instance);
+  sl.registerLazySingleton<NotificationManager>(
+      () => NotificationManager.instance);
   sl.registerLazySingleton(() => InternetConnectionChecker());
   sl.registerLazySingleton(
     () => List<AddressCheckOptions>.unmodifiable(
@@ -266,17 +267,10 @@ Future<void> get _analysis async {
     ),
   );
 
-  sl.registerFactory(
-    () => FindAnalysisByIdUseCase(
-      repository: sl(),
-    ),
-  );
-
   sl.registerLazySingleton<AnalysisRepository>(
     () => AnalysisRepositoryImpl(
       network: sl(),
       remote: sl(),
-      local: sl(),
     ),
   );
 
@@ -284,9 +278,5 @@ Future<void> get _analysis async {
     () => AnalysisRemoteDataSourceImpl(
       client: sl(),
     ),
-  );
-
-  sl.registerLazySingleton<AnalysisLocalDataSource>(
-    () => AnalysisLocalDataSourceImpl(),
   );
 }

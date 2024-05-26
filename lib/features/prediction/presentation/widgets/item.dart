@@ -35,12 +35,16 @@ class PredictionItemWidget extends StatelessWidget {
                   Expanded(
                     child: Text(
                       "${fixture.matchTitle},${fixture.stadiumName}",
-                      style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                      style: context
+                          .textStyle10Medium(color: theme.textPrimary)
+                          .copyWith(height: 1.2),
                     ),
                   ),
                   Text(
                     fixture.startTime,
-                    style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                    style: context
+                        .textStyle10Medium(color: theme.textPrimary)
+                        .copyWith(height: 1.2),
                   ),
                 ],
               ),
@@ -50,14 +54,16 @@ class PredictionItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BlocProvider(
-                    create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: fixture.homeTeamId)),
+                    create: (context) => sl<TeamBloc>()
+                      ..add(FetchTeam(teamGuid: fixture.homeTeamId)),
                     child: const TeamNameAndFlagWidget(
                       isEnd: false,
                     ),
                   ),
                   SizedBox(width: context.horizontalMargin12),
                   BlocProvider(
-                    create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: fixture.awayTeamId)),
+                    create: (context) => sl<TeamBloc>()
+                      ..add(FetchTeam(teamGuid: fixture.awayTeamId)),
                     child: const TeamNameAndFlagWidget(
                       isEnd: true,
                     ),
@@ -77,23 +83,40 @@ class PredictionItemWidget extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(context.radius5),
-                  onTap: () {
-                    context.pushNamed(
-                      FixtureDetailsPage.name,
-                      pathParameters: {
-                        'id': fixture.guid,
-                      },
+                  onTap: () async {
+                    await RewardedAd.loadWithAdManagerAdRequest(
+                      adUnitId: adUnitId,
+                      adManagerRequest: const AdManagerAdRequest(),
+                      rewardedAdLoadCallback: RewardedAdLoadCallback(
+                        onAdLoaded: (RewardedAd ad) async {
+                          await ad.show(
+                            onUserEarnedReward: (view, reward) {
+                              context.pushNamed(
+                                FixtureDetailsPage.name,
+                                pathParameters: {
+                                  'id': fixture.guid,
+                                },
+                              );
+                            },
+                          );
+                        },
+                        onAdFailedToLoad: (LoadAdError error) {},
+                      ),
                     );
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: context.horizontalMargin8,
+                        vertical: context.verticalMargin4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(context.radius5),
                       color: theme.backgroundTertiary,
                     ),
                     child: Text(
                       "Prediction",
-                      style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                      style: context
+                          .textStyle10Medium(color: theme.textPrimary)
+                          .copyWith(height: 1.2),
                     ),
                   ),
                 ),

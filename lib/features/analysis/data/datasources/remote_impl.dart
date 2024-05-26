@@ -34,27 +34,6 @@ class AnalysisRemoteDataSourceImpl extends AnalysisRemoteDataSource {
     );
 
     if (result.success) {
-      // final List<Map<String, dynamic>> factorsMap = List<Map<String, dynamic>>.from(result.result!);
-      // final List<AnalysisFactorModel> factors =
-      //     factorsMap.map(
-      //       (map) => AnalysisFactorModel.parse(map: map),
-      //     )
-      //     .toList();
-
-      // assert(
-      //   factors.isNotEmpty,
-      //   "Analysis factors is empty, where it shouldn't be",
-      // );
-      // final String homeTeamId = factorsMap.first['homeTeamId'] as String;
-      // final String awayTeamId = factorsMap.first['awayTeamId'] as String;
-
-      // final AnalysisModel analysis = AnalysisModel(
-      //   homeTeamId: homeTeamId,
-      //   awayTeamId: awayTeamId,
-      //   factors: factors,
-      // );
-
-
       final AnalysisModel analysis = AnalysisModel.parseV2(
         maps: List<Map<String, dynamic>>.from(result.result!),
       );
