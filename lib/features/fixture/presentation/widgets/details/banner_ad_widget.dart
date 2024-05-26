@@ -1,6 +1,4 @@
-import 'package:tscore/core/shared/shared.dart';
-
-import '../../../../../core/shared/constants.dart';
+import '../../../../../core/shared/shared.dart';
 
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key});
@@ -11,16 +9,18 @@ class BannerAdWidget extends StatefulWidget {
 
 class _BannerAdWidgetState extends State<BannerAdWidget> {
   bool adIsLoaded = false;
-  BannerAd banner() {
-    BannerAd bannerAd = BannerAd(
+  late final BannerAd banner;
+
+  void _loadBanner() {
+    banner = BannerAd(
       adUnitId: bannerAdUnitId,
-      size: AdSize.banner,
-      request: const AdRequest(
-        nonPersonalizedAds: true,
-      ),
+      size: AdSize.mediumRectangle,
+      request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
-          adIsLoaded = true;
+          setState(() {
+            adIsLoaded = true;
+          });
           if (kDebugMode) {
             print('Ad loaded.');
           }
@@ -32,33 +32,33 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
           }
         },
       ),
-    );
-    return bannerAd;
+    )..load();
   }
 
   @override
   void initState() {
     super.initState();
-    banner().load();
+    _loadBanner();
   }
 
   @override
   void dispose() {
     super.dispose();
-    banner().dispose();
+    banner.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: banner().size.height.toDouble(),
+    return Container(
+      margin: EdgeInsets.only(top: context.verticalMargin16),
+      height: banner.size.height.toDouble(),
       width: double.infinity,
       child: adIsLoaded
           ? AdWidget(
-              ad: banner(),
+              ad: banner,
               key: UniqueKey(),
             )
-          : const CircularProgressIndicator(),
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }

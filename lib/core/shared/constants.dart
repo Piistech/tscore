@@ -1,2 +1,2 @@
 const String appVersion="1.0.1";
-const String bannerAdUnitId = "ca-app-pub-8371786257553869/2208986392";
+const String bannerAdUnitId = "ca-app-pub-3940256099942544/6300978111";

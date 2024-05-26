@@ -1,6 +1,5 @@
 library config;
 
-
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';
 import '../../features/fixture/fixture.dart';
@@ -17,7 +16,6 @@ class AppConfig {
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     MobileAds.instance.initialize();
 
-
     // Bypass the SSL certificate verification
     HttpOverrides.global = MyHttpOverrides();
 
@@ -28,9 +26,11 @@ class AppConfig {
     // Initialize the configurations
     await _setupDependencies();
 
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
     final notification = sl<NotificationManager>();
     notification.initialize();
-    
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor: sl<ThemeBloc>().state.scheme.backgroundPrimary,
