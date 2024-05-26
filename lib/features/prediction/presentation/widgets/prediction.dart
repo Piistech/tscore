@@ -56,7 +56,11 @@ class _PredictionWidgetState extends State<PredictionWidget> {
                   ],
                 );
         } else {
-          return const ShimmerPrediction();
+          return const Center(
+            child: Text(
+              'No prediction available',
+            ),
+          );
         }
       },
     );
