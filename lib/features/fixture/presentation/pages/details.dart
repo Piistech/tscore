@@ -1,3 +1,5 @@
+import 'package:tscore/features/fixture/presentation/widgets/details/banner_ad_widget.dart';
+
 import '../../../../core/shared/shared.dart';
 import '../../../analysis/analysis.dart';
 import '../../../prediction/prediction.dart';
@@ -12,7 +14,6 @@ class FixtureDetailsPage extends StatelessWidget {
     super.key,
     required this.guid,
   });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +27,7 @@ class FixtureDetailsPage extends StatelessWidget {
           AnalysisWidget(fixtureGuid: guid),
           SizedBox(height: context.verticalMargin16),
           PredictionWidget(fixtureGuid: guid),
+          const BannerAdWidget(),
         ],
       ),
     );
