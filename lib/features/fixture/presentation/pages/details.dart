@@ -1,6 +1,6 @@
-
 import '../../../../core/shared/shared.dart';
 import '../../../analysis/analysis.dart';
+import '../../../homepage/presentation/pages/home.dart';
 import '../../../prediction/prediction.dart';
 import '../../fixture.dart';
 
@@ -16,7 +16,14 @@ class FixtureDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const MatchTitleWidget()),
+      appBar: AppBar(
+        title: const MatchTitleWidget(),
+        leading: BackButton(
+          onPressed: () {
+            context.pushNamed(HomePage.name);
+          },
+        ),
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(
           horizontal: context.horizontalMargin15,
