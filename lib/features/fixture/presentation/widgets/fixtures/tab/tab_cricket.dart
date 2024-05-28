@@ -1,8 +1,8 @@
 import '../../../../../../core/config/config.dart';
 import '../../../../../../core/shared/shared.dart';
 import '../../../../../commentary/commentary.dart';
-import '../../../../../live_audio/live_audio.dart';
 import '../../../../fixture.dart';
+import '../../shimmer/fixtures.dart';
 import '../on_air.dart';
 
 class TabCricket extends StatelessWidget {
@@ -17,10 +17,7 @@ class TabCricket extends StatelessWidget {
       child: BlocBuilder<FixturesBloc, FixturesState>(
         builder: (_, state) {
           if (state is FixturesLoading) {
-            return ListView.builder(
-              itemCount: 4,
-              itemBuilder: (_, __) => const ShimmerItem(),
-            );
+            return const ShimmerFixture();
           } else if (state is FixturesDone) {
             final bool live = state.fixtures.where((element) => element.isLive).isNotEmpty;
             final List<FixtureEntity> fixtures = state.fixtures.where((element) => !element.isFinished).toList();

@@ -15,12 +15,18 @@ extension FixtureEntityExtension on FixtureEntity {
 
   bool get isUpcoming {
     final now = DateTime.now();
-    return (now.day < startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
+    //return (now.day < startedAt.day && now.month <= startedAt.month && now.year <= startedAt.year);
+    return (now.isBefore(startedAt));
   }
 
   bool get isToday {
     final now = DateTime.now();
     return (now.day == startedAt.day && now.month == startedAt.month && now.year == startedAt.year);
+  }
+
+  bool get willLiveToday {
+    final now = DateTime.now();
+    return !isLive && (now.day == startedAt.day);
   }
 
   bool get isTomorrow {
@@ -30,7 +36,7 @@ extension FixtureEntityExtension on FixtureEntity {
 
   bool get isPast {
     final now = DateTime.now();
-    return (now.day > startedAt.day);
+    return (now.isAfter(startedAt));
   }
 
   bool get isFinished {

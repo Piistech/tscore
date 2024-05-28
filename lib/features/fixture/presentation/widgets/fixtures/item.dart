@@ -173,13 +173,15 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                       padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(context.radius5),
-                        color: widget.fixture.isLive
-                            ? theme.negative
-                            : widget.fixture.isUpcoming
-                                ? widget.fixture.isTomorrow
-                                    ? theme.tomorrow
-                                    : theme.warning
-                                : theme.positive,
+                        color: widget.fixture.willLiveToday
+                            ? theme.willLive
+                            : widget.fixture.isLive
+                                ? theme.negative
+                                : widget.fixture.isUpcoming
+                                    ? widget.fixture.isTomorrow
+                                        ? theme.tomorrow
+                                        : theme.warning
+                                    : theme.positive,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -199,22 +201,24 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                           ),
                           SizedBox(width: context.verticalMargin5),
                           Text(
-                            widget.fixture.isLive
-                                ? "Live now"
-                                : widget.fixture.isUpcoming
-                                    ? widget.fixture.isTomorrow
-                                        ? "Tomorrow"
-                                        : "Upcoming"
-                                    : "Finished",
+                            widget.fixture.willLiveToday
+                                ? "Match yet to begin"
+                                : widget.fixture.isLive
+                                    ? "Live now"
+                                    : widget.fixture.isUpcoming
+                                        ? widget.fixture.isTomorrow
+                                            ? "Tomorrow"
+                                            : "Upcoming"
+                                        : "Finished",
                             style: context
                                 .textStyle10Regular(
-                                  color: widget.fixture.isLive
-                                      ? theme.textPrimary
-                                      : widget.fixture.isUpcoming
-                                          ? widget.fixture.isTomorrow
-                                              ? theme.textPrimary
-                                              : theme.backgroundPrimary
-                                          : theme.backgroundPrimary,
+                                  color: widget.fixture.willLiveToday
+                                      ? theme.backgroundPrimary
+                                      : widget.fixture.isLive
+                                          ? theme.textPrimary
+                                          : (widget.fixture.isUpcoming || widget.fixture.isTomorrow)
+                                              ? theme.backgroundPrimary
+                                              : theme.backgroundPrimary,
                                 )
                                 .copyWith(height: 1.2, fontWeight: FontWeight.bold),
                           ),

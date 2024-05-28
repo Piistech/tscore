@@ -11,6 +11,7 @@ class ThemeScheme {
   final Color negative;
   final Color live;
   final Color warning;
+  final Color willLive;
   final Color tomorrow;
   final Color scoreCardBottom;
   final Color pink;
@@ -29,6 +30,7 @@ class ThemeScheme {
     required this.negative,
     required this.live,
     required this.warning,
+    required this.willLive,
     required this.tomorrow,
     required this.textTossPrimary,
     required this.scoreCardBottom,
@@ -53,7 +55,8 @@ class ThemeScheme {
       negative: const Color(0xFFFF2C2C),
       live: const Color(0xFFFF2C2C),
       warning: const Color(0xFFFDDD00),
-      tomorrow: const Color.fromARGB(255, 249, 113, 9),
+      willLive: const Color(0xFFD9EDBF),
+      tomorrow: const Color.fromARGB(255, 254, 170, 251),
       scoreCardBottom: const Color(0xFF00BAFF),
       pink: const Color(0xFFC521FF),
       playButton: const Color(0xFFD9D9D9),

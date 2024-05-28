@@ -1,4 +1,3 @@
-
 import '../../../../../core/shared/shared.dart';
 
 class ShimmerItem extends StatelessWidget {
@@ -26,20 +25,16 @@ class ShimmerItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 50.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(context.radius8),
+                  ShimmerLabel(
+                    width: 54.w,
+                    height: 54.h,
+                    radius: context.radius16,
+                  ).animate(
+                    onComplete: (controller) => controller.repeat(),
+                  )..shimmer(
+                      color: theme.shimmerColor,
+                      duration: const Duration(seconds: 1),
                     ),
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: ShimmerIcon(radius: context.radius10).animate(
-                      onComplete: (controller) => controller.repeat(),
-                    )..shimmer(
-                        color: theme.shimmerColor,
-                        duration: const Duration(seconds: 1),
-                      ),
-                  ),
                   SizedBox(width: context.horizontalMargin8),
                   Expanded(
                     child: ShimmerLabel(width: 200.w, height: 13.h).animate(

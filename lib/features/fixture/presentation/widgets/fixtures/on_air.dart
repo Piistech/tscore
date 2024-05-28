@@ -1,4 +1,3 @@
-
 import '../../../../../core/shared/shared.dart';
 import '../../../../commentary/commentary.dart';
 import '../../../fixture.dart';
@@ -26,7 +25,7 @@ class OnAirWidget extends StatelessWidget {
                   SizedBox(height: context.verticalMargin10),
                   Container(
                     width: 329.w,
-                    height: 299.h,
+                    height: 150.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(context.radius10),
                       color: theme.textPrimary,

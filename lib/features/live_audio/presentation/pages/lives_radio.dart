@@ -21,8 +21,13 @@ class LiveRadioPage extends StatelessWidget {
           child: BlocBuilder<FixturesBloc, FixturesState>(
             builder: (_, state) {
               if (state is FixturesLoading) {
-                return ListView.builder(
+                return ListView.separated(
+                  separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin10),
                   itemCount: 4,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.horizontalMargin15,
+                    vertical: context.verticalMargin15,
+                  ),
                   itemBuilder: (_, __) => const ShimmerItem(),
                 );
               } else if (state is FixturesDone) {
