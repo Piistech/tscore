@@ -1,9 +1,10 @@
 class RemoteEndpoints {
   static const String _baseUrl = 'https://tscore-api.made-in-bd.com/v1';
 
-  static Uri get fixtures => Uri.parse('$_baseUrl/get-fixture');
+  static Uri get fixtures => Uri.parse('$_baseUrl/get-fixture-home');
 
   static Uri get prediction => Uri.parse('$_baseUrl/get-prediction');
+  static Uri get predictions => Uri.parse('$_baseUrl/get-fixture-prediction');
   
   static Uri get analysis => Uri.parse('$_baseUrl/get-analysis');
 

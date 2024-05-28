@@ -7,10 +7,10 @@ import '../../../team/team.dart';
 import 'team.dart';
 
 class PredictionItemWidget extends StatefulWidget {
-  final FixtureEntity fixture;
+  final PredictionsEntity predictionModel;
   const PredictionItemWidget({
     super.key,
-    required this.fixture,
+    required this.predictionModel,
   });
 
   @override
@@ -19,7 +19,7 @@ class PredictionItemWidget extends StatefulWidget {
 
 class _PredictionItemWidgetState extends State<PredictionItemWidget> {
   late bool isAddLoaded;
-    @override
+  @override
   void initState() {
     super.initState();
     isAddLoaded = false;
@@ -30,6 +30,7 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
     super.dispose();
     isAddLoaded = false;
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -53,12 +54,12 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                 children: [
                   Expanded(
                     child: Text(
-                      "${widget.fixture.matchTitle},${widget.fixture.stadiumName}",
+                      "${widget.predictionModel.matchTitle},${widget.predictionModel.stadiumName}",
                       style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
                     ),
                   ),
                   Text(
-                    widget.fixture.startTime,
+                    widget.predictionModel.startTime,
                     style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
                   ),
                 ],
@@ -69,14 +70,14 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BlocProvider(
-                    create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.fixture.homeTeamId)),
+                    create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.predictionModel.homeTeamId)),
                     child: const TeamNameAndFlagWidget(
                       isEnd: false,
                     ),
                   ),
                   SizedBox(width: context.horizontalMargin12),
                   BlocProvider(
-                    create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.fixture.awayTeamId)),
+                    create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.predictionModel.awayTeamId)),
                     child: const TeamNameAndFlagWidget(
                       isEnd: true,
                     ),
@@ -87,7 +88,7 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  widget.fixture.startDate,
+                  widget.predictionModel.startDate,
                   style: context.textStyle12Medium(color: Colors.blue),
                 ),
               ),
@@ -95,57 +96,57 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
               Align(
                 alignment: Alignment.centerRight,
                 child: InkWell(
-                      borderRadius: BorderRadius.circular(context.radius5),
-                      onTap: () async {
-                        setState(() {
-                          isAddLoaded = true;
-                        });
-                        await RewardedAd.loadWithAdManagerAdRequest(
-                          adUnitId: adUnitId,
-                          adManagerRequest: const AdManagerAdRequest(),
-                          rewardedAdLoadCallback: RewardedAdLoadCallback(
-                            onAdLoaded: (RewardedAd ad) async {
-                              await ad.show(
-                                onUserEarnedReward: (view, reward) {
-                                  context.pushNamed(
-                                    FixtureDetailsPage.name,
-                                    pathParameters: {
-                                      'id': widget.fixture.guid,
-                                    },
-                                  );
+                  borderRadius: BorderRadius.circular(context.radius5),
+                  onTap: () async {
+                    setState(() {
+                      isAddLoaded = true;
+                    });
+                    await RewardedAd.loadWithAdManagerAdRequest(
+                      adUnitId: adUnitId,
+                      adManagerRequest: const AdManagerAdRequest(),
+                      rewardedAdLoadCallback: RewardedAdLoadCallback(
+                        onAdLoaded: (RewardedAd ad) async {
+                          await ad.show(
+                            onUserEarnedReward: (view, reward) {
+                              context.pushNamed(
+                                FixtureDetailsPage.name,
+                                pathParameters: {
+                                  'id': widget.predictionModel.guid,
                                 },
                               );
                             },
-                            onAdFailedToLoad: (LoadAdError error) {},
+                          );
+                        },
+                        onAdFailedToLoad: (LoadAdError error) {},
+                      ),
+                    );
+                  },
+                  child: isAddLoaded
+                      ? Container(
+                          width: 72.w,
+                          height: 20.h,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(context.radius5),
+                            color: theme.backgroundTertiary,
                           ),
-                        );
-                      },
-                      child: isAddLoaded
-                          ? Container(
-                              width: 72.w,
-                              height: 20.h,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(context.radius5),
-                                color: theme.backgroundTertiary,
-                              ),
-                              child: const CupertinoActivityIndicator(),
-                            )
-                          : Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(context.radius5),
-                                color: theme.backgroundTertiary,
-                              ),
-                              child: Text(
-                                "Prediction",
-                                style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
-                              ),
-                            ),
-                    ),
-                  ),
+                          child: const CupertinoActivityIndicator(),
+                        )
+                      : Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(context.radius5),
+                            color: theme.backgroundTertiary,
+                          ),
+                          child: Text(
+                            "Prediction",
+                            style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                          ),
+                        ),
+                ),
+              ),
             ],
           ),
         );

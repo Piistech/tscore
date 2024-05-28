@@ -1,9 +1,9 @@
-import '../../domain/entities/fixtures.dart';
 
 import '../../../../core/shared/shared.dart';
+import '../../domain/entities/prediction_list.dart';
 
-class FixtureModel extends FixturesEntity {
-  const FixtureModel({
+class PredictionsModel extends PredictionsEntity {
+  const PredictionsModel({
     required super.guid,
     required super.matchTitle,
     required super.matchDescription,
@@ -18,7 +18,7 @@ class FixtureModel extends FixturesEntity {
     required super.isPredictionAvailable,
   });
 
-  factory FixtureModel.parse({
+  factory PredictionsModel.parse({
     required Map<String, dynamic> map,
   }) {
     try {
@@ -125,7 +125,7 @@ class FixtureModel extends FixturesEntity {
         "FixtureModel.parse: map['isPrediction'] is not a bool",
       );
 
-      return FixtureModel(
+      return PredictionsModel(
         guid: map['fixtureId'],
         matchTitle: map['matchTitle'],
         matchDescription: map['matchDescription'],

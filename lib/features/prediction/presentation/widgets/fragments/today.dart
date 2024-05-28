@@ -1,9 +1,6 @@
 
-import 'package:tscore/features/prediction/presentation/widgets/shimmer/item.dart';
 
 import '../../../../../core/shared/shared.dart';
-import '../../../../fixture/fixture.dart';
-import '../../../prediction.dart';
 
 class TodayMatches extends StatelessWidget {
   const TodayMatches({super.key});
@@ -12,20 +9,20 @@ class TodayMatches extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<FixturesBloc>().add(const FetchFixtures());
+        context.read<PredictionsBloc>().add(const Fetch());
       },
-      child: BlocBuilder<FixturesBloc, FixturesState>(
+      child: BlocBuilder<PredictionsBloc, PredictionsState>(
         builder: (_, state) {
-          if (state is FixturesLoading) {
+          if (state is PredictionsLoading) {
             return ListView.builder(
               itemCount: 4,
               itemBuilder: (_, __) => const ShimmerPredictionItem(),
             );
-          } else if (state is FixturesDone) {
+          } else if (state is PredictionsDone) {
             return PredictionList(
               fixtures: state.fixtures.where((element) => element.isToday).toList(),
             );
-          } else if (state is FixturesError) {
+          } else if (state is PredictionsError) {
             return Center(child: Text(state.failure.message));
           } else {
             return Container();

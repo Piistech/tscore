@@ -27,7 +27,7 @@ class FixturesError extends FixturesState {
 }
 
 class FixturesDone extends FixturesState {
-  final List<FixtureEntity> fixtures;
+  final List<FixturesEntity> fixtures;
 
   const FixturesDone({
     required this.fixtures,

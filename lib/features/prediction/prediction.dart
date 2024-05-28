@@ -16,3 +16,6 @@ export 'presentation/widgets/fragments/past.dart';
 export 'presentation/widgets/fragments/today.dart';
 export 'presentation/widgets/fragments/tomorrow.dart';
 export 'presentation/widgets/fragments/upcoming.dart';
+export 'package:tscore/core/shared/extension/prediction.dart';
+export 'presentation/bloc/predictions_bloc.dart';
+export 'presentation/widgets/shimmer/item.dart';

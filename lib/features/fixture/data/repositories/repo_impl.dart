@@ -1,4 +1,5 @@
 import '../../../../core/shared/shared.dart';
+import '../../domain/entities/fixtures.dart';
 import '../../fixture.dart';
 
 class FixtureRepositoryImpl extends FixtureRepository {
@@ -13,7 +14,7 @@ class FixtureRepositoryImpl extends FixtureRepository {
   });
 
   @override
-  Future<Either<Failure, List<FixtureEntity>>> get fixtures async {
+  Future<Either<Failure, List<FixturesEntity>>> get fixtures async {
     if (await network.online) {
       try {
         final List<FixtureModel> fixtures = await remote.fixtures;
@@ -28,7 +29,7 @@ class FixtureRepositoryImpl extends FixtureRepository {
   }
 
   @override
-  Either<Failure, FixtureEntity> findById({
+  Either<Failure, FixturesEntity> findById({
     required String guid,
   }) {
     try {

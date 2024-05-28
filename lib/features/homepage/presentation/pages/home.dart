@@ -1,8 +1,8 @@
+import '../../../../core/config/config.dart';
 import '../../../../core/shared/shared.dart';
 import '../../../fixture/fixture.dart';
 import '../../../live_audio/live_audio.dart';
 import '../../../more/presentation/pages/more.dart';
-import '../../../prediction/prediction.dart';
 import '../../home.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +24,10 @@ class _HomePageState extends State<HomePage> {
     fragments = [
       const FixturesPage(),
       const LiveRadioPage(),
-      const PredictionsPage(),
+      BlocProvider(
+        create: (context) => sl<PredictionsBloc>()..add(const Fetch()),
+        child: const PredictionsPage(),
+      ),
       const MorePage(),
     ];
 
@@ -42,7 +45,9 @@ class _HomePageState extends State<HomePage> {
           if (event.updateAvailability == UpdateAvailability.updateAvailable) {
             InAppUpdate.performImmediateUpdate().then(
               (result) {
-                if (result == AppUpdateResult.success) {}
+                if (result == AppUpdateResult.success) {
+                  TaskNotifier.instance.success(context, message: "App updated successfully");
+                }
               },
             );
           }
@@ -57,7 +62,11 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         final theme = state.scheme;
         return Scaffold(
-          appBar: AppBar(),
+          backgroundColor: theme.backgroundPrimary,
+          appBar: AppBar(
+            backgroundColor: theme.backgroundTertiary,
+            automaticallyImplyLeading: false,
+          ),
           body: fragments.elementAt(currentIndex),
           bottomNavigationBar: PhysicalModel(
             color: theme.backgroundTertiary,

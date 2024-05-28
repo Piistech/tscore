@@ -1,10 +1,11 @@
+import 'package:tscore/features/fixture/domain/entities/fixtures.dart';
+
 import '../../../../core/shared/shared.dart';
-import '../../fixture.dart';
 
 abstract class FixtureRepository {
-  Future<Either<Failure, List<FixtureEntity>>> get fixtures;
+  Future<Either<Failure, List<FixturesEntity>>> get fixtures;
 
-  Either<Failure, FixtureEntity> findById({
+  Either<Failure, FixturesEntity> findById({
     required String guid,
   });
 }

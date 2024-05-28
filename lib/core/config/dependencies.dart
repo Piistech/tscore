@@ -220,6 +220,16 @@ Future<void> get _prediction async {
       client: sl(),
     ),
   );
+  sl.registerFactory(
+    () => PredictionsBloc(
+      useCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => PredictionsUsecase(
+      repository: sl(),
+    ),
+  );
 }
 
 Future<void> get _team async {

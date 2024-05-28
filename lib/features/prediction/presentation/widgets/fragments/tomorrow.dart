@@ -1,8 +1,7 @@
 
+
 import '../../../../../core/shared/shared.dart';
-import '../../../../fixture/fixture.dart';
 import '../../../../live_audio/live_audio.dart';
-import '../list.dart';
 
 class TomorrowMatches extends StatelessWidget {
   const TomorrowMatches({super.key});
@@ -11,19 +10,19 @@ class TomorrowMatches extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<FixturesBloc>().add(const FetchFixtures());
+        context.read<PredictionsBloc>().add(const Fetch());
       },
-      child: BlocBuilder<FixturesBloc, FixturesState>(
+      child: BlocBuilder<PredictionsBloc, PredictionsState>(
         builder: (_, state) {
-          if (state is FixturesLoading) {
+          if (state is PredictionsLoading) {
             return ListView.builder(
               itemCount: 4,
               itemBuilder: (_, __) => const ShimmerItem(),
             );
-          } else if (state is FixturesDone) {
+          } else if (state is PredictionsDone) {
             return PredictionList(
               fixtures: state.fixtures.where((element) => element.isTomorrow).toList(),
-            );} else if (state is FixturesError) {
+            );} else if (state is PredictionsError) {
             return Center(child: Text(state.failure.message));
           } else {
             return Container();

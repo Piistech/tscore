@@ -1,9 +1,8 @@
 import 'package:intl/intl.dart';
 
-import '../../../features/fixture/domain/entities/fixtures.dart';
+import '../../../features/prediction/domain/entities/prediction_list.dart';
 
-
-extension FixtureEntityExtension on FixturesEntity {
+extension PredictionEntityExtension on PredictionsEntity {
   String get title {
     return '$matchTitle, $matchDescription';
   }
@@ -38,7 +37,7 @@ extension FixtureEntityExtension on FixturesEntity {
 
   bool get isPast {
     final now = DateTime.now();
-    return (now.isAfter(startedAt));
+    return now.day > startedAt.day;
   }
 
   bool get isFinished {

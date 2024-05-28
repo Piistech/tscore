@@ -6,7 +6,6 @@ import '../../features/fixture/fixture.dart';
 import '../../features/homepage/presentation/pages/home.dart';
 import '../../features/live_audio/presentation/pages/lives_radio.dart';
 import '../../features/more/presentation/pages/more.dart';
-import '../../features/prediction/prediction.dart';
 import '../config/config.dart';
 import 'shared.dart';
 
@@ -33,7 +32,7 @@ final router = GoRouter(
       path: PredictionsPage.path,
       name: PredictionsPage.name,
       builder: (context, state) => BlocProvider(
-        create: (context) => sl<FixturesBloc>()..add(const FetchFixtures()),
+        create: (context) => sl<PredictionsBloc>()..add(const Fetch()),
         child: const PredictionsPage(),
       ),
     ),

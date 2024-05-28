@@ -1,5 +1,6 @@
 import '../../../../../core/shared/shared.dart';
 import '../../../../commentary/commentary.dart';
+import '../../../domain/entities/fixtures.dart';
 import '../../../fixture.dart';
 
 class OnAirWidget extends StatelessWidget {
@@ -13,7 +14,7 @@ class OnAirWidget extends StatelessWidget {
         return BlocBuilder<FixturesBloc, FixturesState>(
           builder: (context, state) {
             if (state is FixturesDone) {
-              final FixtureEntity fixture = state.fixtures.firstWhere((element) => element.isLive);
+              final FixturesEntity fixture = state.fixtures.firstWhere((element) => element.isLive);
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,

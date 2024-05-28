@@ -1,7 +1,7 @@
+
+
 import '../../../../../core/shared/shared.dart';
-import '../../../../fixture/fixture.dart';
 import '../../../../live_audio/live_audio.dart';
-import '../list.dart';
 
 class UpcomingMatches extends StatelessWidget {
   const UpcomingMatches({super.key});
@@ -10,20 +10,20 @@ class UpcomingMatches extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<FixturesBloc>().add(const FetchFixtures());
+        context.read<PredictionsBloc>().add(const Fetch());
       },
-      child: BlocBuilder<FixturesBloc, FixturesState>(
+      child: BlocBuilder<PredictionsBloc, PredictionsState>(
         builder: (_, state) {
-          if (state is FixturesLoading) {
+          if (state is PredictionsLoading) {
             return ListView.builder(
               itemCount: 4,
               itemBuilder: (_, __) => const ShimmerItem(),
             );
-          } else if (state is FixturesDone) {
+          } else if (state is PredictionsDone) {
             return PredictionList(
               fixtures: state.fixtures.where((element) => (element.isUpcoming && !element.isTomorrow)).toList(),
             );
-          } else if (state is FixturesError) {
+          } else if (state is PredictionsError) {
             return Center(child: Text(state.failure.message));
           } else {
             return Container();

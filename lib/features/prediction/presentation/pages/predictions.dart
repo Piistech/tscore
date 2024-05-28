@@ -1,7 +1,6 @@
 
 
 import '../../../../core/shared/shared.dart';
-import '../../prediction.dart';
 
 class PredictionsPage extends StatefulWidget {
   static const String path = '/predictions';
@@ -13,6 +12,7 @@ class PredictionsPage extends StatefulWidget {
 }
 
 class _PredictionsPageState extends State<PredictionsPage> with SingleTickerProviderStateMixin {
+  
   late TabController tabController;
   @override
   void initState() {

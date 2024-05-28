@@ -2,15 +2,17 @@ part of 'find_fixture_by_id_bloc.dart';
 
 sealed class FindFixtureByIdState extends Equatable {
   const FindFixtureByIdState();
-  
+
   @override
   List<Object> get props => [];
 }
 
 final class FindFixtureByIdInitial extends FindFixtureByIdState {}
+
 final class FindFixtureByIdLoading extends FindFixtureByIdState {
   const FindFixtureByIdLoading();
 }
+
 final class FindFixtureByIdError extends FindFixtureByIdState {
   final Failure failure;
 
@@ -21,8 +23,9 @@ final class FindFixtureByIdError extends FindFixtureByIdState {
   @override
   List<Object> get props => [failure];
 }
+
 final class FindFixtureByIdDone extends FindFixtureByIdState {
-  final FixtureEntity fixture;
+  final FixturesEntity fixture;
 
   const FindFixtureByIdDone({
     required this.fixture,

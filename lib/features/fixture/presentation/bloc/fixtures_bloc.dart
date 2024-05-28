@@ -1,4 +1,5 @@
 import '../../../../core/shared/shared.dart';
+import '../../domain/entities/fixtures.dart';
 import '../../fixture.dart';
 
 part 'fixtures_event.dart';

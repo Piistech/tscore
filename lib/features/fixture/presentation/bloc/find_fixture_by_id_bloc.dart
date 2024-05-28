@@ -1,3 +1,5 @@
+import 'package:tscore/features/fixture/domain/entities/fixtures.dart';
+
 import '../../../../core/shared/shared.dart';
 import '../../fixture.dart';
 

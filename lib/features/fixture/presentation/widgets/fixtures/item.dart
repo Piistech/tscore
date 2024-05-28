@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../../../core/shared/shared.dart';
 import '../../../../commentary/commentary.dart';
+import '../../../domain/entities/fixtures.dart';
 import '../../../fixture.dart';
 
 class FixtureItemWidget extends StatefulWidget {
-  final FixtureEntity fixture;
+  final FixturesEntity fixture;
   const FixtureItemWidget({
     super.key,
     required this.fixture,
@@ -101,69 +102,72 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                   widget.fixture.matchDescription,
                   style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
                 ),
-                SizedBox(height: context.verticalMargin16),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    BlocBuilder<CommentaryBloc, CommentaryState>(
-                      builder: (context, state) {
-                        if (state is CommentaryDone) {
-                          final String channelId = state.commentary.channelId;
-                          return BlocBuilder<CurrentlyPlayingCommentaryBloc, CurrentlyPlayingCommentaryState>(
-                            builder: (context, state) {
-                              final isPlaying = state is CurrentlyPlayingCommentaryChannel && state.channelId == channelId;
-                              if (isPlaying) {
-                                return Lottie.asset(
-                                  'animation/waveform.json',
-                                  height: 24.h,
-                                );
-                              }
-                              return Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: context.radius12,
-                                    backgroundColor: theme.white,
-                                    child: Icon(
-                                      Icons.play_arrow_rounded,
-                                      color: theme.backgroundPrimary,
+                Visibility(visible: widget.fixture.isLive, child: SizedBox(height: context.verticalMargin16)),
+                Visibility(
+                  visible: widget.fixture.isLive,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BlocBuilder<CommentaryBloc, CommentaryState>(
+                        builder: (context, state) {
+                          if (state is CommentaryDone) {
+                            final String channelId = state.commentary.channelId;
+                            return BlocBuilder<CurrentlyPlayingCommentaryBloc, CurrentlyPlayingCommentaryState>(
+                              builder: (context, state) {
+                                final isPlaying = state is CurrentlyPlayingCommentaryChannel && state.channelId == channelId;
+                                if (isPlaying) {
+                                  return Lottie.asset(
+                                    'animation/waveform.json',
+                                    height: 24.h,
+                                  );
+                                }
+                                return Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: context.radius12,
+                                      backgroundColor: theme.white,
+                                      child: Icon(
+                                        Icons.play_arrow_rounded,
+                                        color: theme.backgroundPrimary,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: context.horizontalMargin4),
-                                  Text(
-                                    "Play Now",
-                                    style: context.textStyle12Medium(color: theme.textPrimary).copyWith(letterSpacing: -0.04),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
-                        return Row(
-                          children: [
-                            CircleAvatar(
-                              radius: context.radius12,
-                              backgroundColor: theme.white,
-                              child: Icon(
-                                Icons.play_arrow_rounded,
-                                color: theme.backgroundPrimary,
+                                    SizedBox(width: context.horizontalMargin4),
+                                    Text(
+                                      "Play Now",
+                                      style: context.textStyle12Medium(color: theme.textPrimary).copyWith(letterSpacing: -0.04),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                          return Row(
+                            children: [
+                              CircleAvatar(
+                                radius: context.radius12,
+                                backgroundColor: theme.white,
+                                child: Icon(
+                                  Icons.play_arrow_rounded,
+                                  color: theme.backgroundPrimary,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: context.horizontalMargin4),
-                            Text(
-                              "Play Now",
-                              style: context.textStyle12Medium(color: theme.textPrimary).copyWith(letterSpacing: -0.04),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    Text(
-                      widget.fixture.startDate,
-                      style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
-                    ),
-                  ],
+                              SizedBox(width: context.horizontalMargin4),
+                              Text(
+                                "Play Now",
+                                style: context.textStyle12Medium(color: theme.textPrimary).copyWith(letterSpacing: -0.04),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      Text(
+                        widget.fixture.startDate,
+                        style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: context.verticalMargin16),
                 Row(
@@ -225,56 +229,59 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                         ],
                       ),
                     ),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(context.radius5),
-                      onTap: () async {
-                        setState(() {
-                          isAddLoaded = true;
-                        });
-                        await RewardedAd.loadWithAdManagerAdRequest(
-                          adUnitId: adUnitId,
-                          adManagerRequest: const AdManagerAdRequest(),
-                          rewardedAdLoadCallback: RewardedAdLoadCallback(
-                            onAdLoaded: (RewardedAd ad) async {
-                              await ad.show(
-                                onUserEarnedReward: (view, reward) {
-                                  context.pushNamed(
-                                    FixtureDetailsPage.name,
-                                    pathParameters: {
-                                      'id': widget.fixture.guid,
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                            onAdFailedToLoad: (LoadAdError error) {},
-                          ),
-                        );
-                      },
-                      child: isAddLoaded
-                          ? Container(
-                              width: 72.w,
-                              height: 20.h,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(context.radius5),
-                                color: theme.backgroundTertiary,
-                              ),
-                              child: const CupertinoActivityIndicator(),
-                            )
-                          : Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(context.radius5),
-                                color: theme.backgroundTertiary,
-                              ),
-                              child: Text(
-                                "Prediction",
-                                style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
-                              ),
+                    Visibility(
+                      visible: widget.fixture.isPredictionAvailable,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(context.radius5),
+                        onTap: () async {
+                          setState(() {
+                            isAddLoaded = true;
+                          });
+                          await RewardedAd.loadWithAdManagerAdRequest(
+                            adUnitId: adUnitId,
+                            adManagerRequest: const AdManagerAdRequest(),
+                            rewardedAdLoadCallback: RewardedAdLoadCallback(
+                              onAdLoaded: (RewardedAd ad) async {
+                                await ad.show(
+                                  onUserEarnedReward: (view, reward) {
+                                    context.pushNamed(
+                                      FixtureDetailsPage.name,
+                                      pathParameters: {
+                                        'id': widget.fixture.guid,
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                              onAdFailedToLoad: (LoadAdError error) {},
                             ),
+                          );
+                        },
+                        child: isAddLoaded
+                            ? Container(
+                                width: 72.w,
+                                height: 20.h,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(context.radius5),
+                                  color: theme.backgroundTertiary,
+                                ),
+                                child: const CupertinoActivityIndicator(),
+                              )
+                            : Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(context.radius5),
+                                  color: theme.backgroundTertiary,
+                                ),
+                                child: Text(
+                                  "Prediction",
+                                  style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                ),
+                              ),
+                      ),
                     ),
                   ],
                 ),

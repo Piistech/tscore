@@ -1,5 +1,6 @@
+import 'package:tscore/features/prediction/data/models/prediction_list_model.dart';
+
 import '../../../../core/shared/shared.dart';
-import '../../prediction.dart';
 
 class PredictionDataSourceImpl extends PredictionRemoteDataSource {
   final Client client;
@@ -35,4 +36,33 @@ class PredictionDataSourceImpl extends PredictionRemoteDataSource {
       throw RemoteFailure(message: result.error!);
     }
   }
+    @override
+  Future<List<PredictionsModel>> get predictions async {
+    //! initialize response
+    final Response response = await client.get(
+      RemoteEndpoints.predictions,
+    );
+
+    final RemoteResponse<List<dynamic>> result = RemoteResponse.parse(
+      response: response,
+    );
+
+    if (result.success) {
+      final List<PredictionsModel?> predictions = result.result!.map(
+        (map) {
+          try {
+            return PredictionsModel.parse(
+              map: Map<String, dynamic>.from(map),
+            );
+          } catch (e) {
+            return null;
+          }
+        },
+      ).toList();
+      return predictions.whereType<PredictionsModel>().toList();
+    } else {
+      throw RemoteFailure(message: result.error!);
+    }
+  }
+
 }

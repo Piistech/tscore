@@ -3,7 +3,7 @@ import '../../../fixture/fixture.dart';
 import 'item.dart';
 
 class PredictionList extends StatelessWidget {
-  final List<FixtureEntity> fixtures;
+  final List<PredictionsEntity> fixtures;
   const PredictionList({super.key, required this.fixtures});
 
   @override
@@ -25,7 +25,7 @@ class PredictionList extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             itemBuilder: (_, index) {
               final fixture = fixtures[index];
-              return PredictionItemWidget(fixture: fixture);
+              return PredictionItemWidget(predictionModel: fixture);
             },
           );
   }

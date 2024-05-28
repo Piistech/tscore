@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class FixtureEntity extends Equatable {
+class PredictionsEntity extends Equatable {
   final String guid;
   final String matchTitle;
   final String matchDescription;
@@ -11,8 +11,10 @@ class FixtureEntity extends Equatable {
   final String stadiumName;
   final String logo;
   final bool isCompleted;
+  final bool isCommentrySetupOk;
+  final bool isPredictionAvailable;
 
-  const FixtureEntity({
+  const PredictionsEntity({
     required this.guid,
     required this.matchTitle,
     required this.matchDescription,
@@ -23,6 +25,8 @@ class FixtureEntity extends Equatable {
     required this.stadiumName,
     required this.logo,
     required this.isCompleted,
+    required this.isCommentrySetupOk,
+    required this.isPredictionAvailable,
   });
 
   @override
@@ -37,5 +41,7 @@ class FixtureEntity extends Equatable {
         stadiumName,
         logo,
         isCompleted,
+        isCommentrySetupOk,
+        isPredictionAvailable,
       ];
 }

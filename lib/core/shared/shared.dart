@@ -55,3 +55,6 @@ export 'package:google_mobile_ads/google_mobile_ads.dart';
 
 export 'package:firebase_core/firebase_core.dart';
 export 'package:tscore/firebase_options.dart';
+export 'package:tscore/features/prediction/prediction.dart';
+
+

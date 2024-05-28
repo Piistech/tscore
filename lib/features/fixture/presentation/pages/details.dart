@@ -1,7 +1,6 @@
 import '../../../../core/shared/shared.dart';
 import '../../../analysis/analysis.dart';
 import '../../../homepage/presentation/pages/home.dart';
-import '../../../prediction/prediction.dart';
 import '../../fixture.dart';
 
 class FixtureDetailsPage extends StatelessWidget {
@@ -20,7 +19,7 @@ class FixtureDetailsPage extends StatelessWidget {
         title: const MatchTitleWidget(),
         leading: BackButton(
           onPressed: () {
-            context.pushNamed(HomePage.name);
+            context.pushReplacementNamed(HomePage.name);
           },
         ),
       ),

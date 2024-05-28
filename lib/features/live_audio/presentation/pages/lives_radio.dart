@@ -47,7 +47,6 @@ class LiveRadioPage extends StatelessWidget {
                         itemCount: state.fixtures.length,
                         padding: EdgeInsets.symmetric(
                           horizontal: context.horizontalMargin15,
-                          vertical: context.verticalMargin15,
                         ),
                         separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin8),
                         physics: const AlwaysScrollableScrollPhysics(),
