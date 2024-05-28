@@ -62,9 +62,30 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         final theme = state.scheme;
         return Scaffold(
-          backgroundColor: theme.backgroundPrimary,
           appBar: AppBar(
-            backgroundColor: theme.backgroundTertiary,
+            leadingWidth: 30.w,
+            leading: Padding(
+              padding: EdgeInsets.only(left: context.horizontalMargin10),
+              child: CachedNetworkImage(
+                imageUrl: "images/splash.png",
+                fit: BoxFit.cover,
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                errorWidget: (context, url, error) => SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 538.h,
+                  child: Image.asset('images/splash.png'),
+                ),
+              ),
+            ),
+            title: Container(
+              margin: EdgeInsets.only(left: context.horizontalMargin8),
+              child: Text(
+                "T-Score",
+                style: context.textStyle17MediumZenDots(color: theme.textPrimary),
+              ),
+            ),
             automaticallyImplyLeading: false,
           ),
           body: fragments.elementAt(currentIndex),
