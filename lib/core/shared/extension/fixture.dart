@@ -29,7 +29,7 @@ extension FixtureEntityExtension on FixturesEntity {
     final now = DateTime.now();
     return !isLive &&
         (now.day == startedAt.day) &&
-        (now.hour < startedAt.hour || now.minute < startedAt.minute);
+        (now.hour < startedAt.hour);
   }
 
   bool get isTomorrow {
