@@ -1,5 +1,3 @@
-
-
 import '../../../../../core/shared/shared.dart';
 
 class TodayMatches extends StatelessWidget {
@@ -14,8 +12,13 @@ class TodayMatches extends StatelessWidget {
       child: BlocBuilder<PredictionsBloc, PredictionsState>(
         builder: (_, state) {
           if (state is PredictionsLoading) {
-            return ListView.builder(
-              itemCount: 4,
+            return ListView.separated(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.horizontalMargin15,
+                vertical: context.verticalMargin15,
+              ),
+              separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin8),
+              itemCount: 10,
               itemBuilder: (_, __) => const ShimmerPredictionItem(),
             );
           } else if (state is PredictionsDone) {

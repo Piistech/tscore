@@ -49,6 +49,6 @@ extension PredictionEntityExtension on PredictionsEntity {
   }
 
   String get startDate {
-    return DateFormat("dd MMMM yyyy, EEEE").format(startedAt);
+    return DateFormat("dd MMMM yyyy, EEEE 'at' h:mm a").format(startedAt);
   }
 }

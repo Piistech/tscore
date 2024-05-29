@@ -23,15 +23,15 @@ class ShimmerPredictionItem extends StatelessWidget {
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: ShimmerLabel(width: 100.w, height: 11.h).animate(
-                      onComplete: (controller) => controller.repeat(),
-                    )..shimmer(
-                        color: theme.shimmerColor,
-                        duration: const Duration(seconds: 1),
-                      ),
-                  ),
+                  ShimmerLabel(width: 150.w, height: 11.h).animate(
+                    onComplete: (controller) => controller.repeat(),
+                  )..shimmer(
+                      color: theme.shimmerColor,
+                      duration: const Duration(seconds: 1),
+                    ),
+                  const SizedBox(width: 8),
                   ShimmerLabel(width: 72.w, height: 11.h).animate(
                     onComplete: (controller) => controller.repeat(),
                   )..shimmer(
@@ -49,23 +49,38 @@ class ShimmerPredictionItem extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(context.radius10),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: ShimmerIcon(radius: context.radius10).animate(
-                          onComplete: (controller) => controller.repeat(),
-                        )..shimmer(
-                            color: theme.shimmerColor,
-                            duration: const Duration(seconds: 1),
-                          ),
-                      ),
+                      const ShimmerLabel(width: 48, height: 17).animate(
+                        onComplete: (controller) => controller.repeat(),
+                      )..shimmer(
+                          color: theme.shimmerColor,
+                          duration: const Duration(seconds: 1),
+                        ),
                       SizedBox(height: context.horizontalMargin12),
                       ShimmerLabel(width: 72.w, height: 11.h).animate(
-                    onComplete: (controller) => controller.repeat(),
-                  )..shimmer(
-                      color: theme.shimmerColor,
-                      duration: const Duration(seconds: 1),
-                    ),
+                        onComplete: (controller) => controller.repeat(),
+                      )..shimmer(
+                          color: theme.shimmerColor,
+                          duration: const Duration(seconds: 1),
+                        ),
+                    ],
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const ShimmerLabel(width: 48, height: 17).animate(
+                        onComplete: (controller) => controller.repeat(),
+                      )..shimmer(
+                          color: theme.shimmerColor,
+                          duration: const Duration(seconds: 1),
+                        ),
+                      SizedBox(height: context.horizontalMargin12),
+                      ShimmerLabel(width: 72.w, height: 11.h).animate(
+                        onComplete: (controller) => controller.repeat(),
+                      )..shimmer(
+                          color: theme.shimmerColor,
+                          duration: const Duration(seconds: 1),
+                        ),
                     ],
                   ),
                 ],
@@ -73,12 +88,12 @@ class ShimmerPredictionItem extends StatelessWidget {
               SizedBox(height: context.verticalMargin8),
               Align(
                 alignment: Alignment.center,
-                child: ShimmerLabel(width: 128.w, height: 11.h).animate(
-                    onComplete: (controller) => controller.repeat(),
-                  )..shimmer(
-                      color: theme.shimmerColor,
-                      duration: const Duration(seconds: 1),
-                    ),
+                child: ShimmerLabel(width: 200.w, height: 11.h).animate(
+                  onComplete: (controller) => controller.repeat(),
+                )..shimmer(
+                    color: theme.shimmerColor,
+                    duration: const Duration(seconds: 1),
+                  ),
               ),
               SizedBox(height: context.verticalMargin8),
               Align(

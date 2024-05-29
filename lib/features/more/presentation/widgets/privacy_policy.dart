@@ -1,4 +1,3 @@
-
 import '../../../../core/shared/shared.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
@@ -8,7 +7,10 @@ class PrivacyPolicyPage extends StatelessWidget {
   final String link;
 
   const PrivacyPolicyPage({super.key, required this.headerText, required this.link});
-
+ Future<String> get _url async {
+    await Future.delayed(const Duration(seconds: 1));
+    return link;
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -24,8 +26,24 @@ class PrivacyPolicyPage extends StatelessWidget {
               style: TextStyles.title(context: context, color: theme.textPrimary),
             ),
           ),
-          body: WebViewWidget(
-            controller: WebViewController()..loadRequest(Uri.parse(link)),
+          body: FutureBuilder(
+            future: _url,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasData) {
+                return WebViewWidget(
+                  controller: WebViewController()
+                    ..loadRequest(
+                      Uri.parse(link),
+                    ),
+                );
+              } else {
+                return Container();
+              }
+            },
           ),
         );
       },

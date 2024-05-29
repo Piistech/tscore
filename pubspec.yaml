@@ -1,7 +1,7 @@
 name: tscore
 description: "A live commentary and prediction app for cricket fans."
 publish_to: "none"
-version: 0.1.21+21
+version: 0.1.22+22
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
