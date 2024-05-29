@@ -2,7 +2,6 @@ import 'package:tscore/features/prediction/data/models/prediction_list_model.dar
 
 import '../../../../core/shared/shared.dart';
 import '../../domain/entities/prediction_list.dart';
-import '../../prediction.dart';
 
 class PredictionRepositoryImpl implements PredictionRepository {
   final NetworkInfo network;

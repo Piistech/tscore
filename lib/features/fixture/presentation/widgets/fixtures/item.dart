@@ -102,15 +102,15 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                   widget.fixture.matchDescription,
                   style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
                 ),
-                Visibility(visible: widget.fixture.isLive, child: SizedBox(height: context.verticalMargin16)),
-                Visibility(
-                  visible: widget.fixture.isLive,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BlocBuilder<CommentaryBloc, CommentaryState>(
+                SizedBox(height: context.verticalMargin16),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Visibility(
+                      visible: widget.fixture.isLive,
+                      child: BlocBuilder<CommentaryBloc, CommentaryState>(
                         builder: (context, state) {
                           if (state is CommentaryDone) {
                             final String channelId = state.commentary.channelId;
@@ -162,12 +162,12 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                           );
                         },
                       ),
-                      Text(
-                        widget.fixture.startDate,
-                        style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Text(
+                      widget.fixture.startDate,
+                      style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
+                    ),
+                  ],
                 ),
                 SizedBox(height: context.verticalMargin16),
                 Row(
@@ -185,7 +185,7 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                                     ? widget.fixture.isTomorrow
                                         ? theme.tomorrow
                                         : theme.warning
-                                    : theme.positive,
+                                    : Colors.cyan,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -213,7 +213,7 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                                         ? widget.fixture.isTomorrow
                                             ? "Tomorrow"
                                             : "Upcoming"
-                                        : "Finished",
+                                        : "On-Going",
                             style: context
                                 .textStyle10Regular(
                                   color: widget.fixture.willLiveToday

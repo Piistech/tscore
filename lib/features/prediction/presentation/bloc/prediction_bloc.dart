@@ -1,5 +1,4 @@
 import '../../../../core/shared/shared.dart';
-import '../../prediction.dart';
 
 part 'prediction_event.dart';
 part 'prediction_state.dart';

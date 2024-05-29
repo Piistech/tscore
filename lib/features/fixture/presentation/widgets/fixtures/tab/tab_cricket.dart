@@ -21,7 +21,7 @@ class TabCricket extends StatelessWidget {
             return const ShimmerFixture();
           } else if (state is FixturesDone) {
             final bool live = state.fixtures.where((element) => element.isLive).isNotEmpty;
-            final List<FixturesEntity> fixtures = state.fixtures.where((element) => !element.isFinished).toList();
+            final List<FixturesEntity> fixtures = state.fixtures.where((element) => !element.isOnGoing).toList();
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [

@@ -2,7 +2,6 @@ import 'package:intl/intl.dart';
 
 import '../../../features/fixture/domain/entities/fixtures.dart';
 
-
 extension FixtureEntityExtension on FixturesEntity {
   String get title {
     return '$matchTitle, $matchDescription';
@@ -28,7 +27,10 @@ extension FixtureEntityExtension on FixturesEntity {
 
   bool get willLiveToday {
     final now = DateTime.now();
-    return !isLive && (now.day == startedAt.day);
+    return !isLive &&
+        (now.day == startedAt.day) &&
+        (now.hour < startedAt.hour || now.minute < startedAt.minute) &&
+        isCommentrySetupOk;
   }
 
   bool get isTomorrow {
@@ -41,8 +43,8 @@ extension FixtureEntityExtension on FixturesEntity {
     return (now.isAfter(startedAt));
   }
 
-  bool get isFinished {
-    return !isLive && !isUpcoming && (result != "" || result != null) && isCompleted;
+  bool get isOnGoing {
+    return result != "" && isCompleted && isCommentrySetupOk && !isLive;
   }
 
   String get startTime {
@@ -50,6 +52,6 @@ extension FixtureEntityExtension on FixturesEntity {
   }
 
   String get startDate {
-    return DateFormat("dd MMMM yyyy, EEEE").format(startedAt);
+    return DateFormat("dd MMMM yyyy, EEEE 'at' hh:mm a").format(startedAt);
   }
 }

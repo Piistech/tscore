@@ -1,7 +1,6 @@
 import '../../../../core/config/config.dart';
 import '../../../../core/shared/shared.dart';
 import '../../../team/team.dart';
-import '../../prediction.dart';
 import 'shimmer/prediction.dart';
 
 class PredictionWidget extends StatefulWidget {
