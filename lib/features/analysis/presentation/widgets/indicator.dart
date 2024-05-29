@@ -22,7 +22,7 @@ class AnalysisIndicator extends StatelessWidget {
             itemBuilder: (_, index) {
               return Container(
                 color: index + 1 > score
-                    ? theme.textSecondary
+                    ? theme.backgroundPrimary
                     : score <= 3
                         ? theme.negative
                         : score <= 6

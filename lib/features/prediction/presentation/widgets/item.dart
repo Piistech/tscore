@@ -66,7 +66,7 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
               ),
               SizedBox(height: context.verticalMargin8),
               Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(

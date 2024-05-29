@@ -20,12 +20,13 @@ class TeamShortNameAndFlagWidget extends StatelessWidget {
                 team.shortName,
                 style: context.textStyle20Medium(color: theme.textPrimary).copyWith(height: 1.2),
               ),
-              SizedBox(width: context.horizontalMargin2),
+              SizedBox(width: context.horizontalMargin8),
               ClipRRect(
                 borderRadius: BorderRadius.circular(context.radius52),
                 child: CachedNetworkImage(
                   imageUrl: team.flag,
                   height: context.flagHeight24,
+                  width: context.flagHeight24,
                   placeholder: (context, url) => SizedBox(
                     width: context.flagHeight24,
                     height: context.flagHeight24,

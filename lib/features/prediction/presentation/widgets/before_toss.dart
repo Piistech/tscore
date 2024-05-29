@@ -65,13 +65,19 @@ class _BeforeTossPredictionState extends State<BeforeTossPrediction> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Match Winner',
-                    style: context.textStyle14Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      'Match Winner',
+                      style: context.textStyle14Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                    ),
                   ),
-                  const TeamFullNameWidget(),
+                  const Expanded(
+                    flex: 1,
+                    child: TeamShortNameAndFlagWidget(),
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         );

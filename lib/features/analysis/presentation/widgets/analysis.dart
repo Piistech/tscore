@@ -41,7 +41,7 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                       child: Text(
                         textAlign: TextAlign.center,
                         "No analysis found",
-                        style: TextStyles.caption(context: context, color: theme.textPrimary),
+                        style: TextStyles.title(context: context, color: theme.textPrimary),
                       ),
                     )
                   : ListView(
@@ -159,7 +159,61 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                                     ],
                                   );
                                 },
-                              )
+                              ),
+                              SizedBox(height: context.verticalMargin16),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 6.w,
+                                        height: 8.h,
+                                        decoration: BoxDecoration(
+                                          color: theme.positive,
+                                        ),
+                                      ),
+                                      SizedBox(width: context.horizontalMargin8),
+                                      Text(
+                                        "Positive",
+                                        style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 6.w,
+                                        height: 8.h,
+                                        decoration: BoxDecoration(
+                                          color: theme.warning,
+                                        ),
+                                      ),
+                                      SizedBox(width: context.horizontalMargin8),
+                                      Text(
+                                        "Avg",
+                                        style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 6.w,
+                                        height: 8.h,
+                                        decoration: BoxDecoration(
+                                          color: theme.negative,
+                                        ),
+                                      ),
+                                      SizedBox(width: context.horizontalMargin8),
+                                      Text(
+                                        "Weak",
+                                        style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),

@@ -47,7 +47,7 @@ class TeamNameAndFlagWidget extends StatelessWidget {
                   ),
                   SizedBox(height: context.horizontalMargin12),
                   Text(
-                    state.team.name,
+                    state.team.shortName,
                     style: context.textStyle17Medium(color: theme.textPrimary).copyWith(height: 1.2),
                   ),
                 ],
