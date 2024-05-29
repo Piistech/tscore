@@ -10,10 +10,7 @@ class PredictionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return fixtures.isEmpty
         ? Center(
-            child: Text(
-              'No match found',
-              style: TextStyles.body(context: context, color: Colors.white),
-            ),
+            child: Lottie.asset("images/icons/no_data.json"),
           )
         : ListView.separated(
             itemCount: fixtures.length,

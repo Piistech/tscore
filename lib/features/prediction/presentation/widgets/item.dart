@@ -66,20 +66,31 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
               ),
               SizedBox(height: context.verticalMargin8),
               Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BlocProvider(
-                    create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.predictionModel.homeTeamId)),
-                    child: const TeamNameAndFlagWidget(
-                      isEnd: false,
+                  Expanded(
+                    flex: 2,
+                    child: BlocProvider(
+                      create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.predictionModel.homeTeamId)),
+                      child: const TeamNameAndFlagWidget(
+                        isEnd: false,
+                      ),
                     ),
                   ),
-                  SizedBox(width: context.horizontalMargin12),
-                  BlocProvider(
-                    create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.predictionModel.awayTeamId)),
-                    child: const TeamNameAndFlagWidget(
-                      isEnd: true,
+                  Expanded(
+                    flex: 1,
+                    child: SvgPicture.asset(
+                      "images/icons/vs.svg",
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: BlocProvider(
+                      create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.predictionModel.awayTeamId)),
+                      child: const TeamNameAndFlagWidget(
+                        isEnd: true,
+                      ),
                     ),
                   ),
                 ],
