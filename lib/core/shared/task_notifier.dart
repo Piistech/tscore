@@ -72,6 +72,8 @@ class TaskNotifier {
       ..showSnackBar(
         SnackBar(
           padding: EdgeInsets.zero,
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          behavior: SnackBarBehavior.floating,
           content: ListTile(
             dense: true,
             horizontalTitleGap: 16,

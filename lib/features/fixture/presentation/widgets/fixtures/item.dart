@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
-
 import '../../../../../core/shared/shared.dart';
 import '../../../../commentary/commentary.dart';
 import '../../../domain/entities/fixtures.dart';
-import '../../../fixture.dart';
 
 class FixtureItemWidget extends StatefulWidget {
   final FixturesEntity fixture;
@@ -47,8 +44,12 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                     );
                   } else if (widget.fixture.isUpcoming) {
                     TaskNotifier.instance.warning(context, message: "Match is not started yet!");
-                  } else {
-                    TaskNotifier.instance.success(context, message: "Match has been finished");
+                  } else if (widget.fixture.willLiveToday) {
+                    TaskNotifier.instance.warning(context, message: "Match will start today!");
+                  } else if (widget.fixture.isTomorrow) {
+                    TaskNotifier.instance.warning(context, message: "Match will start tomorrow!");
+                  } else if (widget.fixture.isOnGoing) {
+                    TaskNotifier.instance.success(context, message: "Match on going!");
                   }
                 },
           child: Container(
@@ -97,10 +98,14 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                     ),
                   ],
                 ),
-                SizedBox(height: context.verticalMargin12),
-                Text(
-                  widget.fixture.matchDescription,
-                  style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
+                Visibility(
+                    visible: widget.fixture.matchDescription.isNotEmpty, child: SizedBox(height: context.verticalMargin12)),
+                Visibility(
+                  visible: widget.fixture.matchDescription.isNotEmpty,
+                  child: Text(
+                    widget.fixture.matchDescription,
+                    style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
+                  ),
                 ),
                 SizedBox(height: context.verticalMargin16),
                 Row(
@@ -163,14 +168,11 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                         },
                       ),
                     ),
-                    Text(
-                      widget.fixture.startDate,
-                      style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
-                    ),
                   ],
                 ),
-                SizedBox(height: context.verticalMargin16),
+                Visibility(visible: widget.fixture.isLive, child: SizedBox(height: context.verticalMargin16)),
                 Row(
+                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
@@ -206,7 +208,7 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                           SizedBox(width: context.verticalMargin5),
                           Text(
                             widget.fixture.willLiveToday
-                                ? "Match yet to begin"
+                                ? "Starting soon"
                                 : widget.fixture.isLive
                                     ? "Live now"
                                     : widget.fixture.isUpcoming
@@ -229,58 +231,17 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                         ],
                       ),
                     ),
-                    Visibility(
-                      visible: widget.fixture.isPredictionAvailable,
-                      child: InkWell(
+                    SizedBox(width: context.horizontalMargin8),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(context.radius5),
-                        onTap: () async {
-                          setState(() {
-                            isAddLoaded = true;
-                          });
-                          await RewardedAd.loadWithAdManagerAdRequest(
-                            adUnitId: adUnitId,
-                            adManagerRequest: const AdManagerAdRequest(),
-                            rewardedAdLoadCallback: RewardedAdLoadCallback(
-                              onAdLoaded: (RewardedAd ad) async {
-                                await ad.show(
-                                  onUserEarnedReward: (view, reward) {
-                                    context.pushNamed(
-                                      FixtureDetailsPage.name,
-                                      pathParameters: {
-                                        'id': widget.fixture.guid,
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                              onAdFailedToLoad: (LoadAdError error) {},
-                            ),
-                          );
-                        },
-                        child: isAddLoaded
-                            ? Container(
-                                width: 72.w,
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(context.radius5),
-                                  color: theme.backgroundTertiary,
-                                ),
-                                child: const CupertinoActivityIndicator(),
-                              )
-                            : Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(context.radius5),
-                                  color: theme.backgroundTertiary,
-                                ),
-                                child: Text(
-                                  "Prediction",
-                                  style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
-                                ),
-                              ),
+                        color: theme.backgroundTertiary,
+                      ),
+                      child: Text(
+                        widget.fixture.startDate,
+                        style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
                       ),
                     ),
                   ],

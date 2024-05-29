@@ -31,9 +31,7 @@ class FixtureRemoteDataSourceImpl extends FixtureRemoteDataSource {
           }
         },
       ).toList();
-      fixtures.sort(
-        (a, b) => a!.startDate.compareTo(b!.startDate),
-      );
+
       return fixtures.whereType<FixtureModel>().toList();
     } else {
       throw RemoteFailure(message: result.error!);
