@@ -79,9 +79,42 @@ class _AfterTossPredictionState extends State<AfterTossPrediction> {
                       style: context.textStyle14Medium(color: theme.textPrimary).copyWith(height: 1.2),
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     flex: 1,
-                    child: TeamShortNameAndFlagWidget(),
+                    child: TeamInfoWidget(
+                      builder: (team) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              team.shortName,
+                              style: context.textStyle20Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                            ),
+                            SizedBox(width: context.horizontalMargin4),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(context.radius16),
+                              child: CachedNetworkImage(
+                                imageUrl: team.flag,
+                                height: context.flagHeight36,
+                                width: context.flagWidth48,
+                                placeholder: (context, url) => SizedBox(
+                                  height: context.flagHeight36,
+                                  width: context.flagWidth48,
+                                  child: const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) => SizedBox(
+                                  height: context.flagHeight36,
+                                  width: context.flagWidth48,
+                                  child: Image.asset('images/splash.png'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

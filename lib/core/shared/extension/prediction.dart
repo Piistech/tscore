@@ -17,7 +17,7 @@ extension PredictionEntityExtension on PredictionsEntity {
   bool get isUpcoming {
     final now = DateTime.now();
     //return (now.day < startedAt.day && now.month <= startedAt.month && now.year <= startedAt.year);
-    return !isToday && (startedAt.isAfter(now));
+    return !isToday && (startedAt.isAfter(now)) && !isTomorrow;
   }
 
   bool get isToday {

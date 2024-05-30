@@ -21,23 +21,29 @@ class TeamShortNameAndFlagWidget extends StatelessWidget {
                 style: context.textStyle20Medium(color: theme.textPrimary).copyWith(height: 1.2),
               ),
               SizedBox(width: context.horizontalMargin8),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(context.radius52),
-                child: CachedNetworkImage(
-                  imageUrl: team.flag,
-                  height: context.flagHeight24,
-                  width: context.flagHeight24,
-                  placeholder: (context, url) => SizedBox(
-                    width: context.flagHeight24,
+              Container(
+                padding: const EdgeInsets.all(1),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(context.radius52),
+                  color: theme.warning,
+                ),
+                child: ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: team.flag,
                     height: context.flagHeight24,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
+                    width: context.flagHeight24,
+                    placeholder: (context, url) => SizedBox(
+                      width: context.flagHeight24,
+                      height: context.flagHeight24,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
-                  ),
-                  errorWidget: (context, url, error) => SizedBox(
-                    width: context.flagHeight24,
-                    height: context.flagHeight24,
-                    child: Image.asset('images/splash.png'),
+                    errorWidget: (context, url, error) => SizedBox(
+                      width: context.flagHeight24,
+                      height: context.flagHeight24,
+                      child: Image.asset('images/splash.png'),
+                    ),
                   ),
                 ),
               ),

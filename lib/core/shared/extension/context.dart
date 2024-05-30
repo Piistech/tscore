@@ -180,5 +180,7 @@ extension BuildContextExtension on BuildContext {
   double get verticalMargin40 => 40.h;
 
   double get flagHeight24 => 24.h;
+  double get flagWidth48 => 48.h;
+  double get flagHeight36 => 36.h;
   double get navBarHeight => 54.h;
 }

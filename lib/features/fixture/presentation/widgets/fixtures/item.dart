@@ -234,6 +234,7 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                     SizedBox(width: context.horizontalMargin8),
                     Container(
                       alignment: Alignment.center,
+                      clipBehavior: Clip.antiAlias,
                       padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(context.radius5),
