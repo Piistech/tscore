@@ -1,4 +1,3 @@
-import 'package:tscore/features/prediction/domain/usecases/predictions.dart';
 
 import '../../../../core/shared/shared.dart';
 import '../../../fixture/fixture.dart';

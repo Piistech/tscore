@@ -11,6 +11,7 @@ Future<void> _setupDependencies() async {
     _commentary,
     _team,
     _analysis,
+    _lookup,
   ]);
 }
 
@@ -286,6 +287,32 @@ Future<void> get _analysis async {
 
   sl.registerLazySingleton<AnalysisRemoteDataSource>(
     () => AnalysisRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+}
+Future<void> get _lookup async {
+  sl.registerFactory(
+    () => LookupBloc(
+      usecase: sl(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => LookupUsecase(
+      repository: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<LookupRepository>(
+    () => LookupRepositoryImpl(
+      network: sl(),
+      remote: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<LookupRemoteDataSource>(
+    () => LookupRemoteDataSourceImpl(
       client: sl(),
     ),
   );

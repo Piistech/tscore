@@ -19,3 +19,5 @@ export 'presentation/widgets/fragments/upcoming.dart';
 export 'package:tscore/core/shared/extension/prediction.dart';
 export 'presentation/bloc/predictions_bloc.dart';
 export 'presentation/widgets/shimmer/item.dart';
+
+export 'domain/usecases/predictions.dart';

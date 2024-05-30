@@ -2,6 +2,7 @@ import '../../../../core/config/config.dart';
 import '../../../../core/shared/shared.dart';
 import '../../../fixture/fixture.dart';
 import '../../../live_audio/live_audio.dart';
+import '../../../lookup/lookup.dart';
 import '../../../more/presentation/pages/more.dart';
 import '../../home.dart';
 
@@ -24,10 +25,10 @@ class _HomePageState extends State<HomePage> {
     fragments = [
       const FixturesPage(),
       const LiveRadioPage(),
-      BlocProvider(
-        create: (context) => sl<PredictionsBloc>()..add(const Fetch()),
-        child: const PredictionsPage(),
-      ),
+      MultiBlocProvider(providers: [
+        BlocProvider(create: (context) => sl<LookupBloc>()..add(const FetchLookup(key: 'adKey'))),
+        BlocProvider(create: (context) => sl<PredictionsBloc>()..add(const Fetch())),
+      ], child: const PredictionsPage()),
       const MorePage(),
     ];
 

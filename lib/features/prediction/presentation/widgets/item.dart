@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../../../../core/config/config.dart';
 import '../../../../core/shared/shared.dart';
 import '../../../fixture/fixture.dart';
+import '../../../lookup/lookup.dart';
 import '../../../team/team.dart';
 import 'team.dart';
 
@@ -104,59 +105,70 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                 ),
               ),
               SizedBox(height: context.verticalMargin8),
-              Align(
-                alignment: Alignment.centerRight,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(context.radius5),
-                  onTap: () async {
-                    setState(() {
-                      isAddLoaded = true;
-                    });
-                    await RewardedAd.loadWithAdManagerAdRequest(
-                      adUnitId: adUnitId,
-                      adManagerRequest: const AdManagerAdRequest(),
-                      rewardedAdLoadCallback: RewardedAdLoadCallback(
-                        onAdLoaded: (RewardedAd ad) async {
-                          await ad.show(
-                            onUserEarnedReward: (view, reward) {
-                              context.pushNamed(
-                                FixtureDetailsPage.name,
-                                pathParameters: {
-                                  'id': widget.predictionModel.guid,
-                                },
-                              );
-                            },
+              BlocBuilder<LookupBloc, LookupState>(
+                builder: (context, state) {
+                  if (state is LookupLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is LookupDone) {
+                    final adUnitId = state.lookups.firstOrNull;
+                    return Align(
+                      alignment: Alignment.centerRight,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(context.radius5),
+                        onTap: () async {
+                          setState(() {
+                            isAddLoaded = true;
+                          });
+                          await RewardedAd.loadWithAdManagerAdRequest(
+                            adUnitId: adUnitId!.dataValue,
+                            adManagerRequest: const AdManagerAdRequest(),
+                            rewardedAdLoadCallback: RewardedAdLoadCallback(
+                              onAdLoaded: (RewardedAd ad) async {
+                                await ad.show(
+                                  onUserEarnedReward: (view, reward) {
+                                    context.pushNamed(
+                                      FixtureDetailsPage.name,
+                                      pathParameters: {
+                                        'id': widget.predictionModel.guid,
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                              onAdFailedToLoad: (LoadAdError error) {},
+                            ),
                           );
                         },
-                        onAdFailedToLoad: (LoadAdError error) {},
+                        child: isAddLoaded
+                            ? Container(
+                                width: 72.w,
+                                height: 20.h,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(context.radius5),
+                                  color: theme.backgroundTertiary,
+                                ),
+                                child: const CupertinoActivityIndicator(),
+                              )
+                            : Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(context.radius5),
+                                  color: theme.backgroundTertiary,
+                                ),
+                                child: Text(
+                                  "Prediction",
+                                  style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                ),
+                              ),
                       ),
                     );
-                  },
-                  child: isAddLoaded
-                      ? Container(
-                          width: 72.w,
-                          height: 20.h,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(context.radius5),
-                            color: theme.backgroundTertiary,
-                          ),
-                          child: const CupertinoActivityIndicator(),
-                        )
-                      : Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(context.radius5),
-                            color: theme.backgroundTertiary,
-                          ),
-                          child: Text(
-                            "Prediction",
-                            style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
-                          ),
-                        ),
-                ),
+                  } else {
+                    return Container();
+                  }
+                },
               ),
             ],
           ),

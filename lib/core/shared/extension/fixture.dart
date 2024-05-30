@@ -4,7 +4,7 @@ import '../../../features/fixture/domain/entities/fixtures.dart';
 
 extension FixtureEntityExtension on FixturesEntity {
   String get title {
-    return '$matchTitle, $matchDescription';
+    return matchTitle;
   }
 
   bool get isLive {
@@ -16,7 +16,7 @@ extension FixtureEntityExtension on FixturesEntity {
 
   bool get isUpcoming {
     final now = DateTime.now();
-    return (startedAt.isAfter(now));
+    return !isToday && (startedAt.isAfter(now));
   }
 
   bool get isToday {

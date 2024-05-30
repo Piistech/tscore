@@ -1,4 +1,3 @@
-import 'package:tscore/features/more/presentation/widgets/privacy_policy.dart';
 
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';
@@ -15,8 +14,10 @@ final router = GoRouter(
     GoRoute(
       path: HomePage.path,
       name: HomePage.name,
-      builder: (context, state) => BlocProvider(
-        create: (context) => sl<FixturesBloc>()..add(const FetchFixtures()),
+      builder: (context, state) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => sl<FixturesBloc>()..add(const FetchFixtures())),
+        ],
         child: const HomePage(),
       ),
     ),
@@ -31,10 +32,7 @@ final router = GoRouter(
     GoRoute(
       path: PredictionsPage.path,
       name: PredictionsPage.name,
-      builder: (context, state) => BlocProvider(
-        create: (context) => sl<PredictionsBloc>()..add(const Fetch()),
-        child: const PredictionsPage(),
-      ),
+      builder: (context, state) => const PredictionsPage(),
     ),
     GoRoute(
       path: MorePage.path,
@@ -45,8 +43,7 @@ final router = GoRouter(
         path: PrivacyPolicyPage.path,
         name: PrivacyPolicyPage.name,
         builder: (context, state) {
-          final Map<String, dynamic>? arguments =
-              state.extra as Map<String, dynamic>?;
+          final Map<String, dynamic>? arguments = state.extra as Map<String, dynamic>?;
           final String header = arguments?['header'] as String;
           final String link = arguments?['link'] as String;
           return PrivacyPolicyPage(
@@ -69,18 +66,9 @@ final router = GoRouter(
         final String guid = state.pathParameters['id']!;
         return MultiBlocProvider(
           providers: [
-            BlocProvider(
-              create: (context) =>
-                  sl<FindFixtureByIdBloc>()..add(FindFixtureById(guid: guid)),
-            ),
-            BlocProvider(
-              create: (context) =>
-                  sl<AnalysisBloc>()..add(FetchAnalysis(fixtureGuid: guid)),
-            ),
-            BlocProvider(
-              create: (context) =>
-                  sl<PredictionBloc>()..add(FetchPrediction(fixtureGuid: guid)),
-            ),
+            BlocProvider(create: (context) => sl<FindFixtureByIdBloc>()..add(FindFixtureById(guid: guid))),
+            BlocProvider(create: (context) => sl<AnalysisBloc>()..add(FetchAnalysis(fixtureGuid: guid))),
+            BlocProvider(create: (context) => sl<PredictionBloc>()..add(FetchPrediction(fixtureGuid: guid))),
           ],
           child: FixtureDetailsPage(
             guid: guid,

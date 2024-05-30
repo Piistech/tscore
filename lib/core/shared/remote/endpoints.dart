@@ -9,6 +9,7 @@ class RemoteEndpoints {
   static Uri get analysis => Uri.parse('$_baseUrl/get-analysis');
 
   static Uri get commentary => Uri.parse('$_baseUrl/get-commentary');
+  static Uri get lookup => Uri.parse('$_baseUrl/get-lookup-by-key');
 
   static Uri get team => Uri.parse('$_baseUrl/get-team');
 }
