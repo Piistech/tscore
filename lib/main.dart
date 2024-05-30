@@ -31,11 +31,19 @@ class MainApp extends StatelessWidget {
         return BlocBuilder<ThemeBloc, ThemeState>(
           builder: (_, state) {
             final theme = state.scheme;
-            return MaterialApp.router(
-              routerConfig: router,
-              debugShowCheckedModeBanner: false,
-              theme: AppConfig.theme(context: context, theme: theme),
-              darkTheme: AppConfig.theme(context: context, theme: theme),
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaler: const TextScaler.linear(1).clamp(
+                  maxScaleFactor: 1.2,
+                  minScaleFactor: 0.7,
+                ),
+              ),
+              child: MaterialApp.router(
+                routerConfig: router,
+                debugShowCheckedModeBanner: false,
+                theme: AppConfig.theme(context: context, theme: theme),
+                darkTheme: AppConfig.theme(context: context, theme: theme),
+              ),
             );
           },
         );

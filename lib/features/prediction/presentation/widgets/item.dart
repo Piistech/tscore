@@ -55,7 +55,7 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                 children: [
                   Expanded(
                     child: Text(
-                      "${widget.predictionModel.matchTitle},${widget.predictionModel.stadiumName}",
+                      widget.predictionModel.predictionMatchName,
                       style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
                     ),
                   ),

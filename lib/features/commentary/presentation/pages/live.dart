@@ -27,6 +27,7 @@ class LivePage extends StatelessWidget {
                 );
               } else if (state is FindFixtureByIdDone) {
                 final fixture = state.fixture;
+
                 return ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
@@ -98,7 +99,29 @@ class LivePage extends StatelessWidget {
                                           ),
                                         ),
                                         SizedBox(width: context.horizontalMargin4),
-                                        BlocBuilder<CommentaryBloc, CommentaryState>(
+                                        BlocConsumer<CommentaryBloc, CommentaryState>(
+                                          listener: (context, state) {
+                                            if (state is CommentaryDone) {
+                                              final String channelId = state.commentary.channelId;
+                                              final currentlyPlayingState =
+                                                  context.read<CurrentlyPlayingCommentaryBloc>().state;
+                                              final bool isPlaying =
+                                                  currentlyPlayingState is CurrentlyPlayingCommentaryChannel &&
+                                                      currentlyPlayingState.channelId == channelId;
+
+                                              if (!isPlaying && fixture.isLive) {
+                                                context.read<PlayCommentaryBloc>().add(
+                                                      PlayCommentary(
+                                                        channelId: channelId,
+                                                        token: state.commentary.token,
+                                                        fixtureGuid: fixture.guid,
+                                                        fixtureIcon: fixture.logo,
+                                                        matchName: fixture.matchTitle,
+                                                      ),
+                                                    );
+                                              }
+                                            }
+                                          },
                                           builder: (context, state) {
                                             if (state is CommentaryDone) {
                                               final String channelId = state.commentary.channelId;

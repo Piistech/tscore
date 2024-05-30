@@ -31,15 +31,6 @@ class _HomePageState extends State<HomePage> {
       ], child: const PredictionsPage()),
       const MorePage(),
     ];
-
-    /*
-    
-    The code snippet in the if block provided checks for an update using InAppUpdate.checkForUpdate(). 
-    If an update is available, it performs an immediate update using InAppUpdate.performImmediateUpdate(). 
-    If the update is successful (AppUpdateResult.success), it executes the code inside the if block.
-
-    */
-
     if (kReleaseMode) {
       InAppUpdate.checkForUpdate().then(
         (event) {
@@ -67,17 +58,11 @@ class _HomePageState extends State<HomePage> {
             leadingWidth: 30.w,
             leading: Padding(
               padding: EdgeInsets.only(left: context.horizontalMargin10),
-              child: CachedNetworkImage(
-                imageUrl: "images/splash.png",
+              child: Image.asset(
+                "images/splash.png",
                 fit: BoxFit.cover,
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                errorWidget: (context, url, error) => SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 538.h,
-                  child: Image.asset('images/splash.png'),
-                ),
+                width: MediaQuery.of(context).size.width,
+                height: 538.h,
               ),
             ),
             title: Container(
@@ -207,7 +192,7 @@ class SelectedNavItem extends StatelessWidget {
               SizedBox(width: context.horizontalMargin2),
               Text(
                 title,
-                style: context.textStyle17Regular(color: theme.backgroundPrimary).copyWith(height: 1.2),
+                style: context.textStyle14Medium(color: theme.backgroundPrimary).copyWith(height: 1.2),
               ),
             ],
           ),
@@ -237,18 +222,21 @@ class UnselectedNavItem extends StatelessWidget {
         final theme = state.scheme;
         return InkWell(
           onTap: onTap,
-          child: SvgPicture.asset(
-            icon,
-            colorFilter: ColorFilter.mode(
-              theme.textPrimary,
-              BlendMode.srcIn,
-            ),
-            width: 24.w,
-            height: 24.h,
-          ).animate()
-            ..moveX(
-              duration: const Duration(milliseconds: 300),
-            ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin16),
+            child: SvgPicture.asset(
+              icon,
+              colorFilter: ColorFilter.mode(
+                theme.textPrimary,
+                BlendMode.srcIn,
+              ),
+              width: 24.w,
+              height: 24.h,
+            ).animate()
+              ..moveX(
+                duration: const Duration(milliseconds: 300),
+              ),
+          ),
         );
       },
     );

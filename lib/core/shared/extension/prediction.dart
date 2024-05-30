@@ -7,6 +7,10 @@ extension PredictionEntityExtension on PredictionsEntity {
     return '$matchTitle, $matchDescription';
   }
 
+  String get predictionMatchName {
+    return '$matchTitle ${stadiumName.isEmpty ? "" : "at $stadiumName"}';
+  }
+
   bool get isLive {
     return (result == "" &&
         isCompleted == false &&

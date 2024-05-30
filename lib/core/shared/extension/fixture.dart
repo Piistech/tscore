@@ -27,6 +27,7 @@ extension FixtureEntityExtension on FixturesEntity {
   bool get willLiveToday {
     return !isLive && isToday;
   }
+
   bool get isTomorrow {
     final now = DateTime.now();
     final DateTime tomorrow = now.add(const Duration(days: 1));
@@ -46,6 +47,6 @@ extension FixtureEntityExtension on FixturesEntity {
   }
 
   String get startDate {
-    return DateFormat("dd MMMM yyyy, EEEE 'at' hh:mm a").format(startedAt);
+    return DateFormat("dd MMMM yyyy, EEE 'at' hh:mm a").format(startedAt);
   }
 }

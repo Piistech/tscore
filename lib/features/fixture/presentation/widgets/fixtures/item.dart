@@ -235,14 +235,17 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                     Container(
                       alignment: Alignment.center,
                       clipBehavior: Clip.antiAlias,
-                      padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.horizontalMargin4,
+                        vertical: context.verticalMargin4,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(context.radius5),
                         color: theme.backgroundTertiary,
                       ),
                       child: Text(
                         widget.fixture.startDate,
-                        style: context.textStyle10Regular(color: theme.textPrimary).copyWith(height: 1.2),
+                        style: context.textStyle10Medium(color: theme.textPrimary).copyWith(fontSize: 10.sp, height: 1.2),
                       ),
                     ),
                   ],

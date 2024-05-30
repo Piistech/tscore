@@ -175,7 +175,7 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                                       ),
                                       SizedBox(width: context.horizontalMargin8),
                                       Text(
-                                        "Positive",
+                                        "Strong",
                                         style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
                                       ),
                                     ],
