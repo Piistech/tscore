@@ -60,9 +60,9 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(left: context.horizontalMargin10),
               child: Image.asset(
                 "images/splash.png",
-                fit: BoxFit.cover,
-                width: MediaQuery.of(context).size.width,
-                height: 538.h,
+                fit: BoxFit.contain,
+                width: 36.w,
+                height: 36.h,
               ),
             ),
             title: Container(

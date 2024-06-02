@@ -22,8 +22,7 @@ Future<void> get _core async {
 
   sl.registerLazySingleton(() => Client());
   sl.registerLazySingleton<AgoraManager>(() => AgoraManager.instance);
-  sl.registerLazySingleton<NotificationManager>(
-      () => NotificationManager.instance);
+  sl.registerLazySingleton<NotificationManager>(() => NotificationManager.instance);
   sl.registerLazySingleton(() => InternetConnectionChecker());
   sl.registerLazySingleton(
     () => List<AddressCheckOptions>.unmodifiable(
@@ -208,6 +207,16 @@ Future<void> get _prediction async {
       repository: sl(),
     ),
   );
+  sl.registerFactory<FindPredictionByIdUseCase>(
+    () => FindPredictionByIdUseCase(
+      repository: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => FindPredictionByIdBloc(
+      useCase: sl(),
+    ),
+  );
 
   sl.registerLazySingleton<PredictionRepository>(
     () => PredictionRepositoryImpl(
@@ -291,6 +300,7 @@ Future<void> get _analysis async {
     ),
   );
 }
+
 Future<void> get _lookup async {
   sl.registerFactory(
     () => LookupBloc(

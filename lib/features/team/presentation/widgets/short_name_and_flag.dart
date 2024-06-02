@@ -25,13 +25,14 @@ class TeamShortNameAndFlagWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(1),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(context.radius52),
-                  color: theme.warning,
+                  color: theme.warning.withOpacity(.2),
                 ),
                 child: ClipOval(
                   child: CachedNetworkImage(
                     imageUrl: team.flag,
                     height: context.flagHeight24,
                     width: context.flagHeight24,
+                    fit: BoxFit.cover,
                     placeholder: (context, url) => SizedBox(
                       width: context.flagHeight24,
                       height: context.flagHeight24,

@@ -1,6 +1,5 @@
 
 import '../../../../core/shared/shared.dart';
-import '../../domain/entities/prediction_list.dart';
 
 class PredictionsModel extends PredictionsEntity {
   const PredictionsModel({

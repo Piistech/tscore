@@ -1,6 +1,5 @@
-import 'package:tscore/features/prediction/data/models/prediction_list_model.dart';
 
-import '../models/prediction.dart';
+import '../../prediction.dart';
 
 abstract class PredictionRemoteDataSource {
   Future<PredictionModel> fetch ({
@@ -8,4 +7,8 @@ abstract class PredictionRemoteDataSource {
   });
 
   Future<List<PredictionsModel>> get predictions;
+
+    Future<PredictionsModel> findById ({
+    required String fixtureGuid,
+  });
 }

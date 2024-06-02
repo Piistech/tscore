@@ -2,6 +2,7 @@ import '../../../../core/shared/shared.dart';
 import '../../../analysis/analysis.dart';
 import '../../../homepage/presentation/pages/home.dart';
 import '../../fixture.dart';
+import '../widgets/details/result.dart';
 
 class FixtureDetailsPage extends StatelessWidget {
   final String guid;
@@ -16,7 +17,9 @@ class FixtureDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const MatchTitleWidget(),
+        title: MatchTitleWidget(
+          fixtureGuid: guid,
+        ),
         leading: BackButton(
           onPressed: () {
             context.pushReplacementNamed(HomePage.name);
@@ -32,6 +35,8 @@ class FixtureDetailsPage extends StatelessWidget {
           AnalysisWidget(fixtureGuid: guid),
           SizedBox(height: context.verticalMargin16),
           PredictionWidget(fixtureGuid: guid),
+          SizedBox(height: context.verticalMargin16),
+          MatchResult(fixtureGuid: guid),
         ],
       ),
     );

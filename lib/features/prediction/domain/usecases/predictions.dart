@@ -1,5 +1,4 @@
 import '../../../../core/shared/shared.dart';
-import '../entities/prediction_list.dart';
 
 class PredictionsUsecase {
   final PredictionRepository repository;

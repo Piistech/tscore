@@ -1,6 +1,5 @@
 
 import '../../../../core/shared/shared.dart';
-import '../../../fixture/fixture.dart';
 
 part 'predictions_event.dart';
 part 'predictions_state.dart';

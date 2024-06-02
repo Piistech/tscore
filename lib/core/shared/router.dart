@@ -1,4 +1,5 @@
 
+
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';
 import '../../features/fixture/fixture.dart';
@@ -66,7 +67,7 @@ final router = GoRouter(
         final String guid = state.pathParameters['id']!;
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => sl<FindFixtureByIdBloc>()..add(FindFixtureById(guid: guid))),
+            BlocProvider(create: (context) => sl<FindPredictionByIdBloc>()..add(FindPredictionById(guid: guid))),
             BlocProvider(create: (context) => sl<AnalysisBloc>()..add(FetchAnalysis(fixtureGuid: guid))),
             BlocProvider(create: (context) => sl<PredictionBloc>()..add(FetchPrediction(fixtureGuid: guid))),
           ],
