@@ -30,7 +30,7 @@ class _MatchTitleWidgetState extends State<MatchTitleWidget> {
             if (state is FindPredictionByIdDone) {
               final prediction = state.prediction;
               return Text(
-                prediction.title,
+                prediction.predictionMatchName,
                 style: context.textStyle17Medium(color: theme.textPrimary),
               );
             }
