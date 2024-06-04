@@ -6,11 +6,13 @@ class PrivacyPolicyPage extends StatelessWidget {
   final String headerText;
   final String link;
 
-  const PrivacyPolicyPage({super.key, required this.headerText, required this.link});
- Future<String> get _url async {
+  const PrivacyPolicyPage(
+      {super.key, required this.headerText, required this.link});
+  Future<String> get _url async {
     await Future.delayed(const Duration(seconds: 1));
     return link;
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -23,7 +25,8 @@ class PrivacyPolicyPage extends StatelessWidget {
             automaticallyImplyLeading: true,
             title: Text(
               "T Score Radio $headerText",
-              style: TextStyles.title(context: context, color: theme.textPrimary),
+              style:
+                  TextStyles.title(context: context, color: theme.textPrimary),
             ),
           ),
           body: FutureBuilder(

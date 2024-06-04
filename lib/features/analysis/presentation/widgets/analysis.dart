@@ -1,3 +1,5 @@
+import 'package:tscore/features/homepage/presentation/pages/home.dart';
+
 import '../../../../core/shared/shared.dart';
 
 import '../../../../core/config/config.dart';
@@ -26,6 +28,13 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
   }
 
   @override
+  void dispose() {
+    context.read<AnalysisBloc>().close();
+    context.goNamed(HomePage.name);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, state) {
@@ -41,7 +50,8 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                       child: Text(
                         textAlign: TextAlign.center,
                         "No analysis found",
-                        style: TextStyles.title(context: context, color: theme.textPrimary),
+                        style: TextStyles.title(
+                            context: context, color: theme.textPrimary),
                       ),
                     )
                   : ListView(
@@ -54,12 +64,16 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                             children: [
                               TextSpan(
                                 text: "Team Analysis",
-                                style: context.textStyle20Medium(color: theme.textPrimary),
+                                style: context.textStyle20Medium(
+                                    color: theme.textPrimary),
                               ),
-                              WidgetSpan(child: SizedBox(width: context.horizontalMargin4)),
+                              WidgetSpan(
+                                  child: SizedBox(
+                                      width: context.horizontalMargin4)),
                               TextSpan(
                                 text: "(Last 5 matches)",
-                                style: context.textStyle12Medium(color: theme.textPrimary),
+                                style: context.textStyle12Medium(
+                                    color: theme.textPrimary),
                               ),
                             ],
                           ),
@@ -68,7 +82,8 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                         Container(
                           decoration: BoxDecoration(
                             color: theme.backgroundSecondary,
-                            borderRadius: BorderRadius.circular(context.radius10),
+                            borderRadius:
+                                BorderRadius.circular(context.radius10),
                           ),
                           padding: EdgeInsets.symmetric(
                             horizontal: context.horizontalMargin19,
@@ -81,13 +96,17 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                             children: [
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     flex: 1,
                                     child: Text(
                                       "Bat/Bowl Fronts",
-                                      style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                      style: context
+                                          .textStyle10Medium(
+                                              color: theme.textPrimary)
+                                          .copyWith(height: 1.2),
                                     ),
                                   ),
                                   Expanded(
@@ -117,7 +136,8 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                               ListView.separated(
                                 padding: EdgeInsets.zero,
                                 separatorBuilder: (context, index) {
-                                  return SizedBox(height: context.verticalMargin20);
+                                  return SizedBox(
+                                      height: context.verticalMargin20);
                                 },
                                 itemCount: state.analysis.factors.length,
                                 shrinkWrap: true,
@@ -125,8 +145,10 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                                 itemBuilder: (context, index) {
                                   final factor = state.analysis.factors[index];
                                   return Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
                                         flex: 1,
@@ -134,7 +156,10 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             factor.label,
-                                            style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                            style: context
+                                                .textStyle10Medium(
+                                                    color: theme.textPrimary)
+                                                .copyWith(height: 1.2),
                                           ),
                                         ),
                                       ),
@@ -162,7 +187,8 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                               ),
                               SizedBox(height: context.verticalMargin16),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Row(
                                     children: [
@@ -173,10 +199,14 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                                           color: theme.positive,
                                         ),
                                       ),
-                                      SizedBox(width: context.horizontalMargin8),
+                                      SizedBox(
+                                          width: context.horizontalMargin8),
                                       Text(
                                         "Strong",
-                                        style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                        style: context
+                                            .textStyle10Medium(
+                                                color: theme.textPrimary)
+                                            .copyWith(height: 1.2),
                                       ),
                                     ],
                                   ),
@@ -189,10 +219,14 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                                           color: theme.warning,
                                         ),
                                       ),
-                                      SizedBox(width: context.horizontalMargin8),
+                                      SizedBox(
+                                          width: context.horizontalMargin8),
                                       Text(
                                         "Avg",
-                                        style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                        style: context
+                                            .textStyle10Medium(
+                                                color: theme.textPrimary)
+                                            .copyWith(height: 1.2),
                                       ),
                                     ],
                                   ),
@@ -205,10 +239,14 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                                           color: theme.negative,
                                         ),
                                       ),
-                                      SizedBox(width: context.horizontalMargin8),
+                                      SizedBox(
+                                          width: context.horizontalMargin8),
                                       Text(
                                         "Weak",
-                                        style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                        style: context
+                                            .textStyle10Medium(
+                                                color: theme.textPrimary)
+                                            .copyWith(height: 1.2),
                                       ),
                                     ],
                                   ),

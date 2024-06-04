@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-
 import '../../../../core/shared/shared.dart';
 import '../../fixture.dart';
 
@@ -21,27 +20,9 @@ class _FixturesPageState extends State<FixturesPage>
   @override
   void initState() {
     super.initState();
-    // BackButtonInterceptor.add(myInterceptor);
 
     tabController = TabController(length: 2, vsync: this);
   }
-
-  // @override
-  // void dispose() {
-  //   BackButtonInterceptor.remove(myInterceptor);
-  //   super.dispose();
-  // }
-
-  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-  //   if (context.read<HomeNavigatorCubit>().currentIndex == 0) {
-  //     log("if");
-  //     return true;
-  //   } else {
-  //     log("else");
-  //     context.read<HomeNavigatorCubit>().setCurrentIndex(0);
-  //     return false;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
