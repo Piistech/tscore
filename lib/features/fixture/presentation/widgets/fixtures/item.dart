@@ -112,7 +112,7 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                   child: Text(
                     widget.fixture.matchDescription,
                     style: context
-                        .textStyle10Regular(color: theme.textPrimary)
+                        .textStyle12Medium(color: theme.textPrimary)
                         .copyWith(height: 1.2),
                   ),
                 ),
@@ -272,8 +272,8 @@ class _FixtureItemWidgetState extends State<FixtureItemWidget> {
                       child: Text(
                         widget.fixture.startDate,
                         style: context
-                            .textStyle10Medium(color: theme.textPrimary)
-                            .copyWith(fontSize: 12.sp, height: 1.2),
+                            .textStyle12Medium(color: theme.textPrimary)
+                            .copyWith(height: 1.2),
                       ),
                     ),
                   ],
