@@ -1,3 +1,5 @@
+import 'package:tscore/core/shared/home_navigator/home_navigator_cubit.dart';
+
 import 'core/config/config.dart';
 import 'core/shared/shared.dart';
 import 'features/commentary/commentary.dart';
@@ -11,6 +13,7 @@ void main() async {
         BlocProvider(create: (_) => sl<ThemeBloc>()),
         BlocProvider(create: (_) => sl<LiveCommentaryStatusBloc>()),
         BlocProvider(create: (_) => sl<CurrentlyPlayingCommentaryBloc>()),
+        BlocProvider(create: (_) => sl<HomeNavigatorCubit>()),
       ],
       child: const MainApp(),
     ),

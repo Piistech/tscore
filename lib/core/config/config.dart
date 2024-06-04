@@ -1,5 +1,6 @@
 library config;
 
+import 'package:tscore/core/shared/home_navigator/home_navigator_cubit.dart';
 
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';
@@ -27,14 +28,16 @@ class AppConfig {
     // Initialize the configurations
     await _setupDependencies();
 
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
 
     final notification = sl<NotificationManager>();
     notification.initialize();
 
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: sl<ThemeBloc>().state.scheme.backgroundPrimary,
+        systemNavigationBarColor:
+            sl<ThemeBloc>().state.scheme.backgroundPrimary,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
     );
@@ -55,7 +58,8 @@ class AppConfig {
           isDense: true,
           filled: true,
           fillColor: theme.backgroundSecondary,
-          labelStyle: TextStyles.body(context: context, color: theme.textPrimary),
+          labelStyle:
+              TextStyles.body(context: context, color: theme.textPrimary),
           contentPadding: const EdgeInsets.all(16.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -96,11 +100,13 @@ class AppConfig {
           style: TextButton.styleFrom(
             elevation: 3,
             backgroundColor: Colors.white,
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+            shape:
+                const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           ),
         ),
-        textSelectionTheme: TextSelectionThemeData(cursorColor: theme.textPrimary),
+        textSelectionTheme:
+            TextSelectionThemeData(cursorColor: theme.textPrimary),
         iconTheme: IconThemeData(color: theme.textPrimary, size: 20),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         appBarTheme: AppBarTheme(

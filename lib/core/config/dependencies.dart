@@ -12,7 +12,14 @@ Future<void> _setupDependencies() async {
     _team,
     _analysis,
     _lookup,
+    _homeNavigator,
   ]);
+}
+
+Future<void> get _homeNavigator async {
+  sl.registerFactory(
+    () => HomeNavigatorCubit(),
+  );
 }
 
 Future<void> get _core async {
@@ -22,7 +29,8 @@ Future<void> get _core async {
 
   sl.registerLazySingleton(() => Client());
   sl.registerLazySingleton<AgoraManager>(() => AgoraManager.instance);
-  sl.registerLazySingleton<NotificationManager>(() => NotificationManager.instance);
+  sl.registerLazySingleton<NotificationManager>(
+      () => NotificationManager.instance);
   sl.registerLazySingleton(() => InternetConnectionChecker());
   sl.registerLazySingleton(
     () => List<AddressCheckOptions>.unmodifiable(

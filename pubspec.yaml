@@ -9,6 +9,7 @@ environment:
 dependencies:
   agora_rtc_engine: ^6.3.0
   app_settings: ^5.1.1
+  back_button_interceptor: ^7.0.3
   bloc: ^8.1.1
   cached_network_image: ^3.2.3
   either_dart: ^1.0.0

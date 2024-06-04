@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:tscore/core/shared/home_navigator/home_navigator_cubit.dart';
+
 import '../../../../core/config/config.dart';
 import '../../../../core/shared/shared.dart';
 import '../../../fixture/fixture.dart';
@@ -16,18 +21,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentIndex = 0;
-
   late final List<Widget> fragments;
   @override
   void initState() {
     super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+
     fragments = [
       const FixturesPage(),
       const LiveRadioPage(),
       MultiBlocProvider(providers: [
-        BlocProvider(create: (context) => sl<LookupBloc>()..add(const FetchLookup(key: 'adKey'))),
-        BlocProvider(create: (context) => sl<PredictionsBloc>()..add(const Fetch())),
+        BlocProvider(
+            create: (context) =>
+                sl<LookupBloc>()..add(const FetchLookup(key: 'adKey'))),
+        BlocProvider(
+            create: (context) => sl<PredictionsBloc>()..add(const Fetch())),
       ], child: const PredictionsPage()),
       const MorePage(),
     ];
@@ -38,7 +46,8 @@ class _HomePageState extends State<HomePage> {
             InAppUpdate.performImmediateUpdate().then(
               (result) {
                 if (result == AppUpdateResult.success) {
-                  TaskNotifier.instance.success(context, message: "App updated successfully");
+                  TaskNotifier.instance
+                      .success(context, message: "App updated successfully");
                 }
               },
             );
@@ -49,102 +58,144 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    // log("$stopDefaultButtonEvent, ${info.currentRoute(context)?.settings.name}");
+
+    if (context.read<HomeNavigatorCubit>().currentIndex != 0) {
+      context.read<HomeNavigatorCubit>().setCurrentIndex(0);
+      log("if");
+      return true;
+    } else {
+      log("else");
+      context.read<HomeNavigatorCubit>().setCurrentIndex(0);
+      return false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, state) {
-        final theme = state.scheme;
-        return Scaffold(
-          appBar: AppBar(
-            leadingWidth: 30.w,
-            leading: Padding(
-              padding: EdgeInsets.only(left: context.horizontalMargin10),
-              child: Image.asset(
-                "images/splash.png",
-                fit: BoxFit.contain,
-                width: 36.w,
-                height: 36.h,
-              ),
-            ),
-            title: Container(
-              margin: EdgeInsets.only(left: context.horizontalMargin8),
-              child: Text(
-                "T-Score",
-                style: context.textStyle17MediumZenDots(color: theme.textPrimary),
-              ),
-            ),
-            automaticallyImplyLeading: false,
-          ),
-          body: fragments.elementAt(currentIndex),
-          bottomNavigationBar: PhysicalModel(
-            color: theme.backgroundTertiary,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.horizontalMargin15,
-                vertical: context.verticalMargin11,
-              ).copyWith(bottom: (context.bottomInset / 2) + context.verticalMargin11),
-              width: double.maxFinite,
-              height: 54.h + (context.bottomInset / 2),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  currentIndex == 0
-                      ? SelectedNavItem(
-                          icon: "images/icons/home.svg",
-                          title: "Home",
-                          index: 0,
-                          previous: currentIndex,
-                        )
-                      : UnselectedNavItem(
-                          icon: "images/icons/home.svg",
-                          onTap: () {
-                            setState(() => currentIndex = 0);
-                          },
-                        ),
-                  currentIndex == 1
-                      ? SelectedNavItem(
-                          icon: "images/icons/live.svg",
-                          title: "Live Radio",
-                          index: 1,
-                          previous: currentIndex,
-                        )
-                      : UnselectedNavItem(
-                          icon: "images/icons/live.svg",
-                          onTap: () {
-                            setState(() => currentIndex = 1);
-                          },
-                        ),
-                  currentIndex == 2
-                      ? SelectedNavItem(
-                          icon: "images/icons/prediction.svg",
-                          title: "Prediction",
-                          index: 2,
-                          previous: currentIndex,
-                        )
-                      : UnselectedNavItem(
-                          icon: "images/icons/prediction.svg",
-                          onTap: () {
-                            setState(() => currentIndex = 2);
-                          },
-                        ),
-                  currentIndex == 3
-                      ? SelectedNavItem(
-                          icon: "images/icons/more.svg",
-                          title: "More",
-                          index: 3,
-                          previous: currentIndex,
-                        )
-                      : UnselectedNavItem(
-                          icon: "images/icons/more.svg",
-                          onTap: () {
-                            setState(() => currentIndex = 3);
-                          },
-                        ),
-                ],
-              ),
-            ),
-          ),
-        );
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        log("didPop: $didPop");
       },
+      child: BlocBuilder<HomeNavigatorCubit, int>(
+        builder: (context, state) {
+          int currentIndex = state;
+          return BlocBuilder<ThemeBloc, ThemeState>(
+            builder: (context, state) {
+              final theme = state.scheme;
+              return Scaffold(
+                appBar: AppBar(
+                  leadingWidth: 30.w,
+                  leading: Padding(
+                    padding: EdgeInsets.only(left: context.horizontalMargin10),
+                    child: Image.asset(
+                      "images/splash.png",
+                      fit: BoxFit.contain,
+                      width: 36.w,
+                      height: 36.h,
+                    ),
+                  ),
+                  title: Container(
+                    margin: EdgeInsets.only(left: context.horizontalMargin8),
+                    child: Text(
+                      "T-Score",
+                      style: context.textStyle17MediumZenDots(
+                          color: theme.textPrimary),
+                    ),
+                  ),
+                  automaticallyImplyLeading: false,
+                ),
+                body: fragments.elementAt(currentIndex),
+                bottomNavigationBar: PhysicalModel(
+                  color: theme.backgroundTertiary,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.horizontalMargin15,
+                      vertical: context.verticalMargin11,
+                    ).copyWith(
+                        bottom: (context.bottomInset / 2) +
+                            context.verticalMargin11),
+                    width: double.maxFinite,
+                    height: 54.h + (context.bottomInset / 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        currentIndex == 0
+                            ? SelectedNavItem(
+                                icon: "images/icons/home.svg",
+                                title: "Home",
+                                index: 0,
+                                previous: currentIndex,
+                              )
+                            : UnselectedNavItem(
+                                icon: "images/icons/home.svg",
+                                onTap: () {
+                                  context
+                                      .read<HomeNavigatorCubit>()
+                                      .setCurrentIndex(0);
+                                },
+                              ),
+                        currentIndex == 1
+                            ? SelectedNavItem(
+                                icon: "images/icons/live.svg",
+                                title: "Live Radio",
+                                index: 1,
+                                previous: currentIndex,
+                              )
+                            : UnselectedNavItem(
+                                icon: "images/icons/live.svg",
+                                onTap: () {
+                                  context
+                                      .read<HomeNavigatorCubit>()
+                                      .setCurrentIndex(1);
+                                },
+                              ),
+                        currentIndex == 2
+                            ? SelectedNavItem(
+                                icon: "images/icons/prediction.svg",
+                                title: "Prediction",
+                                index: 2,
+                                previous: currentIndex,
+                              )
+                            : UnselectedNavItem(
+                                icon: "images/icons/prediction.svg",
+                                onTap: () {
+                                  context
+                                      .read<HomeNavigatorCubit>()
+                                      .setCurrentIndex(2);
+                                },
+                              ),
+                        currentIndex == 3
+                            ? SelectedNavItem(
+                                icon: "images/icons/more.svg",
+                                title: "More",
+                                index: 3,
+                                previous: currentIndex,
+                              )
+                            : UnselectedNavItem(
+                                icon: "images/icons/more.svg",
+                                onTap: () {
+                                  context
+                                      .read<HomeNavigatorCubit>()
+                                      .setCurrentIndex(3);
+                                },
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
@@ -192,7 +243,9 @@ class SelectedNavItem extends StatelessWidget {
               SizedBox(width: context.horizontalMargin2),
               Text(
                 title,
-                style: context.textStyle14Medium(color: theme.backgroundPrimary).copyWith(height: 1.2),
+                style: context
+                    .textStyle14Medium(color: theme.backgroundPrimary)
+                    .copyWith(height: 1.2),
               ),
             ],
           ),
@@ -223,7 +276,8 @@ class UnselectedNavItem extends StatelessWidget {
         return InkWell(
           onTap: onTap,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.horizontalMargin16),
+            padding:
+                EdgeInsets.symmetric(horizontal: context.horizontalMargin16),
             child: SvgPicture.asset(
               icon,
               colorFilter: ColorFilter.mode(
