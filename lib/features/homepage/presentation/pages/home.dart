@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:tscore/core/shared/app_review/app_review_services.dart';
 import 'package:tscore/core/shared/home_navigator/home_navigator_cubit.dart';
 
 import '../../../../core/config/config.dart';
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    AppReviewServices.instance.checkAvailability();
     BackButtonInterceptor.add(myInterceptor);
 
     fragments = [

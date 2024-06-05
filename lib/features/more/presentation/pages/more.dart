@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:tscore/core/shared/app_review/app_review_services.dart';
 
 import '../../../../core/shared/shared.dart';
 import '../../more.dart';
@@ -29,7 +30,8 @@ class _MorePageState extends State<MorePage> {
             SizedBox(height: context.verticalMargin10),
             Text(
               "Other options".toUpperCase(),
-              style: TextStyles.title(context: context, color: theme.textPrimary),
+              style:
+                  TextStyles.title(context: context, color: theme.textPrimary),
             ),
             SizedBox(height: context.verticalMargin10),
             CardWidget(
@@ -37,12 +39,14 @@ class _MorePageState extends State<MorePage> {
                 dense: true,
                 visualDensity: VisualDensity.compact,
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(Icons.notifications_active_outlined, color: theme.white),
+                leading: Icon(Icons.notifications_active_outlined,
+                    color: theme.white),
                 horizontalTitleGap: 8.w,
                 onTap: () {},
                 title: Text(
                   "Notification",
-                  style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
+                  style: TextStyles.body(context: context, color: theme.white)
+                      .copyWith(height: 1.2),
                 ),
                 trailing: FutureBuilder<bool>(
                   future: checkPermission(Permission.notification),
@@ -55,7 +59,8 @@ class _MorePageState extends State<MorePage> {
                             await Permission.notification.request();
                             setState(() {});
                           } else {
-                            await AppSettings.openAppSettings(type: AppSettingsType.notification);
+                            await AppSettings.openAppSettings(
+                                type: AppSettingsType.notification);
                             setState(() {});
                           }
                         },
@@ -70,7 +75,8 @@ class _MorePageState extends State<MorePage> {
             SizedBox(height: context.verticalMargin10),
             Text(
               "Follow us".toUpperCase(),
-              style: TextStyles.title(context: context, color: theme.textPrimary),
+              style:
+                  TextStyles.title(context: context, color: theme.textPrimary),
             ),
             SizedBox(height: context.verticalMargin10),
             CardWidget(
@@ -81,18 +87,21 @@ class _MorePageState extends State<MorePage> {
                 leading: Icon(Icons.facebook_outlined, color: theme.white),
                 horizontalTitleGap: 8.w,
                 onTap: () async {
-                  await launchUrl(Uri.parse(ExternalLinks().facebook), mode: LaunchMode.inAppBrowserView);
+                  await launchUrl(Uri.parse(ExternalLinks().facebook),
+                      mode: LaunchMode.inAppBrowserView);
                 },
                 title: Text(
                   "Facebook",
-                  style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
+                  style: TextStyles.body(context: context, color: theme.white)
+                      .copyWith(height: 1.2),
                 ),
               ),
             ),
             SizedBox(height: context.verticalMargin10),
             Text(
               "App".toUpperCase(),
-              style: TextStyles.title(context: context, color: theme.textPrimary),
+              style:
+                  TextStyles.title(context: context, color: theme.textPrimary),
             ),
             SizedBox(height: context.verticalMargin10),
             CardWidget(
@@ -118,23 +127,32 @@ class _MorePageState extends State<MorePage> {
                             children: [
                               Text(
                                 "About app",
-                                style: TextStyles.title(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                                style: TextStyles.title(
+                                        context: context,
+                                        color: theme.textPrimary)
+                                    .copyWith(height: 1.2),
                               ),
                               SizedBox(height: context.verticalMargin10),
                               Text(
                                 "copyrights@ by - T Score (${DateFormat("yyyy").format(DateTime.now())}). All rights reserved.All trademarks are the property of their respective owners.",
-                                style: TextStyles.body(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                                style: TextStyles.body(
+                                        context: context,
+                                        color: theme.textPrimary)
+                                    .copyWith(height: 1.2),
                               ),
                               SizedBox(height: context.verticalMargin10),
                               FutureBuilder(
                                 future: PackageInfo.fromPlatform(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    final PackageInfo packageInfo = snapshot.data as PackageInfo;
+                                    final PackageInfo packageInfo =
+                                        snapshot.data as PackageInfo;
                                     return Text(
                                       "App version - ${packageInfo.version}",
-                                      style:
-                                          TextStyles.caption(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                                      style: TextStyles.caption(
+                                              context: context,
+                                              color: theme.textPrimary)
+                                          .copyWith(height: 1.2),
                                     );
                                   } else {
                                     return const CupertinoActivityIndicator();
@@ -148,10 +166,13 @@ class _MorePageState extends State<MorePage> {
                     },
                     title: Text(
                       "About app",
-                      style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
+                      style:
+                          TextStyles.body(context: context, color: theme.white)
+                              .copyWith(height: 1.2),
                     ),
                   ),
-                  Divider(color: theme.textSecondary, height: 1.h, thickness: .5.h),
+                  Divider(
+                      color: theme.textSecondary, height: 1.h, thickness: .5.h),
                   ListTile(
                     dense: true,
                     visualDensity: VisualDensity.compact,
@@ -159,20 +180,18 @@ class _MorePageState extends State<MorePage> {
                     leading: Icon(Icons.star_rate_outlined, color: theme.white),
                     horizontalTitleGap: 8.w,
                     onTap: () async {
-                      if (await checkReview()) {
-                        InAppReview.instance.requestReview();
-                      } else {
-                        InAppReview.instance.openStoreListing(
-                          appStoreId: "com.tscore.radio",
-                        );
-                      }
+                      await AppReviewServices.instance
+                          .requestReviewFlow(context);
                     },
                     title: Text(
                       "Rate us",
-                      style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
+                      style:
+                          TextStyles.body(context: context, color: theme.white)
+                              .copyWith(height: 1.2),
                     ),
                   ),
-                  Divider(color: theme.textSecondary, height: 1.h, thickness: .5.h),
+                  Divider(
+                      color: theme.textSecondary, height: 1.h, thickness: .5.h),
                   ListTile(
                     dense: true,
                     visualDensity: VisualDensity.compact,
@@ -180,19 +199,24 @@ class _MorePageState extends State<MorePage> {
                     leading: Icon(Icons.share_outlined, color: theme.white),
                     horizontalTitleGap: 8.w,
                     onTap: () async {
-                      Share.share('https://play.google.com/store/apps/details?id=com.tscore.radio');
+                      Share.share(
+                          'https://play.google.com/store/apps/details?id=com.tscore.radio');
                     },
                     title: Text(
                       "Share App",
-                      style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
+                      style:
+                          TextStyles.body(context: context, color: theme.white)
+                              .copyWith(height: 1.2),
                     ),
                   ),
-                  Divider(color: theme.textSecondary, height: 1.h, thickness: .5.h),
+                  Divider(
+                      color: theme.textSecondary, height: 1.h, thickness: .5.h),
                   ListTile(
                     dense: true,
                     visualDensity: VisualDensity.compact,
                     contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.lock_outline_rounded, color: theme.white),
+                    leading:
+                        Icon(Icons.lock_outline_rounded, color: theme.white),
                     horizontalTitleGap: 8.w,
                     onTap: () {
                       context.pushNamed(
@@ -205,10 +229,13 @@ class _MorePageState extends State<MorePage> {
                     },
                     title: Text(
                       "Privacy Policy",
-                      style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
+                      style:
+                          TextStyles.body(context: context, color: theme.white)
+                              .copyWith(height: 1.2),
                     ),
                   ),
-                  Divider(color: theme.textSecondary, height: 1.h, thickness: .5.h),
+                  Divider(
+                      color: theme.textSecondary, height: 1.h, thickness: .5.h),
                   ListTile(
                     dense: true,
                     visualDensity: VisualDensity.compact,
@@ -226,7 +253,9 @@ class _MorePageState extends State<MorePage> {
                     },
                     title: Text(
                       "Terms & Condition",
-                      style: TextStyles.body(context: context, color: theme.white).copyWith(height: 1.2),
+                      style:
+                          TextStyles.body(context: context, color: theme.white)
+                              .copyWith(height: 1.2),
                     ),
                   ),
                 ],
@@ -241,17 +270,22 @@ class _MorePageState extends State<MorePage> {
                 children: [
                   Text(
                     "App Version:",
-                    style: TextStyles.title(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                    style: TextStyles.title(
+                            context: context, color: theme.textPrimary)
+                        .copyWith(height: 1.2),
                   ),
                   SizedBox(width: context.horizontalMargin8),
                   FutureBuilder(
                     future: PackageInfo.fromPlatform(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        final PackageInfo packageInfo = snapshot.data as PackageInfo;
+                        final PackageInfo packageInfo =
+                            snapshot.data as PackageInfo;
                         return Text(
                           packageInfo.version,
-                          style: TextStyles.title(context: context, color: theme.textPrimary).copyWith(height: 1.2),
+                          style: TextStyles.title(
+                                  context: context, color: theme.textPrimary)
+                              .copyWith(height: 1.2),
                         );
                       } else {
                         return const CupertinoActivityIndicator();
