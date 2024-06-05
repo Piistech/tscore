@@ -56,12 +56,16 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                   Expanded(
                     child: Text(
                       widget.predictionModel.predictionMatchName,
-                      style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                      style: context
+                          .textStyle10Medium(color: theme.textPrimary)
+                          .copyWith(height: 1.2),
                     ),
                   ),
                   Text(
                     widget.predictionModel.startTime,
-                    style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                    style: context
+                        .textStyle10Medium(color: theme.textPrimary)
+                        .copyWith(height: 1.2),
                   ),
                 ],
               ),
@@ -73,7 +77,9 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                   Expanded(
                     flex: 2,
                     child: BlocProvider(
-                      create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.predictionModel.homeTeamId)),
+                      create: (context) => sl<TeamBloc>()
+                        ..add(FetchTeam(
+                            teamGuid: widget.predictionModel.homeTeamId)),
                       child: const TeamNameAndFlagWidget(
                         isEnd: false,
                       ),
@@ -88,7 +94,9 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                   Expanded(
                     flex: 2,
                     child: BlocProvider(
-                      create: (context) => sl<TeamBloc>()..add(FetchTeam(teamGuid: widget.predictionModel.awayTeamId)),
+                      create: (context) => sl<TeamBloc>()
+                        ..add(FetchTeam(
+                            teamGuid: widget.predictionModel.awayTeamId)),
                       child: const TeamNameAndFlagWidget(
                         isEnd: true,
                       ),
@@ -144,23 +152,30 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                                 width: 72.w,
                                 height: 20.h,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                                    horizontal: context.horizontalMargin8,
+                                    vertical: context.verticalMargin4),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(context.radius5),
+                                  borderRadius:
+                                      BorderRadius.circular(context.radius5),
                                   color: theme.backgroundTertiary,
                                 ),
                                 child: const CupertinoActivityIndicator(),
                               )
                             : Container(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: context.horizontalMargin8, vertical: context.verticalMargin4),
+                                    horizontal: context.horizontalMargin8,
+                                    vertical: context.verticalMargin4),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(context.radius5),
+                                  borderRadius:
+                                      BorderRadius.circular(context.radius5),
                                   color: theme.backgroundTertiary,
                                 ),
                                 child: Text(
                                   "Prediction",
-                                  style: context.textStyle10Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                                  style: context
+                                      .textStyle10Medium(
+                                          color: theme.textPrimary)
+                                      .copyWith(height: 1.2),
                                 ),
                               ),
                       ),
