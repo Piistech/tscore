@@ -180,21 +180,8 @@ class _MorePageState extends State<MorePage> {
                     leading: Icon(Icons.star_rate_outlined, color: theme.white),
                     horizontalTitleGap: 8.w,
                     onTap: () async {
-<<<<<<< HEAD
                       await AppReviewServices.instance
                           .requestReviewFlow(context);
-=======
-                      // if (await checkReview()) {
-                      //   InAppReview.instance.requestReview();
-                      // } else {
-                      //   InAppReview.instance.openStoreListing(
-                      //     appStoreId: "com.tscore.radio",
-                      //   );
-                      // }
-                      InAppReview.instance.openStoreListing(
-                        appStoreId: "com.tscore.radio",
-                      );
->>>>>>> refs/remotes/origin/main
                     },
                     title: Text(
                       "Rate us",
