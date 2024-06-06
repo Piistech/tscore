@@ -1,0 +1,4 @@
+Bug Fixes
+- Refactor TextStyles for improved readability and consistency
+- Fixed App Review Not Open Problem
+- Fixing Back Navigation
