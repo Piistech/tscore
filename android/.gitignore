@@ -11,4 +11,4 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
-android/fastlane/fastlane-supply.json
+*/fastlane-supply.json
