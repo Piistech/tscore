@@ -98,7 +98,8 @@ extension BuildContextExtension on BuildContext {
           color: color,
         ),
       );
-  TextStyle textStyle17MediumZenDots({required Color color}) => GoogleFonts.zenDots(
+  TextStyle textStyle17MediumZenDots({required Color color}) =>
+      GoogleFonts.zenDots(
         textStyle: TextStyle(
           fontSize: 17.sp,
           fontWeight: FontWeight.w600,
@@ -130,14 +131,14 @@ extension BuildContextExtension on BuildContext {
 
   TextStyle textStyle10Regular({required Color color}) => GoogleFonts.rubik(
         textStyle: TextStyle(
-          fontSize: 10.sp,
+          fontSize: 12.sp,
           fontWeight: FontWeight.normal,
           color: color,
         ),
       );
   TextStyle textStyle10Medium({required Color color}) => GoogleFonts.rubik(
         textStyle: TextStyle(
-          fontSize: 10.sp,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w600,
           color: color,
         ),
