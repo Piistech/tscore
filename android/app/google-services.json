@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "289420772165",
+    "project_id": "t-score-radio",
+    "storage_bucket": "t-score-radio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289420772165:android:5782e2d2938bfe75c5342c",
+        "android_client_info": {
+          "package_name": "com.tscore.radio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9cDJPcrBPAUFO9axYraCFFMPFoKl98k8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
