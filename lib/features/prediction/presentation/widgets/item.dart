@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:tscore/features/fixture/presentation/pages/custom_ads.dart';
 
 import '../../../../core/config/config.dart';
 import '../../../../core/shared/shared.dart';
@@ -155,12 +156,16 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                           //// ADS show OFF------------------------------------------------------------
 
                           ///// Page Navigate
-                          context.pushNamed(
-                            FixtureDetailsPage.name,
-                            pathParameters: {
-                              'id': widget.predictionModel.guid,
-                            },
-                          );
+                          // context.pushNamed(
+                          //   FixtureDetailsPage.name,
+                          //   pathParameters: {
+                          //     'id': widget.predictionModel.guid,
+                          //   },
+                          // );
+                          context
+                              .pushNamed(CustomAdsScreen.name, pathParameters: {
+                            'id': widget.predictionModel.guid,
+                          });
                         },
                         child: isAddLoaded
                             ? Container(

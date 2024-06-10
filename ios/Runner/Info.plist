@@ -46,5 +46,12 @@
 			<string>UIInterfaceOrientationPortrait</string>
 			<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		</array>
+		<!-- For Webview ADS/WebView -->
+		<key>NSAppTransportSecurity</key>
+		<dict>
+	    <key>NSAllowsArbitraryLoadsInWebContent</key>
+	    <true/>
+		<!-- Webview End -->
+	</dict>
 	</dict>
 </plist>

@@ -240,4 +240,11 @@ platform :android do
       version_code: version_code
     )
   end
+
+  # upload to internal as well as production
+  desc "First Upload to Internal and then Production"
+  lane :promote do
+    internal
+    promote
+  end
 end

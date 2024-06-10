@@ -1,3 +1,5 @@
+import 'package:tscore/features/fixture/presentation/pages/custom_ads.dart';
+
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';
 import '../../features/fixture/fixture.dart';
@@ -15,17 +17,17 @@ final router = GoRouter(
   initialLocation: HomePage.path,
   routes: [
     GoRoute(
-        path: HomePage.path,
-        name: HomePage.name,
-        builder: (context, state) => MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                    create: (context) =>
-                        sl<FixturesBloc>()..add(const FetchFixtures())),
-              ],
-              child: const HomePage(),
-            ),
-        routes: []),
+      path: HomePage.path,
+      name: HomePage.name,
+      builder: (context, state) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+              create: (context) =>
+                  sl<FixturesBloc>()..add(const FetchFixtures())),
+        ],
+        child: const HomePage(),
+      ),
+    ),
     GoRoute(
       path: FixturesPage.path,
       name: FixturesPage.name,
@@ -64,6 +66,14 @@ final router = GoRouter(
         create: (context) => sl<FixturesBloc>()..add(const FetchFixtures()),
         child: const LiveRadioPage(),
       ),
+    ),
+    GoRoute(
+      path: CustomAdsScreen.path,
+      name: CustomAdsScreen.name,
+      builder: (context, state) {
+        final String guid = state.pathParameters['id']!;
+        return CustomAdsScreen(guid: guid);
+      },
     ),
     GoRoute(
       path: FixtureDetailsPage.path,
