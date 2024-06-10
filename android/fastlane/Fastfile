@@ -160,6 +160,8 @@ platform :android do
 
   desc "Update metadata and images for all languages"
   lane :update_metadata  do
+    version_codes = google_play_track_version_codes(track: "production")
+    version_code = version_codes.first
     upload_to_play_store(
       # package_name: "totally.real.package",
       # track: "alpha",
@@ -213,8 +215,7 @@ platform :android do
       # skip_upload_promo_video_4k_11: false,
       # skip_upload_promo_video_4k_12: false,
       # skip_upload_promo_video_4k_13: false,
-      version_code: 48,
-      version_name: "0.2.4",
+      version_code: version_code
 
     )
   end
@@ -228,11 +229,15 @@ platform :android do
   # promoto to production
   desc "Promote a new version to the Google Play"
   lane :promote do
+    version_codes = google_play_track_version_codes(track: "internal")
+    version_code = version_codes.first
     # gradle(task: "clean assembleRelease")
     upload_to_play_store(
-      track_promote_to: 'production',
-      version_code: 38,  # replace '1' with your version code
-      version_name: '0.2.4', # replace '1.0' with your version name
+      track: "internal",
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      track_promote_to: "production",
+      version_code: version_code
     )
   end
 end

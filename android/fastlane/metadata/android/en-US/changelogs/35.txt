@@ -1,0 +1,4 @@
+Bug Fixes
+- Turning Off Google Ads Mod
+- Fixing Back Navigation 
+- Fixing Widget Disposing
