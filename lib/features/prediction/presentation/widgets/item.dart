@@ -118,33 +118,48 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                   if (state is LookupLoading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state is LookupDone) {
-                    final adUnitId = state.lookups.firstOrNull;
+                    /// Turning ```OFF``` ADS and navigate to page
+                    // final adUnitId = state.lookups.firstOrNull;
+                    ///----------------------------------------------
                     return Align(
                       alignment: Alignment.centerRight,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(context.radius5),
                         onTap: () async {
-                          setState(() {
-                            isAddLoaded = true;
-                          });
-                          await RewardedAd.loadWithAdManagerAdRequest(
-                            adUnitId: adUnitId!.dataValue,
-                            adManagerRequest: const AdManagerAdRequest(),
-                            rewardedAdLoadCallback: RewardedAdLoadCallback(
-                              onAdLoaded: (RewardedAd ad) async {
-                                await ad.show(
-                                  onUserEarnedReward: (view, reward) {
-                                    context.pushNamed(
-                                      FixtureDetailsPage.name,
-                                      pathParameters: {
-                                        'id': widget.predictionModel.guid,
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                              onAdFailedToLoad: (LoadAdError error) {},
-                            ),
+                          /// Turning ```OFF``` ADS and navigate to page
+                          /// [Comment OUT] if you want to show Add then navigate to ```FixtureDetails Page```
+                          ///
+                          /// [START] -------------------------------------------------------------
+                          // setState(() {
+                          //   isAddLoaded = true;
+                          // });
+                          // await RewardedAd.loadWithAdManagerAdRequest(
+                          //   adUnitId: adUnitId!.dataValue,
+                          //   adManagerRequest: const AdManagerAdRequest(),
+                          //   rewardedAdLoadCallback: RewardedAdLoadCallback(
+                          //     onAdLoaded: (RewardedAd ad) async {
+                          //       await ad.show(
+                          //         onUserEarnedReward: (view, reward) {
+                          //           context.pushNamed(
+                          //             FixtureDetailsPage.name,
+                          //             pathParameters: {
+                          //               'id': widget.predictionModel.guid,
+                          //             },
+                          //           );
+                          //         },
+                          //       );
+                          //     },
+                          //     onAdFailedToLoad: (LoadAdError error) {},
+                          //   ),
+                          // );
+                          //// ADS show OFF------------------------------------------------------------
+
+                          ///// Page Navigate
+                          context.pushNamed(
+                            FixtureDetailsPage.name,
+                            pathParameters: {
+                              'id': widget.predictionModel.guid,
+                            },
                           );
                         },
                         child: isAddLoaded

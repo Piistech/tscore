@@ -1,5 +1,3 @@
-import 'package:tscore/features/homepage/presentation/pages/home.dart';
-
 import '../../../../core/shared/shared.dart';
 
 import '../../../../core/config/config.dart';
@@ -22,15 +20,13 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<AnalysisBloc>(context).add(
-      FetchAnalysis(fixtureGuid: widget.fixtureGuid),
-    );
+    context
+        .read<AnalysisBloc>()
+        .add(FetchAnalysis(fixtureGuid: widget.fixtureGuid));
   }
 
   @override
   void dispose() {
-    context.read<AnalysisBloc>().close();
-    context.goNamed(HomePage.name);
     super.dispose();
   }
 

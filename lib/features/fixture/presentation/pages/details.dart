@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import '../../../../core/shared/shared.dart';
 import '../../../analysis/analysis.dart';
-import '../../../homepage/presentation/pages/home.dart';
 import '../../fixture.dart';
 import '../widgets/details/result.dart';
 
@@ -15,6 +16,8 @@ class FixtureDetailsPage extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    /// get full path
+    log("${GoRouterState.of(context).fullPath}");
     return Scaffold(
       appBar: AppBar(
         title: MatchTitleWidget(
@@ -22,7 +25,7 @@ class FixtureDetailsPage extends StatelessWidget {
         ),
         leading: BackButton(
           onPressed: () {
-            context.pushReplacementNamed(HomePage.name);
+            context.pop();
           },
         ),
       ),

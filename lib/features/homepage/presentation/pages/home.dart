@@ -66,14 +66,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    // log("$stopDefaultButtonEvent, ${info.currentRoute(context)?.settings.name}");
+    log("$stopDefaultButtonEvent, ${info.currentRoute(context)?.settings.name}");
+    //  GoRouterState.of(context).fullPath ?? "";
+    final int currentIndex = context.read<HomeNavigatorCubit>().currentIndex;
+    final String pageName = info.currentRoute(context)?.settings.name ?? "";
 
-    if (context.read<HomeNavigatorCubit>().currentIndex != 0) {
-      context.read<HomeNavigatorCubit>().setCurrentIndex(0);
-      log("if");
-      return true;
+    log("full path $pageName ");
+
+    if (currentIndex != 0) {
+      if (!pageName.contains("HomePage")) {
+        log("if if Home Index: [${context.read<HomeNavigatorCubit>().currentIndex}], current Path $pageName");
+        return false;
+      } else {
+        log("if  else Home Index: [${context.read<HomeNavigatorCubit>().currentIndex}], current Path $pageName");
+        context.read<HomeNavigatorCubit>().setCurrentIndex(0);
+        return true;
+      }
     } else {
-      log("else");
+      log("else Home Index: [${context.read<HomeNavigatorCubit>().currentIndex}]");
       context.read<HomeNavigatorCubit>().setCurrentIndex(0);
       return false;
     }

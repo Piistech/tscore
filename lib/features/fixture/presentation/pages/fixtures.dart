@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import '../../../../core/shared/shared.dart';
 import '../../fixture.dart';
 
@@ -26,70 +24,64 @@ class _FixturesPageState extends State<FixturesPage>
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) {
-        log("didPop: $didPop");
-      },
-      child: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (context, state) {
-          final theme = state.scheme;
-          return DefaultTabController(
-            length: 2,
-            initialIndex: 0,
-            child: Scaffold(
-              backgroundColor: theme.backgroundPrimary,
-              appBar: TabBar(
-                labelStyle:
-                    TextStyles.body(context: context, color: theme.textPrimary)
-                        .copyWith(fontWeight: FontWeight.bold),
-                unselectedLabelStyle: TextStyles.body(
-                    context: context, color: theme.textSecondary),
-                indicatorWeight: 3,
-                tabAlignment: TabAlignment.center,
-                dividerColor: Colors.transparent,
-                indicatorColor: theme.warning,
-                physics: const ScrollPhysics(),
-                isScrollable: true,
-                controller: tabController,
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: [
-                  Tab(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        "Cricket",
-                        style: context
-                            .textStyle17Medium(color: theme.textPrimary)
-                            .copyWith(height: 1.2),
-                      ),
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        final theme = state.scheme;
+        return DefaultTabController(
+          length: 2,
+          initialIndex: 0,
+          child: Scaffold(
+            backgroundColor: theme.backgroundPrimary,
+            appBar: TabBar(
+              labelStyle:
+                  TextStyles.body(context: context, color: theme.textPrimary)
+                      .copyWith(fontWeight: FontWeight.bold),
+              unselectedLabelStyle:
+                  TextStyles.body(context: context, color: theme.textSecondary),
+              indicatorWeight: 3,
+              tabAlignment: TabAlignment.center,
+              dividerColor: Colors.transparent,
+              indicatorColor: theme.warning,
+              physics: const ScrollPhysics(),
+              isScrollable: true,
+              controller: tabController,
+              indicatorSize: TabBarIndicatorSize.label,
+              tabs: [
+                Tab(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      "Cricket",
+                      style: context
+                          .textStyle17Medium(color: theme.textPrimary)
+                          .copyWith(height: 1.2),
                     ),
                   ),
-                  Tab(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        "Football",
-                        style: context
-                            .textStyle17Medium(color: theme.textPrimary)
-                            .copyWith(height: 1.2),
-                      ),
+                ),
+                Tab(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      "Football",
+                      style: context
+                          .textStyle17Medium(color: theme.textPrimary)
+                          .copyWith(height: 1.2),
                     ),
                   ),
-                ],
-              ),
-              body: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: tabController,
-                children: const [
-                  TabCricket(),
-                  TabFootball(),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
+            body: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: tabController,
+              children: const [
+                TabCricket(),
+                TabFootball(),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
