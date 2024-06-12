@@ -11,17 +11,20 @@ class OnAirWidget extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         final theme = state.scheme;
-        return BlocBuilder<FixturesBloc, FixturesState>(
+        return BlocBuilder<CricketFixturesBloc, CricketFixturesState>(
           builder: (context, state) {
-            if (state is FixturesDone) {
-              final FixturesEntity fixture = state.fixtures.firstWhere((element) => element.isLive);
+            if (state is CricketFixturesDone) {
+              final FixturesEntity fixture =
+                  state.fixtures.firstWhere((element) => element.isLive);
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Live now",
-                    style: context.textStyle14Medium(color: theme.textPrimary).copyWith(height: 1.2),
+                    style: context
+                        .textStyle14Medium(color: theme.textPrimary)
+                        .copyWith(height: 1.2),
                   ),
                   SizedBox(height: context.verticalMargin10),
                   Container(
@@ -37,12 +40,17 @@ class OnAirWidget extends StatelessWidget {
                       children: [
                         Text(
                           "on air now!".toUpperCase(),
-                          style: context.textStyle20Medium(color: theme.backgroundPrimary).copyWith(height: 1.2),
+                          style: context
+                              .textStyle20Medium(color: theme.backgroundPrimary)
+                              .copyWith(height: 1.2),
                         ),
                         SizedBox(height: context.verticalMargin4),
                         Text(
                           "Listen to our radio",
-                          style: context.textStyle17Regular(color: theme.backgroundPrimary).copyWith(height: 1.2),
+                          style: context
+                              .textStyle17Regular(
+                                  color: theme.backgroundPrimary)
+                              .copyWith(height: 1.2),
                         ),
                         SizedBox(height: context.verticalMargin10),
                         ElevatedButton(
@@ -51,7 +59,8 @@ class OnAirWidget extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             backgroundColor: theme.backgroundPrimary,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(context.radius10),
+                              borderRadius:
+                                  BorderRadius.circular(context.radius10),
                             ),
                           ),
                           onPressed: () {
@@ -62,7 +71,8 @@ class OnAirWidget extends StatelessWidget {
                           },
                           child: Text(
                             "Listen now",
-                            style: context.textStyle10Medium(color: theme.textPrimary),
+                            style: context.textStyle10Medium(
+                                color: theme.textPrimary),
                           ),
                         ),
                       ],

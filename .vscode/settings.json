@@ -9,6 +9,7 @@
     "tscore",
     "Usecase",
     "usecases",
-    "vsync"
+    "vsync",
+    "wkwebview"
   ]
 }

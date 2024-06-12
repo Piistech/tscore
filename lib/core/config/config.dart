@@ -1,6 +1,7 @@
 library config;
 
 import 'package:tscore/core/shared/home_navigator/home_navigator_cubit.dart';
+import 'package:tscore/features/fixture/presentation/bloc/football_fixtures_bloc.dart';
 
 import '../../features/analysis/analysis.dart';
 import '../../features/commentary/commentary.dart';

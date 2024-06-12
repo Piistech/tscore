@@ -1,3 +1,4 @@
+import 'package:tscore/features/fixture/presentation/bloc/football_fixtures_bloc.dart';
 import 'package:tscore/features/fixture/presentation/pages/custom_ads.dart';
 
 import '../../features/analysis/analysis.dart';
@@ -22,8 +23,11 @@ final router = GoRouter(
       builder: (context, state) => MultiBlocProvider(
         providers: [
           BlocProvider(
+              create: (context) => sl<FootballFixturesBloc>()
+                ..add(const FootballFetchFixtures())),
+          BlocProvider(
               create: (context) =>
-                  sl<FixturesBloc>()..add(const FetchFixtures())),
+                  sl<CricketFixturesBloc>()..add(const CricketFetchFixtures())),
         ],
         child: const HomePage(),
       ),
@@ -31,8 +35,15 @@ final router = GoRouter(
     GoRoute(
       path: FixturesPage.path,
       name: FixturesPage.name,
-      builder: (context, state) => BlocProvider(
-        create: (context) => sl<FixturesBloc>()..add(const FetchFixtures()),
+      builder: (context, state) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+              create: (context) => sl<FootballFixturesBloc>()
+                ..add(const FootballFetchFixtures())),
+          BlocProvider(
+              create: (context) =>
+                  sl<CricketFixturesBloc>()..add(const CricketFetchFixtures())),
+        ],
         child: const FixturesPage(),
       ),
     ),
@@ -62,8 +73,15 @@ final router = GoRouter(
     GoRoute(
       path: LiveRadioPage.path,
       name: LiveRadioPage.name,
-      builder: (context, state) => BlocProvider(
-        create: (context) => sl<FixturesBloc>()..add(const FetchFixtures()),
+      builder: (context, state) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+              create: (context) => sl<FootballFixturesBloc>()
+                ..add(const FootballFetchFixtures())),
+          BlocProvider(
+              create: (context) =>
+                  sl<CricketFixturesBloc>()..add(const CricketFetchFixtures())),
+        ],
         child: const LiveRadioPage(),
       ),
     ),

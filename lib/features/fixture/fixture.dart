@@ -9,7 +9,7 @@ export 'domain/repositories/repo.dart';
 export 'domain/usecases/find_by_id.dart';
 export 'domain/usecases/fixtures.dart';
 export 'presentation/bloc/find_fixture_by_id_bloc.dart';
-export 'presentation/bloc/fixtures_bloc.dart';
+export 'presentation/bloc/cricket_fixtures_bloc.dart';
 export 'presentation/pages/details.dart';
 export 'presentation/pages/fixtures.dart';
 export 'presentation/widgets/details/match_title.dart';

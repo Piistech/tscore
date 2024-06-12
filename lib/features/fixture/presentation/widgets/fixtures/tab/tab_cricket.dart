@@ -13,15 +13,17 @@ class TabCricket extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<FixturesBloc>().add(const FetchFixtures());
+        context.read<CricketFixturesBloc>().add(const CricketFetchFixtures());
       },
-      child: BlocBuilder<FixturesBloc, FixturesState>(
+      child: BlocBuilder<CricketFixturesBloc, CricketFixturesState>(
         builder: (_, state) {
-          if (state is FixturesLoading) {
+          if (state is CricketFixturesLoading) {
             return const ShimmerFixture();
-          } else if (state is FixturesDone) {
-            final bool live = state.fixtures.where((element) => element.isLive).isNotEmpty;
-            final List<FixturesEntity> fixtures = state.fixtures.where((element) => !element.isOnGoing).toList();
+          } else if (state is CricketFixturesDone) {
+            final bool live =
+                state.fixtures.where((element) => element.isLive).isNotEmpty;
+            final List<FixturesEntity> fixtures =
+                state.fixtures.where((element) => !element.isOnGoing).toList();
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -35,7 +37,8 @@ class TabCricket extends StatelessWidget {
                   visible: live,
                   child: MultiBlocProvider(
                     providers: [
-                      BlocProvider.value(value: context.read<FixturesBloc>()),
+                      BlocProvider.value(
+                          value: context.read<CricketFixturesBloc>()),
                     ],
                     child: const OnAirWidget(),
                   ),
@@ -47,7 +50,8 @@ class TabCricket extends StatelessWidget {
                       horizontal: context.horizontalMargin15,
                       vertical: context.verticalMargin15,
                     ),
-                    separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin8),
+                    separatorBuilder: (_, __) =>
+                        SizedBox(height: context.verticalMargin8),
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemBuilder: (_, index) {
                       final fixture = fixtures[index];
@@ -63,7 +67,7 @@ class TabCricket extends StatelessWidget {
                 ),
               ],
             );
-          } else if (state is FixturesError) {
+          } else if (state is CricketFixturesError) {
             return Center(child: Text(state.failure.message));
           } else {
             return Container();

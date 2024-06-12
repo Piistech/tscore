@@ -4,7 +4,6 @@ import 'dart:developer';
 
 import 'package:tscore/core/shared/shared.dart';
 import 'package:tscore/features/fixture/presentation/pages/details.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 // #doc region platform_imports
 // Import for Android features.
 import 'package:webview_flutter_android/webview_flutter_android.dart';

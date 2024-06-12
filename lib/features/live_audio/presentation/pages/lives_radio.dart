@@ -13,13 +13,14 @@ class LiveRadioPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<FixturesBloc>().add(const FetchFixtures());
+        context.read<CricketFixturesBloc>().add(const CricketFetchFixtures());
       },
-      child: BlocBuilder<FixturesBloc, FixturesState>(
+      child: BlocBuilder<CricketFixturesBloc, CricketFixturesState>(
         builder: (_, state) {
-          if (state is FixturesLoading) {
+          if (state is CricketFixturesLoading) {
             return ListView.separated(
-              separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin10),
+              separatorBuilder: (_, __) =>
+                  SizedBox(height: context.verticalMargin10),
               itemCount: 4,
               padding: EdgeInsets.symmetric(
                 horizontal: context.horizontalMargin15,
@@ -27,7 +28,7 @@ class LiveRadioPage extends StatelessWidget {
               ),
               itemBuilder: (_, __) => const ShimmerItem(),
             );
-          } else if (state is FixturesDone) {
+          } else if (state is CricketFixturesDone) {
             return state.fixtures.where((element) => element.isLive).isEmpty
                 ? Container(
                     alignment: Alignment.center,
@@ -45,7 +46,8 @@ class LiveRadioPage extends StatelessWidget {
                       horizontal: context.horizontalMargin15,
                       vertical: context.verticalMargin15,
                     ),
-                    separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin8),
+                    separatorBuilder: (_, __) =>
+                        SizedBox(height: context.verticalMargin8),
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemBuilder: (_, index) {
                       final fixture = state.fixtures[index];
@@ -62,7 +64,7 @@ class LiveRadioPage extends StatelessWidget {
                       }
                     },
                   );
-          } else if (state is FixturesError) {
+          } else if (state is CricketFixturesError) {
             return Center(child: Text(state.failure.message));
           } else {
             return Container();

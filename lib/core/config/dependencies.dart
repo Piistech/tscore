@@ -79,7 +79,12 @@ Future<void> get _core async {
 
 Future<void> get _fixtures async {
   sl.registerFactory(
-    () => FixturesBloc(
+    () => CricketFixturesBloc(
+      useCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => FootballFixturesBloc(
       useCase: sl(),
     ),
   );
