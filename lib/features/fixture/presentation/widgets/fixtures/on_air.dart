@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import '../../../../../core/shared/shared.dart';
 import '../../../../commentary/commentary.dart';
 import '../../../domain/entities/fixtures.dart';
