@@ -238,6 +238,7 @@ platform :android do
       skip_upload_screenshots: true,
       track_promote_to: "production",
       version_code: version_code
+      
     )
   end
 
