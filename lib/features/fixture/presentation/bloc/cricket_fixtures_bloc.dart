@@ -14,7 +14,7 @@ class CricketFixturesBloc
   }) : super(const CricketFixturesInitial()) {
     on<CricketFetchFixtures>((event, emit) async {
       emit(const CricketFixturesLoading());
-      final result = await useCase();
+      final result = await useCase(type: null);
       result.fold(
         (failure) => emit(CricketFixturesError(failure: failure)),
         (fixtures) => emit(CricketFixturesDone(fixtures: fixtures)),

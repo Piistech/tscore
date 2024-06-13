@@ -1,4 +1,3 @@
-
 import '../../../../core/shared/shared.dart';
 
 class PredictionsModel extends PredictionsEntity {
@@ -123,6 +122,8 @@ class PredictionsModel extends PredictionsEntity {
         map['isPrediction'] is bool,
         "FixtureModel.parse: map['isPrediction'] is not a bool",
       );
+
+      // log('PredictionsModel.parse: map: $map');
 
       return PredictionsModel(
         guid: map['fixtureId'],

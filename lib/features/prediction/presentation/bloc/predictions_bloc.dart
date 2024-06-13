@@ -1,3 +1,4 @@
+// import 'dart:developer';
 
 import '../../../../core/shared/shared.dart';
 
@@ -12,7 +13,16 @@ class PredictionsBloc extends Bloc<PredictionsEvent, PredictionsState> {
       final result = await useCase();
       result.fold(
         (failure) => emit(PredictionsError(failure: failure)),
-        (predictions) => emit(PredictionsDone(fixtures: predictions)),
+        (predictions) {
+          List<PredictionsEntity> sortedPredictions =
+              List<PredictionsEntity>.from(predictions);
+          sortedPredictions.sort((a, b) {
+            // log('${a.startedAt} ${b.startedAt}');
+            return b.startedAt.compareTo(a.startedAt);
+          });
+
+          emit(PredictionsDone(fixtures: sortedPredictions));
+        },
       );
     });
   }

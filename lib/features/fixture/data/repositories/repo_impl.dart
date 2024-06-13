@@ -14,10 +14,12 @@ class FixtureRepositoryImpl extends FixtureRepository {
   });
 
   @override
-  Future<Either<Failure, List<FixturesEntity>>> get fixtures async {
+  Future<Either<Failure, List<FixturesEntity>>> fixtures({
+    required String? type,
+  }) async {
     if (await network.online) {
       try {
-        final List<FixtureModel> fixtures = await remote.fixtures;
+        final List<FixtureModel> fixtures = await remote.fixtures(type: type);
         local.cache(fixtures: fixtures);
         return Right(fixtures);
       } on Failure catch (e) {

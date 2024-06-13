@@ -9,11 +9,12 @@ class FixtureRemoteDataSourceImpl extends FixtureRemoteDataSource {
   });
 
   @override
-  Future<List<FixtureModel>> get fixtures async {
+  Future<List<FixtureModel>> fixtures({
+    required String? type,
+  }) async {
     //! initialize response
-    final Response response = await client.get(
-      RemoteEndpoints.fixtures,
-    );
+    final Response response = await client.get(RemoteEndpoints.fixtures,
+        headers: type == null ? null : {'type': type});
 
     final RemoteResponse<List<dynamic>> result = RemoteResponse.parse(
       response: response,

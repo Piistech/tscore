@@ -10,7 +10,9 @@ class FixturesUseCase {
     required this.repository,
   });
 
-  Future<Either<Failure, List<FixturesEntity>>> call() async {
-    return await repository.fixtures;
+  Future<Either<Failure, List<FixturesEntity>>> call({
+    required String? type,
+  }) async {
+    return await repository.fixtures(type: type);
   }
 }

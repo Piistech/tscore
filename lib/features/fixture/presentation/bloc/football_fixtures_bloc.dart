@@ -16,7 +16,7 @@ class FootballFixturesBloc
   }) : super(FootballFixturesInitial()) {
     on<FootballFixturesEvent>((event, emit) async {
       emit(const FootballFixturesLoading());
-      final result = await useCase();
+      final result = await useCase(type: "football");
       result.fold(
         (failure) => emit(FootballFixturesError(failure: failure)),
         (fixtures) => emit(FootballFixturesDone(fixtures: fixtures)),

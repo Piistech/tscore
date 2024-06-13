@@ -1,5 +1,7 @@
 import '../../fixture.dart';
 
 abstract class FixtureRemoteDataSource {
-  Future<List<FixtureModel>> get fixtures;
+  Future<List<FixtureModel>> fixtures({
+    required String? type,
+  });
 }
