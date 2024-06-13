@@ -1,5 +1,3 @@
-
-
 import '../../../../../core/shared/shared.dart';
 import '../../../../live_audio/live_audio.dart';
 
@@ -21,8 +19,11 @@ class TomorrowMatches extends StatelessWidget {
             );
           } else if (state is PredictionsDone) {
             return PredictionList(
-              fixtures: state.fixtures.where((element) => element.isTomorrow).toList(),
-            );} else if (state is PredictionsError) {
+              fixtures: state.fixtures
+                  .where((element) => element.isTomorrow)
+                  .toList(),
+            );
+          } else if (state is PredictionsError) {
             return Center(child: Text(state.failure.message));
           } else {
             return Container();

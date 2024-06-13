@@ -16,10 +16,6 @@ class PredictionsBloc extends Bloc<PredictionsEvent, PredictionsState> {
         (predictions) {
           List<PredictionsEntity> sortedPredictions =
               List<PredictionsEntity>.from(predictions);
-          sortedPredictions.sort((a, b) {
-            // log('${a.startedAt} ${b.startedAt}');
-            return b.startedAt.compareTo(a.startedAt);
-          });
 
           emit(PredictionsDone(fixtures: sortedPredictions));
         },

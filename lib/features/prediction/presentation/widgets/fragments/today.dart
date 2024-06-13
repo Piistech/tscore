@@ -17,13 +17,15 @@ class TodayMatches extends StatelessWidget {
                 horizontal: context.horizontalMargin15,
                 vertical: context.verticalMargin15,
               ),
-              separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin8),
+              separatorBuilder: (_, __) =>
+                  SizedBox(height: context.verticalMargin8),
               itemCount: 10,
               itemBuilder: (_, __) => const ShimmerPredictionItem(),
             );
           } else if (state is PredictionsDone) {
             return PredictionList(
-              fixtures: state.fixtures.where((element) => element.isToday).toList(),
+              fixtures:
+                  state.fixtures.where((element) => element.isToday).toList(),
             );
           } else if (state is PredictionsError) {
             return Center(child: Text(state.failure.message));

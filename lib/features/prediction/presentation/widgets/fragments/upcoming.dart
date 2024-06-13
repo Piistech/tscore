@@ -1,5 +1,3 @@
-
-
 import '../../../../../core/shared/shared.dart';
 import '../../../../live_audio/live_audio.dart';
 
@@ -20,8 +18,14 @@ class UpcomingMatches extends StatelessWidget {
               itemBuilder: (_, __) => const ShimmerItem(),
             );
           } else if (state is PredictionsDone) {
+            List<PredictionsEntity> fixtures =
+                state.fixtures.where((element) => element.isPast).toList();
+            fixtures.sort((a, b) => b.startedAt.compareTo(a.startedAt));
             return PredictionList(
-              fixtures: state.fixtures.where((element) => (element.isUpcoming && !element.isTomorrow)).toList(),
+              fixtures: state.fixtures
+                  .where(
+                      (element) => (element.isUpcoming && !element.isTomorrow))
+                  .toList(),
             );
           } else if (state is PredictionsError) {
             return Center(child: Text(state.failure.message));
