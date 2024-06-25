@@ -17,9 +17,11 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         <meta-data
         android:name="google_analytics_adid_collection_enabled"
         android:value="false" />
+        <!-- Google AdsMob App ID-->
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-7083447738557720~2005171954"/>
+        <!-- Google AdsMob -->
         <activity
             android:name=".MainActivity"
             android:exported="true"

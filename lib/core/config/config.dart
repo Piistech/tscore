@@ -17,7 +17,12 @@ class AppConfig {
   static FutureOr<void> init() async {
     WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    MobileAds.instance.initialize();
+
+    ///------------------------AdsMob---------------------------
+    // need to initialize the Mobile Ads SDK before loading ads.
+    unawaited(MobileAds.instance.initialize());
+
+    ///---------------------------------------------------------
 
     // Bypass the SSL certificate verification
     HttpOverrides.global = MyHttpOverrides();

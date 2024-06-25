@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/config/config.dart';
@@ -6,6 +8,13 @@ import '../../../fixture/fixture.dart';
 import '../../../lookup/lookup.dart';
 import '../../../team/team.dart';
 import 'team.dart';
+
+enum AdsLoadStatus {
+  initial,
+  loading,
+  loaded,
+  failed,
+}
 
 class PredictionItemWidget extends StatefulWidget {
   final PredictionsEntity predictionModel;
@@ -19,17 +28,16 @@ class PredictionItemWidget extends StatefulWidget {
 }
 
 class _PredictionItemWidgetState extends State<PredictionItemWidget> {
-  late bool isAddLoaded;
+  AdsLoadStatus adsLoadStatus = AdsLoadStatus.initial;
   @override
   void initState() {
     super.initState();
-    isAddLoaded = false;
   }
 
   @override
   void dispose() {
     super.dispose();
-    isAddLoaded = false;
+    adsLoadStatus = AdsLoadStatus.initial;
   }
 
   @override
@@ -126,47 +134,24 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(context.radius5),
                         onTap: () async {
-                          /// Turning ```OFF``` ADS and navigate to page
-                          /// [Comment OUT] if you want to show Add then navigate to ```FixtureDetails Page```
-                          ///
-                          /// [START] -------------------------------------------------------------
-                          // setState(() {
-                          //   isAddLoaded = true;
-                          // });
-                          // await RewardedAd.loadWithAdManagerAdRequest(
-                          //   adUnitId: adUnitId!.dataValue,
-                          //   adManagerRequest: const AdManagerAdRequest(),
-                          //   rewardedAdLoadCallback: RewardedAdLoadCallback(
-                          //     onAdLoaded: (RewardedAd ad) async {
-                          //       await ad.show(
-                          //         onUserEarnedReward: (view, reward) {
-                          //           context.pushNamed(
-                          //             FixtureDetailsPage.name,
-                          //             pathParameters: {
-                          //               'id': widget.predictionModel.guid,
-                          //             },
-                          //           );
-                          //         },
-                          //       );
-                          //     },
-                          //     onAdFailedToLoad: (LoadAdError error) {},
-                          //   ),
-                          // );
-                          //// ADS show OFF------------------------------------------------------------
-
-                          ///// Page Navigate
-                          context.pushNamed(
-                            FixtureDetailsPage.name,
-                            pathParameters: {
-                              'id': widget.predictionModel.guid,
-                            },
-                          );
-                          // context
-                          //     .pushNamed(CustomAdsScreen.name, pathParameters: {
-                          //   'id': widget.predictionModel.guid,
-                          // });
+                          if (state.lookups.first.dataValue.isEmpty) {
+                            context.pushNamed(
+                              FixtureDetailsPage.name,
+                              pathParameters: {
+                                'id': widget.predictionModel.guid,
+                              },
+                            );
+                            setState(() {
+                              adsLoadStatus = AdsLoadStatus.initial;
+                            });
+                          } else {
+                            setState(() {
+                              adsLoadStatus = AdsLoadStatus.loading;
+                            });
+                            await rewardAds(state);
+                          }
                         },
-                        child: isAddLoaded
+                        child: adsLoadStatus == AdsLoadStatus.loading
                             ? Container(
                                 width: 72.w,
                                 height: 20.h,
@@ -200,7 +185,51 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
                       ),
                     );
                   } else {
-                    return Container();
+                    return Align(
+                      alignment: Alignment.centerRight,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(context.radius5),
+                        onTap: () async {
+                          context.pushNamed(
+                            FixtureDetailsPage.name,
+                            pathParameters: {
+                              'id': widget.predictionModel.guid,
+                            },
+                          );
+                        },
+                        child: adsLoadStatus == AdsLoadStatus.loading
+                            ? Container(
+                                width: 72.w,
+                                height: 20.h,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: context.horizontalMargin8,
+                                    vertical: context.verticalMargin4),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(context.radius5),
+                                  color: theme.backgroundTertiary,
+                                ),
+                                child: const CupertinoActivityIndicator(),
+                              )
+                            : Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: context.horizontalMargin8,
+                                    vertical: context.verticalMargin4),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(context.radius5),
+                                  color: theme.backgroundTertiary,
+                                ),
+                                child: Text(
+                                  "Prediction",
+                                  style: context
+                                      .textStyle10Medium(
+                                          color: theme.textPrimary)
+                                      .copyWith(height: 1.2),
+                                ),
+                              ),
+                      ),
+                    );
                   }
                 },
               ),
@@ -208,6 +237,45 @@ class _PredictionItemWidgetState extends State<PredictionItemWidget> {
           ),
         );
       },
+    );
+  }
+
+  Future<void> rewardAds(LookupDone state) async {
+    final String rewardAddUnitID = state.lookups.first.dataValue;
+    await RewardedAd.loadWithAdManagerAdRequest(
+      adUnitId: kReleaseMode ? rewardAddUnitID : AddMobConfig().rewardUnit,
+      adManagerRequest: const AdManagerAdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (RewardedAd ad) async {
+          log("ads checks loaded ${adsLoadStatus.name}");
+          await ad.show(
+            onUserEarnedReward: (view, reward) {
+              context.pushNamed(
+                FixtureDetailsPage.name,
+                pathParameters: {
+                  'id': widget.predictionModel.guid,
+                },
+              );
+            },
+          ).whenComplete(() {
+            log("ads checks shown and completed ${adsLoadStatus.name}");
+            setState(() {
+              adsLoadStatus = AdsLoadStatus.loaded;
+            });
+          });
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          setState(() {
+            adsLoadStatus = AdsLoadStatus.failed;
+          });
+          context.pushNamed(
+            FixtureDetailsPage.name,
+            pathParameters: {
+              'id': widget.predictionModel.guid,
+            },
+          );
+        },
+      ),
     );
   }
 }

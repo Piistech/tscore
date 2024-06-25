@@ -52,6 +52,11 @@
 	    <key>NSAllowsArbitraryLoadsInWebContent</key>
 	    <true/>
 		<!-- Webview End -->
+
+		<!-- google_mobile_ads -->
+		<key>GADApplicationIdentifier</key>
+		<string>ca-app-pub-7083447738557720~2005171954</string>
+		 <!--  -->
 	</dict>
 	</dict>
 </plist>
