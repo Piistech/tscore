@@ -59,6 +59,40 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  BannerAd? _bannerAd;
+  final String adUnitId = AddMobConfig().bannerUnit;
+  AdSize size = AdSize.fullBanner;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadAd(context);
+  }
+
+  /// Loads a banner ad.
+  Future<void> loadAd(BuildContext context) async {
+    final AnchoredAdaptiveBannerAdSize? size =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            MediaQuery.of(context).size.width.truncate());
+    _bannerAd = BannerAd(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      size: size ?? AdSize.fullBanner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+          setState(() {});
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('${ad.responseInfo} BannerAd failed to load: $err');
+          // Dispose the ad here to free resources.
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
+
   @override
   void dispose() {
     BackButtonInterceptor.remove(myInterceptor);
@@ -124,7 +158,35 @@ class _HomePageState extends State<HomePage> {
                   ),
                   automaticallyImplyLeading: false,
                 ),
-                body: fragments.elementAt(currentIndex),
+                body: Stack(
+                  children: [
+                    fragments.elementAt(currentIndex),
+
+                    /// Admob
+                    if (currentIndex == 2)
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: _bannerAd!.size.height.abs().h,
+                          width: _bannerAd!.size.width.abs().w,
+                          alignment: Alignment.bottomCenter,
+                          child: (_bannerAd != null)
+                              ? AdWidget(
+                                  ad: _bannerAd!,
+                                  key: const Key("ad_widget"),
+                                )
+                              : null,
+                        ),
+                      ),
+                    // SizedBox(
+                    //   height: 50.h,
+                    //   child: AdWidget(
+                    //     key: const Key('banner_ad'),
+                    //     ad: context.watch<LookupBloc>().state.ad,
+                    //   ),
+                    // ),
+                  ],
+                ),
                 bottomNavigationBar: PhysicalModel(
                   color: theme.backgroundTertiary,
                   child: Container(

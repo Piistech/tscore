@@ -13,11 +13,14 @@ class PredictionList extends StatelessWidget {
           )
         : ListView.separated(
             itemCount: fixtures.length,
-            padding: EdgeInsets.symmetric(
-              horizontal: context.horizontalMargin15,
-              vertical: context.verticalMargin15,
+            padding: EdgeInsets.only(
+              left: context.horizontalMargin15,
+              right: context.horizontalMargin15,
+              top: context.verticalMargin15,
+              bottom: 150,
             ),
-            separatorBuilder: (_, __) => SizedBox(height: context.verticalMargin8),
+            separatorBuilder: (_, __) =>
+                SizedBox(height: context.verticalMargin8),
             physics: const AlwaysScrollableScrollPhysics(),
             itemBuilder: (_, index) {
               final fixture = fixtures[index];

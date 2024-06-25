@@ -21,8 +21,8 @@ class FixtureDetailsPage extends StatefulWidget {
 
 class _FixtureDetailsPageState extends State<FixtureDetailsPage> {
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     loadAd(context);
   }
 
@@ -30,15 +30,19 @@ class _FixtureDetailsPageState extends State<FixtureDetailsPage> {
   final String adUnitId = AddMobConfig().bannerUnit;
 
   /// Loads a banner ad.
-  void loadAd(BuildContext context) {
+  Future<void> loadAd(BuildContext context) async {
+    final AnchoredAdaptiveBannerAdSize? size =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            MediaQuery.of(context).size.width.truncate());
     _bannerAd = BannerAd(
       adUnitId: adUnitId,
       request: const AdRequest(),
-      size: const AdSize(height: 100, width: 320),
+      size: size ?? AdSize.fullBanner,
       listener: BannerAdListener(
         // Called when an ad is successfully received.
         onAdLoaded: (ad) {
           debugPrint('$ad loaded.');
+          setState(() {});
         },
         // Called when an ad request failed.
         onAdFailedToLoad: (ad, err) {
@@ -48,6 +52,12 @@ class _FixtureDetailsPageState extends State<FixtureDetailsPage> {
         },
       ),
     )..load();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bannerAd?.dispose();
   }
 
   @override
@@ -65,6 +75,16 @@ class _FixtureDetailsPageState extends State<FixtureDetailsPage> {
           },
         ),
       ),
+      bottomNavigationBar: (_bannerAd != null)
+          ? SizedBox(
+              height: _bannerAd!.size.height.abs().h,
+              width: _bannerAd!.size.width.abs().w,
+              child: AdWidget(
+                ad: _bannerAd!,
+                key: const Key("ad_widget"),
+              ),
+            )
+          : null,
       body: ListView(
         padding: EdgeInsets.symmetric(
           horizontal: context.horizontalMargin15,
@@ -76,18 +96,6 @@ class _FixtureDetailsPageState extends State<FixtureDetailsPage> {
           PredictionWidget(fixtureGuid: widget.guid),
           SizedBox(height: context.verticalMargin16),
           MatchResult(fixtureGuid: widget.guid),
-          SizedBox(height: context.verticalMargin16),
-          if (_bannerAd != null)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SafeArea(
-                child: SizedBox(
-                  width: _bannerAd!.size.width.toDouble(),
-                  height: _bannerAd!.size.height.toDouble(),
-                  child: AdWidget(ad: _bannerAd!),
-                ),
-              ),
-            )
         ],
       ),
     );
