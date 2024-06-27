@@ -167,6 +167,7 @@ class _HomePageState extends State<HomePage> {
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
+                          color: Colors.transparent,
                           height: _bannerAd!.size.height.abs().h,
                           width: _bannerAd!.size.width.abs().w,
                           alignment: Alignment.bottomCenter,
