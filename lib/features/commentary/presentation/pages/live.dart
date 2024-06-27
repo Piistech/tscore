@@ -12,81 +12,117 @@ class LivePage extends StatefulWidget {
 }
 
 class _LivePageState extends State<LivePage> {
-  NativeAd? _nativeAd;
-  bool _nativeAdIsLoaded = false;
-
-  final String _adUnitId = AddMobConfig().nativeUnit;
+  BannerAd? _bannerAd;
+  bool _isLoaded = false;
+  final String adUnitId = AddMobConfig().bannerUnit;
+  AdSize size = AdSize.fullBanner;
 
   @override
-  void initState() {
-    super.initState();
-    loadAd();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadAd(context);
   }
 
   @override
   void dispose() {
-    _nativeAd?.dispose();
     super.dispose();
+    _bannerAd?.dispose();
   }
 
-  /// Loads a native ad.
-  void loadAd() {
-    _nativeAd = NativeAd(
-        adUnitId: _adUnitId,
-        listener: NativeAdListener(
-          onAdLoaded: (ad) {
-            print('$NativeAd loaded.');
-            setState(() {
-              _nativeAdIsLoaded = true;
-            });
-          },
-          onAdFailedToLoad: (ad, error) {
-            // Dispose the ad here to free resources.
-            print('${ad.responseInfo} failedToLoad: $error');
-            ad.dispose();
-          },
-          // Called when a click is recorded for a NativeAd.
-          onAdClicked: (ad) {},
-          // Called when an impression occurs on the ad.
-          onAdImpression: (ad) {},
-          // Called when an ad removes an overlay that covers the screen.
-          onAdClosed: (ad) {},
-          // Called when an ad opens an overlay that covers the screen.
-          onAdOpened: (ad) {},
-          // For iOS only. Called before dismissing a full screen view
-          onAdWillDismissScreen: (ad) {},
-          // Called when an ad receives revenue value.
-          onPaidEvent: (ad, valueMicros, precision, currencyCode) {},
-        ),
-        request: const AdRequest(),
-        // Styling
-        nativeTemplateStyle: NativeTemplateStyle(
-            // Required: Choose a template.
-            templateType: TemplateType.medium,
-            // Optional: Customize the ad's style.
-            mainBackgroundColor: Colors.purple,
-            cornerRadius: 10.0,
-            callToActionTextStyle: NativeTemplateTextStyle(
-                textColor: Colors.cyan,
-                backgroundColor: Colors.red,
-                style: NativeTemplateFontStyle.monospace,
-                size: 16.0),
-            primaryTextStyle: NativeTemplateTextStyle(
-                textColor: Colors.red,
-                backgroundColor: Colors.cyan,
-                style: NativeTemplateFontStyle.italic,
-                size: 16.0),
-            secondaryTextStyle: NativeTemplateTextStyle(
-                textColor: Colors.green,
-                backgroundColor: Colors.black,
-                style: NativeTemplateFontStyle.bold,
-                size: 16.0),
-            tertiaryTextStyle: NativeTemplateTextStyle(
-                textColor: Colors.brown,
-                backgroundColor: Colors.amber,
-                style: NativeTemplateFontStyle.normal,
-                size: 16.0)))
-      ..load();
+  // /// Loads a native ad.
+  // void loadAd() {
+  //   _nativeAd = NativeAd(
+  //       adUnitId: _adUnitId,
+  //       listener: NativeAdListener(
+  //         onAdLoaded: (ad) {
+  //           print('$NativeAd loaded.');
+  //           setState(() {
+  //             _nativeAdIsLoaded = true;
+  //           });
+  //         },
+  //         onAdFailedToLoad: (ad, error) {
+  //           // Dispose the ad here to free resources.
+  //           print('${ad.responseInfo} failedToLoad: $error');
+  //           ad.dispose();
+  //         },
+  //         // Called when a click is recorded for a NativeAd.
+  //         onAdClicked: (ad) {},
+  //         // Called when an impression occurs on the ad.
+  //         onAdImpression: (ad) {},
+  //         // Called when an ad removes an overlay that covers the screen.
+  //         onAdClosed: (ad) {},
+  //         // Called when an ad opens an overlay that covers the screen.
+  //         onAdOpened: (ad) {},
+  //         // For iOS only. Called before dismissing a full screen view
+  //         onAdWillDismissScreen: (ad) {},
+  //         // Called when an ad receives revenue value.
+  //         onPaidEvent: (ad, valueMicros, precision, currencyCode) {},
+  //       ),
+  //       request: const AdRequest(),
+  //       // Styling
+  //       nativeTemplateStyle: NativeTemplateStyle(
+  //           // Required: Choose a template.
+  //           templateType: TemplateType.medium,
+  //           // Optional: Customize the ad's style.
+  //           mainBackgroundColor: Colors.purple,
+  //           cornerRadius: 10.0,
+  //           callToActionTextStyle: NativeTemplateTextStyle(
+  //               textColor: Colors.cyan,
+  //               backgroundColor: Colors.red,
+  //               style: NativeTemplateFontStyle.monospace,
+  //               size: 16.0),
+  //           primaryTextStyle: NativeTemplateTextStyle(
+  //               textColor: Colors.red,
+  //               backgroundColor: Colors.cyan,
+  //               style: NativeTemplateFontStyle.italic,
+  //               size: 16.0),
+  //           secondaryTextStyle: NativeTemplateTextStyle(
+  //               textColor: Colors.green,
+  //               backgroundColor: Colors.black,
+  //               style: NativeTemplateFontStyle.bold,
+  //               size: 16.0),
+  //           tertiaryTextStyle: NativeTemplateTextStyle(
+  //               textColor: Colors.brown,
+  //               backgroundColor: Colors.amber,
+  //               style: NativeTemplateFontStyle.normal,
+  //               size: 16.0)))
+  //     ..load();
+  // }
+
+  /// Loads a banner ad.
+  Future<void> loadAd(BuildContext context) async {
+    final AnchoredAdaptiveBannerAdSize? size =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            MediaQuery.of(context).size.width.truncate());
+
+    if (size == null) {
+      debugPrint('Unable to get height of anchored banner.');
+      return;
+    }
+    _bannerAd = BannerAd(
+      // TODO: replace these test ad units with your own ad unit.
+      adUnitId: Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716',
+      size: size,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (Ad ad) {
+          print('$ad loaded: ${ad.responseInfo}');
+          setState(() {
+            // When the ad is loaded, get the ad size and use it to set
+            // the height of the ad container.
+            _bannerAd = ad as BannerAd;
+            _isLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          print('Anchored adaptive banner failedToLoad: $error');
+          ad.dispose();
+        },
+      ),
+    );
+    return _bannerAd!.load();
   }
 
   @override
@@ -95,6 +131,24 @@ class _LivePageState extends State<LivePage> {
       builder: (context, state) {
         final theme = state.scheme;
         return Scaffold(
+          bottomNavigationBar: Builder(builder: (context) {
+            if (_bannerAd != null && _isLoaded) {
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  color: Colors.transparent,
+                  height: _bannerAd!.size.height.abs().h,
+                  width: _bannerAd!.size.width.abs().w,
+                  alignment: Alignment.bottomCenter,
+                  child: AdWidget(
+                    ad: _bannerAd!,
+                    key: const Key("ad_widget"),
+                  ),
+                ),
+              );
+            }
+            return const SizedBox();
+          }),
           backgroundColor: theme.backgroundPrimary,
           appBar: AppBar(
             automaticallyImplyLeading: true,
@@ -299,16 +353,16 @@ class _LivePageState extends State<LivePage> {
                     ),
                     SizedBox(height: context.verticalMargin16),
                     // Medium template
-                    if (_nativeAd != null && _nativeAdIsLoaded)
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          minWidth: 320, // minimum recommended width
-                          minHeight: 90, // minimum recommended height
-                          maxWidth: 400,
-                          maxHeight: 200,
-                        ),
-                        child: AdWidget(ad: _nativeAd!),
-                      ),
+                    // if (_nativeAd != null && _nativeAdIsLoaded)
+                    //   ConstrainedBox(
+                    //     constraints: const BoxConstraints(
+                    //       minWidth: 320, // minimum recommended width
+                    //       minHeight: 90, // minimum recommended height
+                    //       maxWidth: 400,
+                    //       maxHeight: 200,
+                    //     ),
+                    //     child: AdWidget(ad: _nativeAd!),
+                    //   ),
                   ],
                 );
               } else {

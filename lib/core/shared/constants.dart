@@ -40,5 +40,5 @@ class AddMobConfig {
   final String rewardUnit =
       kReleaseMode ? adsRewardUnitIdProduction : adsRewardUnitIdTest;
 
-  final String nativeUnit = kReleaseMode ? nativeAdUnitId : nativeAdUnitIdTest;
+  // final String nativeUnit = kReleaseMode ? nativeAdUnitId : nativeAdUnitIdTest;
 }

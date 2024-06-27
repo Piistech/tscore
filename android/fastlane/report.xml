@@ -10,12 +10,22 @@
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: google_play_track_version_codes" time="3.602943">
+      <testcase classname="fastlane.lanes" name="1: clean" time="6.229624">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: upload_to_play_store" time="7.894028">
+      <testcase classname="fastlane.lanes" name="2: flutter clean" time="4.766014">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: flutter build appbundle --release --obfuscate --split-debug-info\=build/app/outputs/symbols --shrink" time="102.106144">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: upload_to_play_store" time="83.625047">
         
       </testcase>
     

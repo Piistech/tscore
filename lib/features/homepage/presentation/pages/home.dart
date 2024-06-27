@@ -60,6 +60,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   BannerAd? _bannerAd;
+  bool _isLoaded = false;
   final String adUnitId = AddMobConfig().bannerUnit;
   AdSize size = AdSize.fullBanner;
   @override
@@ -73,30 +74,42 @@ class _HomePageState extends State<HomePage> {
     final AnchoredAdaptiveBannerAdSize? size =
         await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
             MediaQuery.of(context).size.width.truncate());
+
+    if (size == null) {
+      debugPrint('Unable to get height of anchored banner.');
+      return;
+    }
     _bannerAd = BannerAd(
-      adUnitId: adUnitId,
-      request: const AdRequest(),
-      size: size ?? AdSize.fullBanner,
+      // TODO: replace these test ad units with your own ad unit.
+      adUnitId: Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716',
+      size: size,
+      request: AdRequest(),
       listener: BannerAdListener(
-        // Called when an ad is successfully received.
-        onAdLoaded: (ad) {
-          debugPrint('$ad loaded.');
-          setState(() {});
+        onAdLoaded: (Ad ad) {
+          print('$ad loaded: ${ad.responseInfo}');
+          setState(() {
+            // When the ad is loaded, get the ad size and use it to set
+            // the height of the ad container.
+            _bannerAd = ad as BannerAd;
+            _isLoaded = true;
+          });
         },
-        // Called when an ad request failed.
-        onAdFailedToLoad: (ad, err) {
-          debugPrint('${ad.responseInfo} BannerAd failed to load: $err');
-          // Dispose the ad here to free resources.
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          print('Anchored adaptive banner failedToLoad: $error');
           ad.dispose();
         },
       ),
-    )..load();
+    );
+    return _bannerAd!.load();
   }
 
   @override
   void dispose() {
-    BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
+    BackButtonInterceptor.remove(myInterceptor);
+    _bannerAd?.dispose();
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
@@ -164,21 +177,22 @@ class _HomePageState extends State<HomePage> {
 
                     /// Admob
                     if (currentIndex == 2)
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          color: Colors.transparent,
-                          height: _bannerAd!.size.height.abs().h,
-                          width: _bannerAd!.size.width.abs().w,
+                      if (_bannerAd != null && _isLoaded)
+                        Align(
                           alignment: Alignment.bottomCenter,
-                          child: (_bannerAd != null)
-                              ? AdWidget(
-                                  ad: _bannerAd!,
-                                  key: const Key("ad_widget"),
-                                )
-                              : null,
-                        ),
-                      ),
+                          child: Container(
+                            color: Colors.transparent,
+                            height: _bannerAd!.size.height.abs().h,
+                            width: _bannerAd!.size.width.abs().w,
+                            alignment: Alignment.bottomCenter,
+                            child: AdWidget(
+                              ad: _bannerAd!,
+                              key: const Key("ad_widget"),
+                            ),
+                          ),
+                        )
+                      else
+                        const SizedBox(),
                     // SizedBox(
                     //   height: 50.h,
                     //   child: AdWidget(
